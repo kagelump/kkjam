@@ -112,10 +112,14 @@ The goal is to create one Level 3 critter of each type (Drum, Bass, Melody, Harm
 
 ## Development Plan
 ### **Phase 1**: Core Match-3 (Day 1-2)
-- 8x8 Grid generation.
-- Swap mechanics.
-- Basic Match-3 detection (remove 3).
-- Gravity/Refill logic.
+- 8x8 Grid generation. (DONE)
+- Swap mechanics. (DONE)
+- Basic Match-3 detection (remove 3). (DONE)
+- Gravity/Refill logic. (DONE)
+- **Scene Setup**:
+  - Create `InputBlocker` Control node (z-index top) to prevent clicks during animations.
+  - Create `CritterContainer` Node2D inside Grid to manage z-ordering vs UI.
+  - Add `DebugUI` CanvasLayer with "Force Win" / "Spawn Lvl 3" buttons for testing.
 
 ### **Phase 2**: Merge & Stage Logic (Day 3-4)
 - Change "Remove 3" to "Merge 3 into 1".
@@ -123,6 +127,9 @@ The goal is to create one Level 3 critter of each type (Drum, Bass, Melody, Harm
 - Implement "Concert" trigger and Board Reset.
 
 ### **Phase 3: The Loop & Shuffle (Day 5)**
+- **Audio Setup**:
+  - Create `MusicLayers` node with 4 `AudioStreamPlayer` children (Drums, Bass, Melody, Harmony).
+  - Route them to a custom "Music" audio bus.
 - Implement Deadlock Detection (check all possible swaps).
 - Implement Shuffle Mechanic (randomize grid array).
 - Implement Difficulty Scaling (Album count -> Speed/BPM).
