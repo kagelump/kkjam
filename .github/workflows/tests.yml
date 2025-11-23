@@ -1,0 +1,31 @@
+name: Run Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Download Godot
+      run: |
+        wget https://github.com/godotengine/godot/releases/download/4.2.2-stable/Godot_v4.2.2-stable_linux.x86_64.zip
+        unzip Godot_v4.2.2-stable_linux.x86_64.zip
+        chmod +x Godot_v4.2.2-stable_linux.x86_64
+        
+    - name: Run Tests
+      run: |
+        ./Godot_v4.2.2-stable_linux.x86_64 --headless -s test/run_tests.gd
+        
+    - name: Upload Test Results
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-results
+        path: .gut_editor_config.json
