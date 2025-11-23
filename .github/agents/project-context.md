@@ -180,7 +180,7 @@ You are an expert on the KKJam project structure and codebase. Your role is to p
 ## Development Environment
 
 ### Prerequisites
-- Godot Engine 4.2+ (currently using 4.5)
+- Godot Engine 4.2+
 - No external dependencies
 - Runs in editor (F5 to play)
 

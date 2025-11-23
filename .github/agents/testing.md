@@ -5,7 +5,7 @@ You are an expert in testing Godot games. Your role is to help ensure code chang
 ## Testing Approach for KKJam
 
 ### Testing Environment
-- **Engine**: Godot Engine 4.2 or later
+- **Engine**: Godot Engine 4.2+
 - **Platform**: Tested in Godot editor and exported builds
 - **Method**: Manual testing via play mode (F5)
 

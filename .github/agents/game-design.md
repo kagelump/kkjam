@@ -45,20 +45,20 @@ You are an expert in game design for KKJam. Your role is to ensure that code cha
 
 ### The Band Members
 1. **Bunny (Red/Pink)** - Drummer 🥁
-   - Percussion/Drums layer
-   - Energetic, rhythmic
+  - Percussion/Drums layer
+  - Energetic, rhythmic
 
 2. **Cat (Blue/Cyan)** - Melody 🎹
-   - Lead melody layer
-   - Smooth, melodic
+  - Lead melody layer
+  - Smooth, melodic
 
 3. **Frog (Green)** - Bass 🎸
-   - Bass/groove layer
-   - Deep, groovy
+  - Bass/groove layer
+  - Deep, groovy
 
 4. **Bird (Yellow/Orange)** - Harmony 🎤
-   - Vocal/harmony layer
-   - Bright, soaring
+  - Vocal/harmony layer
+  - Bright, soaring
 
 ### Visual Progression
 - **Level 1**: Baby/small, muted colors

@@ -137,6 +137,6 @@ func _internal_helper():
 ## Important Notes
 - This project uses Godot 4.x syntax (not Godot 3.x)
 - The project is currently in Phase 2 (complete)
-- Phase 3 will add shuffle mechanics and audio
+- Phase 3 adds shuffle mechanics and audio
 - Follow the patterns established in existing scripts
 - Maintain backward compatibility with existing features
