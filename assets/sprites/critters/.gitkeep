@@ -1,0 +1,4 @@
+# Placeholder for critter sprites
+# Each critter type should have sprites for different evolution levels
+# Recommended format: PNG, 64x64 pixels
+# Example naming: critter_0_base.png, critter_0_evolved_1.png, etc.

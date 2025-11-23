@@ -1,0 +1,4 @@
+# Placeholder for music loops
+# Each critter type should have audio loops for different evolution levels
+# Recommended format: OGG or WAV
+# Example naming: bass_base.ogg, bass_evolved_1.ogg, etc.
