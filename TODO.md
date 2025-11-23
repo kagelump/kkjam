@@ -129,10 +129,15 @@ The goal is to create one Level 3 critter of each type (Drum, Bass, Melody, Harm
   - Create `CritterContainer` Node2D inside Grid to manage z-ordering vs UI. (DONE)
   - Add `DebugUI` CanvasLayer with "Force Win" / "Spawn Lvl 3" buttons for testing. (DONE)
 
-### **Phase 2**: Merge & Stage Logic (Day 3-4)
+### **Phase 2**: Merge & Stage Logic (Day 3-4) ✓ COMPLETE
 - Change "Remove 3" to "Merge 3 into 1". (DONE)
-- Implement "Fly to Stage" for Level 3s. (DONE)
+- Implement "Fly to Stage" for Level 3s with smooth animations. (DONE)
 - Implement "Concert" trigger and Board Reset. (DONE)
+- Create visual Stage display with persistent Level 3 critters. (DONE)
+- Add stage reset signal system for clearing the stage. (DONE)
+- Implement no-initial-matches generation to ensure clean starts. (DONE)
+- Add visual level indicators (numbers on critters). (DONE)
+- Add bounce animations on click and shake on invalid swap. (DONE)
 
 ### **Phase 3: The Loop & Shuffle (Day 5)**
 - **Audio Setup**:
