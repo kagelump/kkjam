@@ -108,7 +108,7 @@ func resolve_matches(matches: Array):
 		# In the future: if level < LEVEL_3, create level + 1 critter
 		# For now, just leave empty spaces
 		
-		print("Match resolved: ", critters.size(), " ", Critter.CritterType.keys()[critter_type], " Level ", critter_level + 1)
+		print("Match resolved: ", critters.size(), " ", Critter.CritterType.keys()[critter_type], " Level ", ["1", "2", "3"][critter_level])
 
 # Check if a swap would create a match
 func would_create_match(x1: int, y1: int, x2: int, y2: int) -> bool:

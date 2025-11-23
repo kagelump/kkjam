@@ -40,8 +40,8 @@ const TYPE_COLORS = {
 func _ready():
 	update_visual()
 
-func initialize(type: CritterType, level: CritterLevel, x: int, y: int):
-	critter_type = type
+func initialize(p_critter_type: CritterType, level: CritterLevel, x: int, y: int):
+	critter_type = p_critter_type
 	critter_level = level
 	grid_x = x
 	grid_y = y

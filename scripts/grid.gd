@@ -36,9 +36,9 @@ func generate_board():
 		for y in range(GRID_HEIGHT):
 			spawn_critter(x, y)
 
-func spawn_critter(x: int, y: int, level: int = Critter.CritterLevel.LEVEL_1) -> Critter:
+func spawn_critter(x: int, y: int, level: Critter.CritterLevel = Critter.CritterLevel.LEVEL_1) -> Critter:
 	# Random critter type
-	var type = randi() % 4  # 0-3 for the 4 types
+	var type = randi() % Critter.CritterType.size()
 	
 	var critter = critter_scene.instantiate()
 	add_child(critter)
