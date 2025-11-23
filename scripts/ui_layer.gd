@@ -44,6 +44,7 @@ func _refresh_layers_display():
 	"""Refresh the music layers display"""
 	# Clear existing labels
 	for child in layers_list.get_children():
+		layers_list.remove_child(child)
 		child.queue_free()
 	
 	# Add new labels

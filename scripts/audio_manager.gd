@@ -99,5 +99,6 @@ func get_active_layer_count() -> int:
 
 func clear_all_layers():
 	"""Remove all active music layers"""
-	for layer_name in active_loops.keys():
+	var layer_names = active_loops.keys().duplicate()
+	for layer_name in layer_names:
 		await remove_music_layer(layer_name)
