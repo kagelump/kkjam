@@ -31,8 +31,20 @@ color = Color(0.2, 0.2, 0.25, 1)
 position = Vector2(48, 400)
 script = ExtResource("1_grid")
 
+[node name="CritterContainer" type="Node2D" parent="Grid"]
+
 [node name="GameManager" type="Node" parent="."]
 script = ExtResource("2_game_manager")
+
+[node name="MusicLayers" type="Node" parent="."]
+
+[node name="Drums" type="AudioStreamPlayer" parent="MusicLayers"]
+
+[node name="Bass" type="AudioStreamPlayer" parent="MusicLayers"]
+
+[node name="Melody" type="AudioStreamPlayer" parent="MusicLayers"]
+
+[node name="Harmony" type="AudioStreamPlayer" parent="MusicLayers"]
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
@@ -78,3 +90,29 @@ theme_override_font_sizes/font_size = 24
 text = "Phase 1 MVP - Core Match-3"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="DebugUI" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DebugUI"]
+offset_left = 560.0
+offset_top = 48.0
+offset_right = 700.0
+offset_bottom = 200.0
+
+[node name="ForceWinButton" type="Button" parent="DebugUI/VBoxContainer"]
+layout_mode = 2
+text = "Force Win"
+
+[node name="SpawnLvl3Button" type="Button" parent="DebugUI/VBoxContainer"]
+layout_mode = 2
+text = "Spawn Lvl 3"
+
+[node name="InputBlocker" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
