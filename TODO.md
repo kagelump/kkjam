@@ -40,6 +40,14 @@ The goal is to create one Level 3 critter of each type (Drum, Bass, Melody, Harm
 - **Auto-Shuffle**: If the game detects zero valid moves, the board automatically shuffles all critters to new positions to create new match opportunities.
 - **Manual Shuffle**: A button allows players to manually shuffle the board if they feel stuck (potentially with a cooldown or score cost).
 
+### 5. Combo System (The "Flow" State)
+- **Combo Counter**: Tracks consecutive matches made without a break (e.g., cascades or quick successive moves).
+- **Visuals**: A "Combo x2", "Combo x3" text pops up near the match.
+- **Audio**: Each step in the combo chain plays a higher pitched/more exciting sound effect (C -> E -> G -> High C).
+- **Reward**: 
+  - Score Multiplier: Points = Base Score * Combo Count.
+  - Hype Meter (Stretch): Higher combos refill the meter faster.
+
 ---
 
 ## Art and Style
@@ -117,14 +125,14 @@ The goal is to create one Level 3 critter of each type (Drum, Bass, Melody, Harm
 - Basic Match-3 detection (remove 3). (DONE)
 - Gravity/Refill logic. (DONE)
 - **Scene Setup**:
-  - Create `InputBlocker` Control node (z-index top) to prevent clicks during animations.
-  - Create `CritterContainer` Node2D inside Grid to manage z-ordering vs UI.
-  - Add `DebugUI` CanvasLayer with "Force Win" / "Spawn Lvl 3" buttons for testing.
+  - Create `InputBlocker` Control node (z-index top) to prevent clicks during animations. (DONE)
+  - Create `CritterContainer` Node2D inside Grid to manage z-ordering vs UI. (DONE)
+  - Add `DebugUI` CanvasLayer with "Force Win" / "Spawn Lvl 3" buttons for testing. (DONE)
 
 ### **Phase 2**: Merge & Stage Logic (Day 3-4)
-- Change "Remove 3" to "Merge 3 into 1".
-- Implement "Fly to Stage" for Level 3s.
-- Implement "Concert" trigger and Board Reset.
+- Change "Remove 3" to "Merge 3 into 1". (DONE)
+- Implement "Fly to Stage" for Level 3s. (DONE)
+- Implement "Concert" trigger and Board Reset. (DONE)
 
 ### **Phase 3: The Loop & Shuffle (Day 5)**
 - **Audio Setup**:
@@ -140,6 +148,10 @@ The goal is to create one Level 3 critter of each type (Drum, Bass, Melody, Harm
 - Particle effects.
 - UI Polish.
 - Bug fixing.
+- **Combo System**:
+  - Track cascade chains in `MatchController`.
+  - Add UI popup for Combo Count.
+  - Implement score multiplier logic.
 
 ---
 

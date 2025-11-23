@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/grid.gd" id="1_grid"]
 [ext_resource type="Script" path="res://scripts/game_manager.gd" id="2_game_manager"]
+[ext_resource type="Script" path="res://scripts/stage_display.gd" id="3_stage_display"]
 
 [node name="Main" type="Node2D"]
 
@@ -19,6 +20,7 @@ offset_top = 150.0
 offset_right = 560.0
 offset_bottom = 350.0
 color = Color(0.1, 0.1, 0.15, 1)
+script = ExtResource("3_stage_display")
 
 [node name="GridBackground" type="ColorRect" parent="."]
 offset_left = 48.0

@@ -36,6 +36,7 @@ const TYPE_COLORS = {
 }
 
 @onready var sprite: ColorRect = $ColorRect
+@onready var level_label: Label = $LevelLabel
 
 func _ready():
 	update_visual()
@@ -58,6 +59,10 @@ func update_visual():
 	# Adjust brightness based on level
 	var brightness_multiplier = 1.0 + (critter_level * 0.2)
 	sprite.color = base_color * brightness_multiplier
+	
+	# Update level label
+	if level_label:
+		level_label.text = str(critter_level + 1)
 	
 	# Adjust size based on level (bigger = higher level)
 	var size_multiplier = 0.7 + (critter_level * 0.15)
@@ -85,9 +90,16 @@ func set_selected(selected: bool):
 	if sprite:
 		# Visual feedback for selection
 		if selected:
+			play_click_animation()
 			sprite.modulate = Color(1.2, 1.2, 1.2)
 		else:
 			sprite.modulate = Color(1.0, 1.0, 1.0)
+
+func play_click_animation():
+	# Bounce animation when clicked
+	var tween = create_tween()
+	tween.tween_property(self, "scale", Vector2(1.2, 1.2), 0.1)
+	tween.tween_property(self, "scale", Vector2(1.0, 1.0), 0.1)
 
 func get_type_name() -> String:
 	match critter_type:

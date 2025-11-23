@@ -1,19 +1,30 @@
 extends Node
 class_name GameManager
 
+signal concert_triggered
+signal critter_collected(type)
+signal stage_reset
+
 # Game state
 var score: int = 0
 var albums_completed: int = 0
 var current_bpm: int = 100
+
+# Collection state
+var collected_critters: Dictionary = {
+	Critter.CritterType.BUNNY: false,
+	Critter.CritterType.CAT: false,
+	Critter.CritterType.FROG: false,
+	Critter.CritterType.BIRD: false
+}
 
 # References
 @onready var grid: Grid = $"../Grid"
 @onready var ui: Control = $"../UI"
 
 func _ready():
-	print("KKJam - Phase 1 MVP Started")
-	print("Click critters to select, then click an adjacent critter to swap")
-	print("Match 3 or more of the same type and level to score!")
+	print("KKJam - Phase 2 Started")
+	print("Match 3 to merge! Collect all 4 Level 3 critters to win!")
 
 func add_score(points: int):
 	score += points
@@ -23,8 +34,40 @@ func update_ui():
 	# Will be implemented when UI is added
 	pass
 
+func collect_critter(type: Critter.CritterType):
+	if not collected_critters[type]:
+		collected_critters[type] = true
+		emit_signal("critter_collected", type)
+		print("Collected Level 3 Critter: ", Critter.CritterType.keys()[type])
+		check_concert_condition()
+
+func check_concert_condition():
+	var all_collected = true
+	for type in collected_critters:
+		if not collected_critters[type]:
+			all_collected = false
+			break
+	
+	if all_collected:
+		trigger_concert()
+
+func trigger_concert():
+	print("ULTIMATE CONCERT TRIGGERED!")
+	emit_signal("concert_triggered")
+	complete_album()
+
 func complete_album():
 	albums_completed += 1
 	current_bpm += 10  # Increase tempo
 	print("Album completed! Total albums: ", albums_completed)
-	# Future: trigger concert animation, reset board, etc.
+	
+	# Reset for next tour stop
+	reset_stage()
+	# In a real implementation, we'd wait for the concert animation to finish
+	grid.reset_board()
+
+func reset_stage():
+	for type in collected_critters:
+		collected_critters[type] = false
+	emit_signal("stage_reset")
+	print("Stage cleared for next tour stop")

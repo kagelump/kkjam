@@ -91,24 +91,55 @@ func find_matches() -> Array:
 	return matches
 
 # Resolve matches: remove critters and create merged critter
-func resolve_matches(matches: Array):
+func resolve_matches(matches: Array, swap_target: Vector2 = Vector2(-1, -1)):
 	for match in matches:
 		var critters = match["critters"]
-		var merge_x = match["merge_x"]
-		var merge_y = match["merge_y"]
 		var critter_type = match["type"]
 		var critter_level = match["level"]
+		
+		# Determine merge location
+		var merge_x = match["merge_x"]
+		var merge_y = match["merge_y"]
+		
+		# If swap_target is valid and is part of this match, use it as merge location
+		if swap_target != Vector2(-1, -1):
+			for critter in critters:
+				if critter.grid_x == int(swap_target.x) and critter.grid_y == int(swap_target.y):
+					merge_x = int(swap_target.x)
+					merge_y = int(swap_target.y)
+					break
+		else:
+			# If no swap target (e.g. cascade match), try to use the middle critter
+			if critters.size() >= 3:
+				var middle_critter = critters[critters.size() / 2]
+				merge_x = middle_critter.grid_x
+				merge_y = middle_critter.grid_y
 		
 		# Remove all matched critters from grid
 		for critter in critters:
 			grid.remove_critter(critter.grid_x, critter.grid_y)
 		
 		# Create a new merged critter at the merge location
-		# For Phase 1, we just remove them (in Phase 2 we'll create higher level)
-		# In the future: if level < LEVEL_3, create level + 1 critter
-		# For now, just leave empty spaces
+		var next_level = critter_level + 1
 		
-		print("Match resolved: ", critters.size(), " ", Critter.CritterType.keys()[critter_type], " Level ", ["1", "2", "3"][critter_level])
+		if next_level <= Critter.CritterLevel.LEVEL_3:
+			# Spawn the upgraded critter
+			var new_critter = grid.spawn_critter(merge_x, merge_y, next_level)
+			# Set type explicitly to match the merged ones (spawn_critter randomizes type by default)
+			new_critter.initialize(critter_type, next_level, merge_x, merge_y)
+			
+			print("Merged into Level ", ["1", "2", "3"][next_level], " at ", merge_x, ",", merge_y)
+			
+			# Check if we created a Level 3 critter
+			if next_level == Critter.CritterLevel.LEVEL_3:
+				grid.handle_level_3_created(new_critter)
+		else:
+			# Should not happen if max level is 3, but just in case
+			print("Max level reached!")
+		
+		# Add score
+		var points = 10 * (critter_level + 1) * critters.size()
+		grid.get_node("../GameManager").add_score(points)
 
 # Check if a swap would create a match
 func would_create_match(x1: int, y1: int, x2: int, y2: int) -> bool:

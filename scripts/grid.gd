@@ -16,6 +16,7 @@ var match_controller: MatchController
 # Selection
 var selected_critter: Critter = null
 var is_processing: bool = false
+var last_swap_target: Vector2 = Vector2(-1, -1)
 
 func _ready():
 	match_controller = MatchController.new(self)
@@ -31,17 +32,48 @@ func initialize_grid():
 			grid_data[x].append(null)
 
 func generate_board():
-	# Fill the board with random Level 1 critters
+	# Fill the board with random Level 1 critters, ensuring no initial matches
 	for x in range(GRID_WIDTH):
 		for y in range(GRID_HEIGHT):
-			spawn_critter(x, y)
+			spawn_critter_no_match(x, y)
+
+func spawn_critter_no_match(x: int, y: int):
+	var possible_types = []
+	for i in range(Critter.CritterType.size()):
+		possible_types.append(i)
+	
+	# Remove types that would create a match
+	# Check left (horizontal match)
+	if x >= 2:
+		var c1 = grid_data[x-1][y]
+		var c2 = grid_data[x-2][y]
+		if c1 and c2 and c1.critter_type == c2.critter_type and c1.critter_level == Critter.CritterLevel.LEVEL_1 and c2.critter_level == Critter.CritterLevel.LEVEL_1:
+			possible_types.erase(c1.critter_type)
+			
+	# Check up (vertical match)
+	if y >= 2:
+		var c1 = grid_data[x][y-1]
+		var c2 = grid_data[x][y-2]
+		if c1 and c2 and c1.critter_type == c2.critter_type and c1.critter_level == Critter.CritterLevel.LEVEL_1 and c2.critter_level == Critter.CritterLevel.LEVEL_1:
+			possible_types.erase(c1.critter_type)
+	
+	# Pick a random valid type
+	if possible_types.size() > 0:
+		var type = possible_types[randi() % possible_types.size()]
+		var critter = critter_scene.instantiate()
+		$CritterContainer.add_child(critter)
+		critter.initialize(type, Critter.CritterLevel.LEVEL_1, x, y)
+		grid_data[x][y] = critter
+	else:
+		# Fallback if somehow no valid types (shouldn't happen with 4 types)
+		spawn_critter(x, y)
 
 func spawn_critter(x: int, y: int, level: Critter.CritterLevel = Critter.CritterLevel.LEVEL_1) -> Critter:
 	# Random critter type
 	var type = randi() % Critter.CritterType.size()
 	
 	var critter = critter_scene.instantiate()
-	add_child(critter)
+	$CritterContainer.add_child(critter)
 	critter.initialize(type, level, x, y)
 	grid_data[x][y] = critter
 	
@@ -68,13 +100,16 @@ func swap_critters(x1: int, y1: int, x2: int, y2: int):
 			perform_swap(x1, y1, x2, y2)
 		else:
 			print("Swap would not create a match")
-			# Could add animation for invalid swap here
+			perform_invalid_swap(x1, y1, x2, y2)
 	else:
 		print("Critters are not adjacent")
 
 func perform_swap(x1: int, y1: int, x2: int, y2: int):
 	var critter1 = grid_data[x1][y1]
 	var critter2 = grid_data[x2][y2]
+	
+	# Store swap target (the second clicked critter)
+	last_swap_target = Vector2(x2, y2)
 	
 	# Swap in grid data
 	grid_data[x1][y1] = critter2
@@ -90,12 +125,39 @@ func perform_swap(x1: int, y1: int, x2: int, y2: int):
 	await get_tree().create_timer(0.25).timeout
 	process_matches()
 
+func perform_invalid_swap(x1: int, y1: int, x2: int, y2: int):
+	# Animate trying to swap and swapping back
+	is_processing = true
+	var critter1 = grid_data[x1][y1]
+	var critter2 = grid_data[x2][y2]
+	
+	# Swap positions visually (but not in grid data)
+	var pos1 = Vector2(x1 * CELL_SIZE + CELL_SIZE / 2, y1 * CELL_SIZE + CELL_SIZE / 2)
+	var pos2 = Vector2(x2 * CELL_SIZE + CELL_SIZE / 2, y2 * CELL_SIZE + CELL_SIZE / 2)
+	
+	if critter1:
+		var tween1 = create_tween()
+		tween1.tween_property(critter1, "position", pos2, 0.15)
+		tween1.tween_property(critter1, "position", pos1, 0.15)
+	
+	if critter2:
+		var tween2 = create_tween()
+		tween2.tween_property(critter2, "position", pos1, 0.15)
+		tween2.tween_property(critter2, "position", pos2, 0.15)
+	
+	# Wait for animation to finish
+	await get_tree().create_timer(0.3).timeout
+	is_processing = false
+
 func process_matches():
 	var matches = match_controller.find_matches()
 	
 	if matches.size() > 0:
 		print("Found ", matches.size(), " matches")
-		match_controller.resolve_matches(matches)
+		match_controller.resolve_matches(matches, last_swap_target)
+		
+		# Reset swap target
+		last_swap_target = Vector2(-1, -1)
 		
 		# Wait a bit before refilling
 		await get_tree().create_timer(0.3).timeout
@@ -120,11 +182,58 @@ func refill_board():
 	var matches = match_controller.find_matches()
 	if matches.size() > 0:
 		print("Cascade! Found ", matches.size(), " new matches")
-		match_controller.resolve_matches(matches)
+		match_controller.resolve_matches(matches) # No swap target for cascades
 		await get_tree().create_timer(0.3).timeout
 		refill_board()
 	else:
 		is_processing = false
+
+func handle_level_3_created(critter: Critter):
+	print("Level 3 Created! Flying to stage...")
+	
+	# Notify Game Manager
+	var game_manager = get_node("../GameManager")
+	if game_manager:
+		game_manager.collect_critter(critter.critter_type)
+	
+	# Get target position from StageDisplay
+	var stage_bg = get_node("../StageBackground")
+	var target_pos = Vector2(360, -100) # Default fallback
+	if stage_bg and stage_bg.has_method("get_global_stage_position"):
+		target_pos = stage_bg.get_global_stage_position(critter.critter_type)
+	
+	# Remove from grid data immediately so it doesn't block gravity
+	grid_data[critter.grid_x][critter.grid_y] = null
+	
+	# Animate flying to stage
+	var tween = create_tween()
+	tween.set_parallel(true)
+	# Use global_position for movement between containers
+	tween.tween_property(critter, "global_position", target_pos, 0.6).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT)
+	# Scale up to match stage size
+	tween.tween_property(critter, "scale", Vector2(1.2, 1.2), 0.6)
+	# Ensure z_index is high so it flies over everything
+	critter.z_index = 100
+	
+	# Wait for animation then free
+	await tween.finished
+	critter.queue_free()
+
+func reset_board():
+	print("Resetting board...")
+	is_processing = true
+	
+	# Clear all critters
+	for x in range(GRID_WIDTH):
+		for y in range(GRID_HEIGHT):
+			remove_critter(x, y)
+	
+	# Wait a bit
+	await get_tree().create_timer(0.5).timeout
+	
+	# Regenerate
+	generate_board()
+	is_processing = false
 
 func apply_gravity():
 	# Move critters down to fill empty spaces
