@@ -12,10 +12,9 @@ var current_bpm: int = 100
 
 # Collection state
 var collected_critters: Dictionary = {
-	Critter.CritterType.BUNNY: false,
-	Critter.CritterType.CAT: false,
-	Critter.CritterType.FROG: false,
-	Critter.CritterType.BIRD: false
+	Critter.CritterType.MELODY: false,
+	Critter.CritterType.DRUMS: false,
+	Critter.CritterType.PAD: false
 }
 
 # References

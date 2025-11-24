@@ -15,10 +15,9 @@ func test_collection_state_initialization():
 	game_manager.set_script(game_manager_script)
 	
 	# All critters should start uncollected
-	assert_false(game_manager.collected_critters[Critter.CritterType.BUNNY], "BUNNY should not be collected initially")
-	assert_false(game_manager.collected_critters[Critter.CritterType.CAT], "CAT should not be collected initially")
-	assert_false(game_manager.collected_critters[Critter.CritterType.FROG], "FROG should not be collected initially")
-	assert_false(game_manager.collected_critters[Critter.CritterType.BIRD], "BIRD should not be collected initially")
+	assert_false(game_manager.collected_critters[Critter.CritterType.MELODY], "MELODY should not be collected initially")
+	assert_false(game_manager.collected_critters[Critter.CritterType.DRUMS], "DRUMS should not be collected initially")
+	assert_false(game_manager.collected_critters[Critter.CritterType.PAD], "PAD should not be collected initially")
 
 func test_add_score():
 	var game_manager = autofree(Node.new())
@@ -36,9 +35,9 @@ func test_collect_single_critter():
 	
 	watch_signals(game_manager)
 	
-	game_manager.collect_critter(Critter.CritterType.BUNNY)
+	game_manager.collect_critter(Critter.CritterType.DRUMS)
 	
-	assert_true(game_manager.collected_critters[Critter.CritterType.BUNNY], "BUNNY should be collected")
+	assert_true(game_manager.collected_critters[Critter.CritterType.DRUMS], "DRUMS should be collected")
 	assert_signal_emitted(game_manager, "critter_collected", "Should emit critter_collected signal")
 
 func test_collect_all_critters_triggers_concert():
@@ -64,15 +63,14 @@ func test_collect_all_critters_triggers_concert():
 	
 	watch_signals(game_manager)
 	
-	# Collect first 3 critters - should not trigger concert
-	game_manager.collect_critter(Critter.CritterType.BUNNY)
-	game_manager.collect_critter(Critter.CritterType.CAT)
-	game_manager.collect_critter(Critter.CritterType.FROG)
+	# Collect first 2 critters - should not trigger concert
+	game_manager.collect_critter(Critter.CritterType.DRUMS)
+	game_manager.collect_critter(Critter.CritterType.MELODY)
 	
-	assert_signal_emit_count(game_manager, "concert_triggered", 0, "Concert should not trigger with only 3 critters")
+	assert_signal_emit_count(game_manager, "concert_triggered", 0, "Concert should not trigger with only 2 critters")
 	
-	# Collect 4th critter - should trigger concert
-	game_manager.collect_critter(Critter.CritterType.BIRD)
+	# Collect 3rd critter - should trigger concert
+	game_manager.collect_critter(Critter.CritterType.PAD)
 	
 	assert_signal_emitted(game_manager, "concert_triggered", "Should emit concert_triggered signal")
 
@@ -100,10 +98,9 @@ func test_concert_increments_album_count():
 	var initial_albums = game_manager.albums_completed
 	
 	# Collect all critters to trigger concert
-	game_manager.collect_critter(Critter.CritterType.BUNNY)
-	game_manager.collect_critter(Critter.CritterType.CAT)
-	game_manager.collect_critter(Critter.CritterType.FROG)
-	game_manager.collect_critter(Critter.CritterType.BIRD)
+	game_manager.collect_critter(Critter.CritterType.DRUMS)
+	game_manager.collect_critter(Critter.CritterType.MELODY)
+	game_manager.collect_critter(Critter.CritterType.PAD)
 	
 	await wait_physics_frames(2)
 	
@@ -133,10 +130,9 @@ func test_concert_increases_bpm():
 	var initial_bpm = game_manager.current_bpm
 	
 	# Trigger concert
-	game_manager.collect_critter(Critter.CritterType.BUNNY)
-	game_manager.collect_critter(Critter.CritterType.CAT)
-	game_manager.collect_critter(Critter.CritterType.FROG)
-	game_manager.collect_critter(Critter.CritterType.BIRD)
+	game_manager.collect_critter(Critter.CritterType.DRUMS)
+	game_manager.collect_critter(Critter.CritterType.MELODY)
+	game_manager.collect_critter(Critter.CritterType.PAD)
 	
 	await wait_physics_frames(2)
 	
@@ -166,20 +162,19 @@ func test_reset_stage_clears_collection():
 	watch_signals(game_manager)
 	
 	# Collect some critters
-	game_manager.collect_critter(Critter.CritterType.BUNNY)
-	game_manager.collect_critter(Critter.CritterType.CAT)
+	game_manager.collect_critter(Critter.CritterType.DRUMS)
+	game_manager.collect_critter(Critter.CritterType.MELODY)
 	
-	assert_true(game_manager.collected_critters[Critter.CritterType.BUNNY], "BUNNY should be collected")
-	assert_true(game_manager.collected_critters[Critter.CritterType.CAT], "CAT should be collected")
+	assert_true(game_manager.collected_critters[Critter.CritterType.DRUMS], "DRUMS should be collected")
+	assert_true(game_manager.collected_critters[Critter.CritterType.MELODY], "MELODY should be collected")
 	
 	# Reset stage
 	game_manager.reset_stage()
 	
 	# All should be uncollected again
-	assert_false(game_manager.collected_critters[Critter.CritterType.BUNNY], "BUNNY should not be collected after reset")
-	assert_false(game_manager.collected_critters[Critter.CritterType.CAT], "CAT should not be collected after reset")
-	assert_false(game_manager.collected_critters[Critter.CritterType.FROG], "FROG should not be collected after reset")
-	assert_false(game_manager.collected_critters[Critter.CritterType.BIRD], "BIRD should not be collected after reset")
+	assert_false(game_manager.collected_critters[Critter.CritterType.DRUMS], "DRUMS should not be collected after reset")
+	assert_false(game_manager.collected_critters[Critter.CritterType.MELODY], "MELODY should not be collected after reset")
+	assert_false(game_manager.collected_critters[Critter.CritterType.PAD], "PAD should not be collected after reset")
 	
 	assert_signal_emitted(game_manager, "stage_reset", "Should emit stage_reset signal")
 
@@ -190,8 +185,8 @@ func test_duplicate_collection_ignored():
 	watch_signals(game_manager)
 	
 	# Collect same critter twice
-	game_manager.collect_critter(Critter.CritterType.BUNNY)
-	game_manager.collect_critter(Critter.CritterType.BUNNY)
+	game_manager.collect_critter(Critter.CritterType.DRUMS)
+	game_manager.collect_critter(Critter.CritterType.DRUMS)
 	
 	# Signal should only be emitted once
 	assert_signal_emit_count(game_manager, "critter_collected", 1, "Signal should only emit once for same critter")

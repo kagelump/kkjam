@@ -50,15 +50,15 @@ func test_horizontal_match_detection():
 	var match_controller = MatchController.new(mock_grid)
 	
 	# Create a horizontal match of 3 bunnies at level 1
-	mock_grid.create_critter(Critter.CritterType.BUNNY, Critter.CritterLevel.LEVEL_1, 0, 0)
-	mock_grid.create_critter(Critter.CritterType.BUNNY, Critter.CritterLevel.LEVEL_1, 1, 0)
-	mock_grid.create_critter(Critter.CritterType.BUNNY, Critter.CritterLevel.LEVEL_1, 2, 0)
+	mock_grid.create_critter(Critter.CritterType.DRUMS, Critter.CritterLevel.LEVEL_1, 0, 0)
+	mock_grid.create_critter(Critter.CritterType.DRUMS, Critter.CritterLevel.LEVEL_1, 1, 0)
+	mock_grid.create_critter(Critter.CritterType.DRUMS, Critter.CritterLevel.LEVEL_1, 2, 0)
 	
 	var matches = match_controller.find_matches()
 	
 	assert_eq(matches.size(), 1, "Should find exactly 1 match")
 	assert_eq(matches[0]["critters"].size(), 3, "Match should contain 3 critters")
-	assert_eq(matches[0]["type"], Critter.CritterType.BUNNY, "Match type should be BUNNY")
+	assert_eq(matches[0]["type"], Critter.CritterType.DRUMS, "Match type should be DRUMS")
 	assert_eq(matches[0]["level"], Critter.CritterLevel.LEVEL_1, "Match level should be LEVEL_1")
 
 func test_vertical_match_detection():
@@ -68,15 +68,15 @@ func test_vertical_match_detection():
 	var match_controller = MatchController.new(mock_grid)
 	
 	# Create a vertical match of 3 cats at level 1
-	mock_grid.create_critter(Critter.CritterType.CAT, Critter.CritterLevel.LEVEL_1, 0, 0)
-	mock_grid.create_critter(Critter.CritterType.CAT, Critter.CritterLevel.LEVEL_1, 0, 1)
-	mock_grid.create_critter(Critter.CritterType.CAT, Critter.CritterLevel.LEVEL_1, 0, 2)
+	mock_grid.create_critter(Critter.CritterType.MELODY, Critter.CritterLevel.LEVEL_1, 0, 0)
+	mock_grid.create_critter(Critter.CritterType.MELODY, Critter.CritterLevel.LEVEL_1, 0, 1)
+	mock_grid.create_critter(Critter.CritterType.MELODY, Critter.CritterLevel.LEVEL_1, 0, 2)
 	
 	var matches = match_controller.find_matches()
 	
 	assert_eq(matches.size(), 1, "Should find exactly 1 match")
 	assert_eq(matches[0]["critters"].size(), 3, "Match should contain 3 critters")
-	assert_eq(matches[0]["type"], Critter.CritterType.CAT, "Match type should be CAT")
+	assert_eq(matches[0]["type"], Critter.CritterType.MELODY, "Match type should be MELODY")
 
 func test_no_match_with_different_types():
 	var mock_grid = autofree(MockGrid.new())
@@ -85,9 +85,9 @@ func test_no_match_with_different_types():
 	var match_controller = MatchController.new(mock_grid)
 	
 	# Create 3 different types in a row
-	mock_grid.create_critter(Critter.CritterType.BUNNY, Critter.CritterLevel.LEVEL_1, 0, 0)
-	mock_grid.create_critter(Critter.CritterType.CAT, Critter.CritterLevel.LEVEL_1, 1, 0)
-	mock_grid.create_critter(Critter.CritterType.FROG, Critter.CritterLevel.LEVEL_1, 2, 0)
+	mock_grid.create_critter(Critter.CritterType.DRUMS, Critter.CritterLevel.LEVEL_1, 0, 0)
+	mock_grid.create_critter(Critter.CritterType.MELODY, Critter.CritterLevel.LEVEL_1, 1, 0)
+	mock_grid.create_critter(Critter.CritterType.PAD, Critter.CritterLevel.LEVEL_1, 2, 0)
 	
 	var matches = match_controller.find_matches()
 	
@@ -100,9 +100,9 @@ func test_no_match_with_different_levels():
 	var match_controller = MatchController.new(mock_grid)
 	
 	# Create 3 same types but different levels
-	mock_grid.create_critter(Critter.CritterType.BUNNY, Critter.CritterLevel.LEVEL_1, 0, 0)
-	mock_grid.create_critter(Critter.CritterType.BUNNY, Critter.CritterLevel.LEVEL_2, 1, 0)
-	mock_grid.create_critter(Critter.CritterType.BUNNY, Critter.CritterLevel.LEVEL_1, 2, 0)
+	mock_grid.create_critter(Critter.CritterType.DRUMS, Critter.CritterLevel.LEVEL_1, 0, 0)
+	mock_grid.create_critter(Critter.CritterType.DRUMS, Critter.CritterLevel.LEVEL_2, 1, 0)
+	mock_grid.create_critter(Critter.CritterType.DRUMS, Critter.CritterLevel.LEVEL_1, 2, 0)
 	
 	var matches = match_controller.find_matches()
 	
@@ -116,7 +116,7 @@ func test_match_of_four():
 	
 	# Create a match of 4
 	for i in range(4):
-		mock_grid.create_critter(Critter.CritterType.FROG, Critter.CritterLevel.LEVEL_1, i, 0)
+		mock_grid.create_critter(Critter.CritterType.PAD, Critter.CritterLevel.LEVEL_1, i, 0)
 	
 	var matches = match_controller.find_matches()
 	
@@ -131,7 +131,7 @@ func test_match_of_five():
 	
 	# Create a match of 5
 	for i in range(5):
-		mock_grid.create_critter(Critter.CritterType.BIRD, Critter.CritterLevel.LEVEL_2, 0, i)
+		mock_grid.create_critter(Critter.CritterType.MELODY, Critter.CritterLevel.LEVEL_2, 0, i)
 	
 	var matches = match_controller.find_matches()
 	
@@ -146,8 +146,8 @@ func test_multiple_matches():
 	
 	# Create two separate horizontal matches
 	for i in range(3):
-		mock_grid.create_critter(Critter.CritterType.BUNNY, Critter.CritterLevel.LEVEL_1, i, 0)
-		mock_grid.create_critter(Critter.CritterType.CAT, Critter.CritterLevel.LEVEL_1, i, 2)
+		mock_grid.create_critter(Critter.CritterType.DRUMS, Critter.CritterLevel.LEVEL_1, i, 0)
+		mock_grid.create_critter(Critter.CritterType.MELODY, Critter.CritterLevel.LEVEL_1, i, 2)
 	
 	var matches = match_controller.find_matches()
 	
@@ -160,10 +160,10 @@ func test_would_create_match_horizontal():
 	var match_controller = MatchController.new(mock_grid)
 	
 	# Setup: BB_B pattern (swap positions 2 and 3 to make BBBB)
-	mock_grid.create_critter(Critter.CritterType.BUNNY, Critter.CritterLevel.LEVEL_1, 0, 0)
-	mock_grid.create_critter(Critter.CritterType.BUNNY, Critter.CritterLevel.LEVEL_1, 1, 0)
-	mock_grid.create_critter(Critter.CritterType.CAT, Critter.CritterLevel.LEVEL_1, 2, 0)
-	mock_grid.create_critter(Critter.CritterType.BUNNY, Critter.CritterLevel.LEVEL_1, 3, 0)
+	mock_grid.create_critter(Critter.CritterType.DRUMS, Critter.CritterLevel.LEVEL_1, 0, 0)
+	mock_grid.create_critter(Critter.CritterType.DRUMS, Critter.CritterLevel.LEVEL_1, 1, 0)
+	mock_grid.create_critter(Critter.CritterType.MELODY, Critter.CritterLevel.LEVEL_1, 2, 0)
+	mock_grid.create_critter(Critter.CritterType.DRUMS, Critter.CritterLevel.LEVEL_1, 3, 0)
 	
 	var would_match = match_controller.would_create_match(2, 0, 3, 0)
 	
@@ -176,8 +176,8 @@ func test_would_not_create_match():
 	var match_controller = MatchController.new(mock_grid)
 	
 	# Setup: BC pattern (swap won't create match)
-	mock_grid.create_critter(Critter.CritterType.BUNNY, Critter.CritterLevel.LEVEL_1, 0, 0)
-	mock_grid.create_critter(Critter.CritterType.CAT, Critter.CritterLevel.LEVEL_1, 1, 0)
+	mock_grid.create_critter(Critter.CritterType.DRUMS, Critter.CritterLevel.LEVEL_1, 0, 0)
+	mock_grid.create_critter(Critter.CritterType.MELODY, Critter.CritterLevel.LEVEL_1, 1, 0)
 	
 	var would_match = match_controller.would_create_match(0, 0, 1, 0)
 	
@@ -190,9 +190,9 @@ func test_check_matches_at_position():
 	var match_controller = MatchController.new(mock_grid)
 	
 	# Create a horizontal match
-	mock_grid.create_critter(Critter.CritterType.BUNNY, Critter.CritterLevel.LEVEL_1, 0, 0)
-	mock_grid.create_critter(Critter.CritterType.BUNNY, Critter.CritterLevel.LEVEL_1, 1, 0)
-	mock_grid.create_critter(Critter.CritterType.BUNNY, Critter.CritterLevel.LEVEL_1, 2, 0)
+	mock_grid.create_critter(Critter.CritterType.DRUMS, Critter.CritterLevel.LEVEL_1, 0, 0)
+	mock_grid.create_critter(Critter.CritterType.DRUMS, Critter.CritterLevel.LEVEL_1, 1, 0)
+	mock_grid.create_critter(Critter.CritterType.DRUMS, Critter.CritterLevel.LEVEL_1, 2, 0)
 	
 	# Check each position in the match
 	assert_true(match_controller.check_matches_at_position(0, 0), "Position 0,0 should be part of a match")
@@ -200,5 +200,5 @@ func test_check_matches_at_position():
 	assert_true(match_controller.check_matches_at_position(2, 0), "Position 2,0 should be part of a match")
 	
 	# Check a position not in a match
-	mock_grid.create_critter(Critter.CritterType.CAT, Critter.CritterLevel.LEVEL_1, 3, 0)
+	mock_grid.create_critter(Critter.CritterType.MELODY, Critter.CritterLevel.LEVEL_1, 3, 0)
 	assert_false(match_controller.check_matches_at_position(3, 0), "Position 3,0 should not be part of a match")

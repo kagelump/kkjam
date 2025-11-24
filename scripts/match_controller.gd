@@ -140,6 +140,14 @@ func resolve_matches(matches: Array, swap_target: Vector2 = Vector2(-1, -1)):
 		# Add score
 		var points = 10 * (critter_level + 1) * critters.size()
 		grid.get_node("../GameManager").add_score(points)
+		
+		# Play SFX
+		if critters.size() >= 5:
+			AudioManager.play_sfx("match_large")
+		elif critters.size() >= 4:
+			AudioManager.play_sfx("match_medium")
+		else:
+			AudioManager.play_sfx("match_small")
 
 # Check if a swap would create a match
 func would_create_match(x1: int, y1: int, x2: int, y2: int) -> bool:

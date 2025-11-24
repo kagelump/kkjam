@@ -57,17 +57,17 @@ This creates a dynamic mix where the music evolves as the player builds up their
 ## 4. Tasks
 
 ### Phase 1: Setup
-- [ ] Create `BGM` folder in Godot project and import WAV files.
-- [ ] Configure import settings: Enable looping for music, disable for SFX.
-- [ ] Create `AudioManager.gd` (Autoload).
+- [x] Create `BGM` folder in Godot project and import WAV files.
+- [x] Configure import settings: Enable looping for music, disable for SFX.
+- [x] Create `AudioManager.gd` (Autoload).
 
 ### Phase 2: Code Changes
-- [ ] Modify `Critter.gd` to reflect 3 types.
-- [ ] Modify `Grid.gd` to spawn 3 types.
-- [ ] Implement `AudioManager` logic to manage `AudioStreamPlayers`.
-- [ ] Connect `GameManager` or `Grid` signals to `AudioManager` to trigger state changes.
+- [x] Modify `Critter.gd` to reflect 3 types.
+- [x] Modify `Grid.gd` to spawn 3 types.
+- [x] Implement `AudioManager` logic to manage `AudioStreamPlayers`.
+- [x] Connect `GameManager` or `Grid` signals to `AudioManager` to trigger state changes.
 
 ### Phase 3: Polish
 - [ ] Tune fade times (e.g., 1-second crossfades).
-- [ ] Implement SFX triggers in `MatchController`.
+- [x] Implement SFX triggers in `MatchController`.
 - [ ] Test synchronization.

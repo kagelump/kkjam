@@ -3,14 +3,13 @@ extends Control
 @onready var game_manager: GameManager = $"../GameManager"
 var critter_scene = preload("res://scenes/critter.tscn")
 
-# Positions for the 4 critters on stage
+# Positions for the 3 critters on stage
 # Stage is 720x200. Center Y is 100.
-# X positions: 1/8, 3/8, 5/8, 7/8 of 720
+# X positions: 1/6, 3/6, 5/6 of 720
 var stage_positions = {
-	Critter.CritterType.BUNNY: Vector2(90, 100),
-	Critter.CritterType.CAT: Vector2(270, 100),
-	Critter.CritterType.FROG: Vector2(450, 100),
-	Critter.CritterType.BIRD: Vector2(630, 100)
+	Critter.CritterType.MELODY: Vector2(120, 100),
+	Critter.CritterType.DRUMS: Vector2(360, 100),
+	Critter.CritterType.PAD: Vector2(600, 100)
 }
 
 var active_critters = {}

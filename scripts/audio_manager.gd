@@ -48,7 +48,11 @@ func setup_audio():
 	for key in BGM_PATHS:
 		var stream = load(BGM_PATHS[key])
 		if stream:
-			stream.loop = true # Ensure looping is on
+			if stream is AudioStreamWAV:
+				stream.loop_mode = AudioStreamWAV.LOOP_FORWARD
+			elif stream is AudioStreamOggVorbis:
+				stream.loop = true
+				
 			var player = AudioStreamPlayer.new()
 			player.stream = stream
 			player.bus = MUSIC_BUS
@@ -67,7 +71,10 @@ func setup_audio():
 	for key in SFX_PATHS:
 		sfx_streams[key] = load(SFX_PATHS[key])
 		if sfx_streams[key]:
-			sfx_streams[key].loop = false
+			if sfx_streams[key] is AudioStreamWAV:
+				sfx_streams[key].loop_mode = AudioStreamWAV.LOOP_DISABLED
+			elif sfx_streams[key] is AudioStreamOggVorbis:
+				sfx_streams[key].loop = false
 
 func start_music():
 	for key in layer_players:
@@ -75,8 +82,32 @@ func start_music():
 
 func update_music_intensity(c1_level: int, c2_level: int, c3_level: int):
 	# Logic to fade in/out layers based on levels
-	# This will be implemented in Phase 2
-	pass
+	
+	# Critter 1: Melody
+	_update_layer_volume("c1_layer1", c1_level >= 1)
+	_update_layer_volume("c1_layer2", c1_level >= 2)
+	_update_layer_volume("c1_layer3", c1_level >= 3)
+	
+	# Critter 2: Drums
+	_update_layer_volume("c2_layer1", c2_level >= 1)
+	_update_layer_volume("c2_layer2", c2_level >= 2)
+	_update_layer_volume("c2_layer3", c2_level >= 3)
+	
+	# Critter 3: Pad
+	_update_layer_volume("c3_layer1", c3_level >= 1)
+	_update_layer_volume("c3_layer2", c3_level >= 2)
+	_update_layer_volume("c3_layer3", c3_level >= 3)
+
+func _update_layer_volume(layer_name: String, active: bool):
+	if not layer_players.has(layer_name):
+		return
+		
+	var player = layer_players[layer_name]
+	var target_vol = 0.0 if active else -80.0
+	
+	# If we want to crossfade, we can use a tween
+	var tween = create_tween()
+	tween.tween_property(player, "volume_db", target_vol, FADE_TIME)
 
 func play_sfx(sfx_name: String):
 	if not sfx_streams.has(sfx_name):

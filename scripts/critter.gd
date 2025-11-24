@@ -3,10 +3,9 @@ class_name Critter
 
 # Critter types
 enum CritterType {
-	BUNNY,    # Drummer (Red/Pink)
-	CAT,      # Melody (Blue/Cyan)
-	FROG,     # Bass (Green)
-	BIRD      # Harmony (Yellow/Orange)
+	MELODY,   # Critter 1 (Blue/Cyan)
+	DRUMS,    # Critter 2 (Red/Pink)
+	PAD       # Critter 3 (Green)
 }
 
 # Critter levels
@@ -29,10 +28,9 @@ const CELL_SIZE = 90
 
 # Color mapping for each type
 const TYPE_COLORS = {
-	CritterType.BUNNY: Color(1.0, 0.4, 0.4),  # Red/Pink
-	CritterType.CAT: Color(0.4, 0.7, 1.0),    # Blue/Cyan
-	CritterType.FROG: Color(0.4, 1.0, 0.4),   # Green
-	CritterType.BIRD: Color(1.0, 0.9, 0.4)    # Yellow/Orange
+	CritterType.MELODY: Color(0.4, 0.7, 1.0),    # Blue/Cyan
+	CritterType.DRUMS: Color(1.0, 0.4, 0.4),     # Red/Pink
+	CritterType.PAD: Color(0.4, 1.0, 0.4)        # Green
 }
 
 @onready var sprite: ColorRect = $ColorRect
@@ -107,8 +105,7 @@ func play_click_animation():
 
 func get_type_name() -> String:
 	match critter_type:
-		CritterType.BUNNY: return "Bunny"
-		CritterType.CAT: return "Cat"
-		CritterType.FROG: return "Frog"
-		CritterType.BIRD: return "Bird"
+		CritterType.MELODY: return "Melody"
+		CritterType.DRUMS: return "Drums"
+		CritterType.PAD: return "Pad"
 	return "Unknown"

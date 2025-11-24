@@ -9,7 +9,7 @@ func test_critter_move_animation():
 	var critter = critter_scene.instantiate()
 	add_child_autofree(critter)
 	
-	critter.initialize(Critter.CritterType.BUNNY, Critter.CritterLevel.LEVEL_1, 0, 0)
+	critter.initialize(Critter.CritterType.DRUMS, Critter.CritterLevel.LEVEL_1, 0, 0)
 	var initial_pos = critter.position
 	
 	# Start moving
@@ -24,7 +24,7 @@ func test_critter_move_animation():
 
 func test_all_critter_type_combinations():
 	# Test all combinations of types and levels
-	for type in [Critter.CritterType.BUNNY, Critter.CritterType.CAT, Critter.CritterType.FROG, Critter.CritterType.BIRD]:
+	for type in [Critter.CritterType.MELODY, Critter.CritterType.DRUMS, Critter.CritterType.PAD]:
 		for level in [Critter.CritterLevel.LEVEL_1, Critter.CritterLevel.LEVEL_2, Critter.CritterLevel.LEVEL_3]:
 			var critter = critter_scene.instantiate()
 			add_child_autofree(critter)
@@ -45,7 +45,7 @@ func test_critter_size_increases_with_level():
 		var critter = critter_scene.instantiate()
 		add_child_autofree(critter)
 		
-		critter.initialize(Critter.CritterType.BUNNY, level, 0, 0)
+		critter.initialize(Critter.CritterType.DRUMS, level, 0, 0)
 		
 		await wait_physics_frames(1)
 		
@@ -82,17 +82,16 @@ func test_concert_triggers_exactly_once_with_duplicates():
 	
 	watch_signals(game_manager)
 	
-	# Collect all 4 types
-	game_manager.collect_critter(Critter.CritterType.BUNNY)
-	game_manager.collect_critter(Critter.CritterType.CAT)
-	game_manager.collect_critter(Critter.CritterType.FROG)
-	game_manager.collect_critter(Critter.CritterType.BIRD)
+	# Collect all 3 types
+	game_manager.collect_critter(Critter.CritterType.DRUMS)
+	game_manager.collect_critter(Critter.CritterType.MELODY)
+	game_manager.collect_critter(Critter.CritterType.PAD)
 	
 	await wait_physics_frames(2)
 	
 	# Try to collect again (should not trigger another concert)
-	game_manager.collect_critter(Critter.CritterType.BUNNY)
-	game_manager.collect_critter(Critter.CritterType.CAT)
+	game_manager.collect_critter(Critter.CritterType.DRUMS)
+	game_manager.collect_critter(Critter.CritterType.MELODY)
 	
 	await wait_physics_frames(2)
 	
@@ -126,10 +125,9 @@ func test_bpm_scaling_multiple_albums():
 	
 	# Complete 3 albums
 	for i in range(3):
-		game_manager.collect_critter(Critter.CritterType.BUNNY)
-		game_manager.collect_critter(Critter.CritterType.CAT)
-		game_manager.collect_critter(Critter.CritterType.FROG)
-		game_manager.collect_critter(Critter.CritterType.BIRD)
+		game_manager.collect_critter(Critter.CritterType.DRUMS)
+		game_manager.collect_critter(Critter.CritterType.MELODY)
+		game_manager.collect_critter(Critter.CritterType.PAD)
 		await wait_physics_frames(2)
 	
 	# BPM should have increased by 30 (10 per album)
@@ -184,11 +182,11 @@ func test_l_shaped_matches_dont_count():
 	# B B B
 	# B
 	# B
-	mock_grid.create_critter(Critter.CritterType.BUNNY, Critter.CritterLevel.LEVEL_1, 0, 0)
-	mock_grid.create_critter(Critter.CritterType.BUNNY, Critter.CritterLevel.LEVEL_1, 1, 0)
-	mock_grid.create_critter(Critter.CritterType.BUNNY, Critter.CritterLevel.LEVEL_1, 2, 0)
-	mock_grid.create_critter(Critter.CritterType.BUNNY, Critter.CritterLevel.LEVEL_1, 0, 1)
-	mock_grid.create_critter(Critter.CritterType.BUNNY, Critter.CritterLevel.LEVEL_1, 0, 2)
+	mock_grid.create_critter(Critter.CritterType.DRUMS, Critter.CritterLevel.LEVEL_1, 0, 0)
+	mock_grid.create_critter(Critter.CritterType.DRUMS, Critter.CritterLevel.LEVEL_1, 1, 0)
+	mock_grid.create_critter(Critter.CritterType.DRUMS, Critter.CritterLevel.LEVEL_1, 2, 0)
+	mock_grid.create_critter(Critter.CritterType.DRUMS, Critter.CritterLevel.LEVEL_1, 0, 1)
+	mock_grid.create_critter(Critter.CritterType.DRUMS, Critter.CritterLevel.LEVEL_1, 0, 2)
 	
 	var matches = match_controller.find_matches()
 	
@@ -206,11 +204,11 @@ func test_t_shaped_matches():
 	# C C C
 	#   C
 	#   C
-	mock_grid.create_critter(Critter.CritterType.CAT, Critter.CritterLevel.LEVEL_1, 0, 0)
-	mock_grid.create_critter(Critter.CritterType.CAT, Critter.CritterLevel.LEVEL_1, 1, 0)
-	mock_grid.create_critter(Critter.CritterType.CAT, Critter.CritterLevel.LEVEL_1, 2, 0)
-	mock_grid.create_critter(Critter.CritterType.CAT, Critter.CritterLevel.LEVEL_1, 1, 1)
-	mock_grid.create_critter(Critter.CritterType.CAT, Critter.CritterLevel.LEVEL_1, 1, 2)
+	mock_grid.create_critter(Critter.CritterType.MELODY, Critter.CritterLevel.LEVEL_1, 0, 0)
+	mock_grid.create_critter(Critter.CritterType.MELODY, Critter.CritterLevel.LEVEL_1, 1, 0)
+	mock_grid.create_critter(Critter.CritterType.MELODY, Critter.CritterLevel.LEVEL_1, 2, 0)
+	mock_grid.create_critter(Critter.CritterType.MELODY, Critter.CritterLevel.LEVEL_1, 1, 1)
+	mock_grid.create_critter(Critter.CritterType.MELODY, Critter.CritterLevel.LEVEL_1, 1, 2)
 	
 	var matches = match_controller.find_matches()
 	
@@ -226,11 +224,11 @@ func test_edge_position_matches():
 	
 	# Create match at top edge (y = 0)
 	for x in range(3):
-		mock_grid.create_critter(Critter.CritterType.FROG, Critter.CritterLevel.LEVEL_1, x, 0)
+		mock_grid.create_critter(Critter.CritterType.PAD, Critter.CritterLevel.LEVEL_1, x, 0)
 	
 	# Create match at right edge (x = 7)
 	for y in range(3):
-		mock_grid.create_critter(Critter.CritterType.BIRD, Critter.CritterLevel.LEVEL_1, 7, y)
+		mock_grid.create_critter(Critter.CritterType.MELODY, Critter.CritterLevel.LEVEL_1, 7, y)
 	
 	var matches = match_controller.find_matches()
 	
@@ -244,14 +242,14 @@ func test_corner_matches():
 	var match_controller = MatchController.new(mock_grid)
 	
 	# Create match in top-left corner
-	mock_grid.create_critter(Critter.CritterType.BUNNY, Critter.CritterLevel.LEVEL_2, 0, 0)
-	mock_grid.create_critter(Critter.CritterType.BUNNY, Critter.CritterLevel.LEVEL_2, 0, 1)
-	mock_grid.create_critter(Critter.CritterType.BUNNY, Critter.CritterLevel.LEVEL_2, 0, 2)
+	mock_grid.create_critter(Critter.CritterType.DRUMS, Critter.CritterLevel.LEVEL_2, 0, 0)
+	mock_grid.create_critter(Critter.CritterType.DRUMS, Critter.CritterLevel.LEVEL_2, 0, 1)
+	mock_grid.create_critter(Critter.CritterType.DRUMS, Critter.CritterLevel.LEVEL_2, 0, 2)
 	
 	# Create match in bottom-right corner
-	mock_grid.create_critter(Critter.CritterType.CAT, Critter.CritterLevel.LEVEL_2, 7, 7)
-	mock_grid.create_critter(Critter.CritterType.CAT, Critter.CritterLevel.LEVEL_2, 6, 7)
-	mock_grid.create_critter(Critter.CritterType.CAT, Critter.CritterLevel.LEVEL_2, 5, 7)
+	mock_grid.create_critter(Critter.CritterType.MELODY, Critter.CritterLevel.LEVEL_2, 7, 7)
+	mock_grid.create_critter(Critter.CritterType.MELODY, Critter.CritterLevel.LEVEL_2, 6, 7)
+	mock_grid.create_critter(Critter.CritterType.MELODY, Critter.CritterLevel.LEVEL_2, 5, 7)
 	
 	var matches = match_controller.find_matches()
 	
