@@ -27,7 +27,7 @@ const BGM_PATHS = {
 	"c3_layer1": "res://BGM/c3_layer1.wav",
 	"c3_layer2": "res://BGM/c3_layer2.wav",
 	"c3_layer3": "res://BGM/c3_layer3.wav",
-	"pregame": "res://BGM/c1_pregame.wav"
+	"permanent_bgm": "res://BGM/permanent_bgm.wav"
 }
 
 const SFX_PATHS = {
@@ -56,7 +56,12 @@ func setup_audio():
 			var player = AudioStreamPlayer.new()
 			player.stream = stream
 			player.bus = MUSIC_BUS
-			player.volume_db = -80.0 # Start silent
+			
+			if key == "permanent_bgm":
+				player.volume_db = 0.0
+			else:
+				player.volume_db = -80.0 # Start silent
+				
 			add_child(player)
 			layer_players[key] = player
 	
@@ -78,7 +83,8 @@ func setup_audio():
 
 func start_music():
 	for key in layer_players:
-		layer_players[key].play()
+		if not layer_players[key].playing:
+			layer_players[key].play()
 
 func update_music_intensity(c1_level: int, c2_level: int, c3_level: int):
 	# Logic to fade in/out layers based on levels

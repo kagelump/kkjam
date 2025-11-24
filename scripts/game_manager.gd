@@ -28,6 +28,9 @@ func _ready():
 	if has_node("../UI"):
 		ui = get_node("../UI")
 	
+	# Start BGM
+	AudioManager.start_music()
+	
 	print("KKJam - Phase 2 Started")
 	print("Match 3 to merge! Collect all 4 Level 3 critters to win!")
 
