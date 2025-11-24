@@ -29,7 +29,7 @@ This document consolidates all agent instructions for working on the KKJam proje
 - Visual feedback and animations
 - Game loop with difficulty scaling
 - Audio system integration
-- **42 automated tests** (33 unit, 8 integration)
+- **50 automated tests** (42 unit, 8 integration)
 
 #### Known Limitations
 - Placeholder visuals (colored squares)
@@ -44,7 +44,6 @@ This document consolidates all agent instructions for working on the KKJam proje
 /home/runner/work/kkjam/kkjam/
 ├── .git/                    # Git repository data
 ├── .github/
-│   ├── agents/              # Agent configurations (deprecated - use AGENTS.md)
 │   └── workflows/
 │       └── deploy.yml       # GitHub Pages deployment automation
 ├── .gitignore               # Git ignore rules
@@ -55,7 +54,7 @@ This document consolidates all agent instructions for working on the KKJam proje
 │   ├── PLAN.md             # Music implementation plan
 │   └── COMPRESSION_GUIDE.md # Audio compression guidelines
 ├── test/                    # Test suite
-│   ├── unit/                # Unit tests (33 tests)
+│   ├── unit/                # Unit tests (42 tests)
 │   ├── integration/         # Integration tests (8 tests)
 │   ├── run_tests.gd         # Custom test runner
 │   └── README.md            # Test documentation
@@ -99,8 +98,8 @@ This document consolidates all agent instructions for working on the KKJam proje
 
 ```bash
 # Testing (ALWAYS use Makefile commands)
-make test           # Run all 42 tests
-make test-unit      # Run unit tests only (33 tests)
+make test           # Run all 50 tests
+make test-unit      # Run unit tests only (42 tests)
 make test-int       # Run integration tests only (8 tests)
 
 # Running the Game
@@ -305,7 +304,7 @@ func _internal_helper():
 ### Testing Framework
 - **Engine**: Godot Engine 4.2+
 - **Framework**: GUT (Godot Unit Test) 9.5.0
-- **Coverage**: 42 automated tests (33 unit + 8 integration)
+- **Coverage**: 50 automated tests (42 unit + 8 integration)
 - **Total Assertions**: 201+ passing
 
 ### Testing Process
@@ -323,7 +322,7 @@ func _internal_helper():
 
 #### 3. After Changes
 - Run full test suite: `make test`
-- Ensure all 42 tests still pass
+- Ensure all 50 tests still pass
 - Run manual gameplay test: `make run`
 - Check for console errors or warnings
 - Test edge cases specific to the change
@@ -339,7 +338,7 @@ func _internal_helper():
 - `test_drag_swap.gd` - Drag and swap mechanics
 
 #### Integration Tests (`test/integration/`)
-- `test_game_flow.gd` - Full game workflows
+- `test_game_flow.gd` - Full game workflows (8 tests)
 
 ### Manual Testing Checklist
 
