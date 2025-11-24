@@ -13,6 +13,8 @@ help:
 	@echo "  make test-unit     - Run unit tests only"
 	@echo "  make test-int      - Run integration tests only"
 	@echo "  make run           - Run the game"
+	@echo "  make export-web    - Export game for web (requires export templates)"
+	@echo "  make serve         - Serve exported web build locally (port 8000)"
 	@echo "  make clean         - Clean temporary files"
 	@echo "  make help          - Show this help message"
 	@echo ""
@@ -42,10 +44,27 @@ run:
 	@echo "Starting KKJam..."
 	@$(GODOT) res://scenes/main.tscn
 
+# Export for web
+.PHONY: export-web
+export-web:
+	@echo "Exporting for web..."
+	@mkdir -p build/web
+	@$(GODOT) --headless --export-release "Web" build/web/index.html
+	@echo "Export complete: build/web/index.html"
+
+# Serve web build locally
+.PHONY: serve
+serve:
+	@echo "Serving web build at http://localhost:8000"
+	@echo "Press Ctrl+C to stop"
+	@cd build/web && python3 -m http.server 8000
+
 # Clean temporary files
 .PHONY: clean
 clean:
 	@echo "Cleaning temporary files..."
 	@find . -name ".DS_Store" -delete
 	@rm -rf .godot/mono_crash.*.json
+	@rm -rf build/
+	@echo "Clean complete."
 	@echo "Clean complete."

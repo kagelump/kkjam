@@ -11,11 +11,13 @@ You are an expert on the KKJam project structure and codebase. Your role is to p
 /home/runner/work/kkjam/kkjam/
 ├── .git/                    # Git repository data
 ├── .github/
-│   └── agents/              # GitHub Copilot agent configurations
-│       ├── godot-expert.md  # GDScript coding guidance
-│       ├── game-design.md   # Game design principles
-│       ├── testing.md       # Testing procedures
-│       └── project-context.md # This file
+│   ├── agents/              # GitHub Copilot agent configurations
+│   │   ├── godot-expert.md  # GDScript coding guidance
+│   │   ├── game-design.md   # Game design principles
+│   │   ├── testing.md       # Testing procedures
+│   │   └── project-context.md # This file
+│   └── workflows/
+│       └── deploy.yml       # GitHub Pages deployment automation
 ├── .gitignore               # Git ignore rules
 ├── addons/
 │   └── gut/                 # GUT test framework
@@ -33,11 +35,13 @@ You are an expert on the KKJam project structure and codebase. Your role is to p
 │   ├── critter.gd           # Critter properties and behavior
 │   ├── match_controller.gd  # Match detection and merge logic
 │   └── stage_display.gd     # Stage UI for Level 3 critters
-├── Makefile                 # Development commands (test, run, clean)
+├── Makefile                 # Development commands (test, run, export, clean)
+├── export_presets.cfg       # Godot export configuration for web
 ├── icon.svg                 # Project icon
 ├── project.godot            # Godot project configuration
 ├── README.md                # Project overview and status
 ├── TODO.md                  # Complete game design document
+├── DEPLOYMENT.md            # GitHub Pages deployment guide
 ├── TEST_FIX_SUMMARY.md      # Test suite setup documentation
 ├── PHASE1_SUMMARY.md        # Phase 1 completion summary
 ├── illustrator_todo.md      # Art asset TODO list
@@ -295,10 +299,23 @@ make test-unit        # Run unit tests only
 make test-int         # Run integration tests only
 ```
 
+### Exporting & Deployment
+```bash
+make export-web       # Export game for web locally
+make serve            # Serve web build at localhost:8000
+```
+
+**Automatic Deployment:**
+- Push to `main` branch triggers GitHub Actions
+- Workflow exports game and deploys to GitHub Pages
+- Live at: `https://kagelump.github.io/kkjam/`
+- See `DEPLOYMENT.md` for details
+
 ### Before Committing
 1. Run `make test` to ensure all tests pass
 2. Manual gameplay test (F5)
 3. Check console for errors
+4. (Optional) Test web export: `make export-web && make serve`
 
 ## Getting Help
 

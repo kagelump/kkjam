@@ -2,6 +2,8 @@
 
 An endless Match-3 puzzle game built in Godot 4 where you match and merge critters into musicians to create the ultimate band!
 
+**🎮 [Play Live on GitHub Pages](https://kagelump.github.io/kkjam/)** | [Deployment Guide](DEPLOYMENT.md)
+
 ## Current Status: Phase 2 Complete ✓
 
 ### Implemented Features (Phase 1 & 2)

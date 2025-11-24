@@ -1,0 +1,76 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:  # Allow manual triggering
+
+# Sets permissions for GitHub Pages deployment
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+env:
+  GODOT_VERSION: 4.3
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    name: Export Game
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Setup Godot
+        uses: chickensoft-games/setup-godot@v2
+        with:
+          version: ${{ env.GODOT_VERSION }}
+          use-dotnet: false
+          include-templates: true
+
+      - name: Verify Project
+        run: |
+          godot --headless --version
+          godot --headless --check-only --quit || true
+
+      - name: Import Assets
+        run: |
+          godot --headless --editor --quit-after 10 || true
+
+      - name: Create Export Directory
+        run: mkdir -p build/web
+
+      - name: Export for Web
+        run: |
+          godot --headless --export-release "Web" build/web/index.html
+
+      - name: Add coi-serviceworker (for SharedArrayBuffer)
+        run: |
+          cd build/web
+          curl -fsSL https://github.com/gzuidhof/coi-serviceworker/raw/master/coi-serviceworker.min.js > coi-serviceworker.min.js
+          sed -i 's#\(</head>\)#<script src="coi-serviceworker.min.js"></script>\n\1#' index.html
+
+      - name: Upload Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/web
+
+  deploy:
+    needs: export
+    runs-on: ubuntu-latest
+    name: Deploy to GitHub Pages
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

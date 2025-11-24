@@ -20,6 +20,10 @@ mono_crash.*.json
 .vscode/
 .idea/
 
+# Export
+dist/
+build/
+
 # Build outputs
 *.exe
 *.pck
