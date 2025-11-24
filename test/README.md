@@ -191,6 +191,6 @@ When a test fails:
 
 ## Resources
 
-- [GUT Documentation](https://github.com/bitwes/Gut/wiki)
-- [Godot Testing Best Practices](https://docs.godotengine.org/en/stable/tutorials/scripting/unit_testing.html)
+- [GUT Documentation](https://gut.readthedocs.io/en/latest/)
+- [Godot Testing Best Practices](https://docs.godotengine.org/en/stable/engine_details/architecture/unit_testing.html)
 - [GDScript Style Guide](https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/gdscript_styleguide.html)

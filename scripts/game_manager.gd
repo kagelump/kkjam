@@ -64,7 +64,8 @@ func complete_album():
 	# Reset for next tour stop
 	reset_stage()
 	# In a real implementation, we'd wait for the concert animation to finish
-	grid.reset_board()
+	if grid:
+		grid.reset_board()
 
 func reset_stage():
 	for type in collected_critters:

@@ -59,15 +59,26 @@ func test_critter_size_increases_with_level():
 
 # Test GameManager edge cases
 func test_concert_triggers_exactly_once_with_duplicates():
-	var game_manager_script = preload("res://scripts/game_manager.gd")
-	var game_manager = autofree(Node.new())
-	game_manager.set_script(game_manager_script)
+	# Create a proper node hierarchy
+	var parent = autofree(Node.new())
+	add_child(parent)
 	
-	# Mock the grid node
-	var mock_grid = Node.new()
-	mock_grid.name = "Grid"
-	mock_grid.set_script(load("res://scripts/grid.gd"))
-	game_manager.add_child(mock_grid)
+	var game_manager = autofree(Node.new())
+	game_manager.set_script(preload("res://scripts/game_manager.gd"))
+	game_manager.name = "GameManager"
+	
+	# Create a stub Grid with reset_board method
+	var grid_stub = autofree(double(Grid).new())
+	stub(grid_stub, "reset_board").to_do_nothing()
+	grid_stub.name = "Grid"
+	
+	# Create stub UI
+	var ui_stub = autofree(Control.new())
+	ui_stub.name = "UI"
+	
+	parent.add_child(game_manager)
+	parent.add_child(grid_stub)
+	parent.add_child(ui_stub)
 	
 	watch_signals(game_manager)
 	
@@ -77,28 +88,39 @@ func test_concert_triggers_exactly_once_with_duplicates():
 	game_manager.collect_critter(Critter.CritterType.FROG)
 	game_manager.collect_critter(Critter.CritterType.BIRD)
 	
-	await wait_frames(2)
+	await wait_physics_frames(2)
 	
 	# Try to collect again (should not trigger another concert)
 	game_manager.collect_critter(Critter.CritterType.BUNNY)
 	game_manager.collect_critter(Critter.CritterType.CAT)
 	
-	await wait_frames(2)
+	await wait_physics_frames(2)
 	
 	# Should only have triggered concert once
 	assert_signal_emit_count(game_manager, "concert_triggered", 1, 
 		"Concert should only trigger once despite duplicate collections")
 
 func test_bpm_scaling_multiple_albums():
-	var game_manager_script = preload("res://scripts/game_manager.gd")
-	var game_manager = autofree(Node.new())
-	game_manager.set_script(game_manager_script)
+	# Create a proper node hierarchy
+	var parent = autofree(Node.new())
+	add_child(parent)
 	
-	# Mock the grid node
-	var mock_grid = Node.new()
-	mock_grid.name = "Grid"
-	mock_grid.set_script(load("res://scripts/grid.gd"))
-	game_manager.add_child(mock_grid)
+	var game_manager = autofree(Node.new())
+	game_manager.set_script(preload("res://scripts/game_manager.gd"))
+	game_manager.name = "GameManager"
+	
+	# Create a stub Grid with reset_board method
+	var grid_stub = autofree(double(Grid).new())
+	stub(grid_stub, "reset_board").to_do_nothing()
+	grid_stub.name = "Grid"
+	
+	# Create stub UI
+	var ui_stub = autofree(Control.new())
+	ui_stub.name = "UI"
+	
+	parent.add_child(game_manager)
+	parent.add_child(grid_stub)
+	parent.add_child(ui_stub)
 	
 	var initial_bpm = game_manager.current_bpm
 	
@@ -108,7 +130,7 @@ func test_bpm_scaling_multiple_albums():
 		game_manager.collect_critter(Critter.CritterType.CAT)
 		game_manager.collect_critter(Critter.CritterType.FROG)
 		game_manager.collect_critter(Critter.CritterType.BIRD)
-		await wait_frames(2)
+		await wait_physics_frames(2)
 	
 	# BPM should have increased by 30 (10 per album)
 	assert_eq(game_manager.current_bpm, initial_bpm + 30, 
@@ -145,7 +167,8 @@ class MockGridForEdgeCases:
 		grid_data[x][y] = critter
 		return critter
 	
-	func get_node(path):
+	@warning_ignore("native_method_override")
+	func get_node(_path):
 		var mock = Node.new()
 		mock.set_script(load("res://scripts/game_manager.gd"))
 		return mock

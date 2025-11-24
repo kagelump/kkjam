@@ -42,14 +42,25 @@ func test_collect_single_critter():
 	assert_signal_emitted(game_manager, "critter_collected", "Should emit critter_collected signal")
 
 func test_collect_all_critters_triggers_concert():
+	# Create parent node
+	var parent = autofree(Node.new())
+	add_child(parent)
+	
 	var game_manager = autofree(Node.new())
 	game_manager.set_script(game_manager_script)
+	game_manager.name = "GameManager"
 	
-	# Mock the grid node
-	var mock_grid = Node.new()
-	mock_grid.name = "Grid"
-	mock_grid.set_script(load("res://scripts/grid.gd"))
-	game_manager.add_child(mock_grid)
+	# Create stub Grid
+	var grid_stub = autofree(double(Grid).new())
+	stub(grid_stub, "reset_board").to_do_nothing()
+	grid_stub.name = "Grid"
+	
+	var ui_stub = autofree(Control.new())
+	ui_stub.name = "UI"
+	
+	parent.add_child(game_manager)
+	parent.add_child(grid_stub)
+	parent.add_child(ui_stub)
 	
 	watch_signals(game_manager)
 	
@@ -66,14 +77,25 @@ func test_collect_all_critters_triggers_concert():
 	assert_signal_emitted(game_manager, "concert_triggered", "Should emit concert_triggered signal")
 
 func test_concert_increments_album_count():
+	# Create parent node
+	var parent = autofree(Node.new())
+	add_child(parent)
+	
 	var game_manager = autofree(Node.new())
 	game_manager.set_script(game_manager_script)
+	game_manager.name = "GameManager"
 	
-	# Mock the grid node
-	var mock_grid = Node.new()
-	mock_grid.name = "Grid"
-	mock_grid.set_script(load("res://scripts/grid.gd"))
-	game_manager.add_child(mock_grid)
+	# Create stub Grid
+	var grid_stub = autofree(double(Grid).new())
+	stub(grid_stub, "reset_board").to_do_nothing()
+	grid_stub.name = "Grid"
+	
+	var ui_stub = autofree(Control.new())
+	ui_stub.name = "UI"
+	
+	parent.add_child(game_manager)
+	parent.add_child(grid_stub)
+	parent.add_child(ui_stub)
 	
 	var initial_albums = game_manager.albums_completed
 	
@@ -88,14 +110,25 @@ func test_concert_increments_album_count():
 	assert_eq(game_manager.albums_completed, initial_albums + 1, "Album count should increment by 1")
 
 func test_concert_increases_bpm():
+	# Create parent node
+	var parent = autofree(Node.new())
+	add_child(parent)
+	
 	var game_manager = autofree(Node.new())
 	game_manager.set_script(game_manager_script)
+	game_manager.name = "GameManager"
 	
-	# Mock the grid node
-	var mock_grid = Node.new()
-	mock_grid.name = "Grid"
-	mock_grid.set_script(load("res://scripts/grid.gd"))
-	game_manager.add_child(mock_grid)
+	# Create stub Grid
+	var grid_stub = autofree(double(Grid).new())
+	stub(grid_stub, "reset_board").to_do_nothing()
+	grid_stub.name = "Grid"
+	
+	var ui_stub = autofree(Control.new())
+	ui_stub.name = "UI"
+	
+	parent.add_child(game_manager)
+	parent.add_child(grid_stub)
+	parent.add_child(ui_stub)
 	
 	var initial_bpm = game_manager.current_bpm
 	
@@ -110,8 +143,25 @@ func test_concert_increases_bpm():
 	assert_eq(game_manager.current_bpm, initial_bpm + 10, "BPM should increase by 10")
 
 func test_reset_stage_clears_collection():
+	# Create parent node
+	var parent = autofree(Node.new())
+	add_child(parent)
+	
 	var game_manager = autofree(Node.new())
 	game_manager.set_script(game_manager_script)
+	game_manager.name = "GameManager"
+	
+	# Create stub Grid
+	var grid_stub = autofree(double(Grid).new())
+	stub(grid_stub, "reset_board").to_do_nothing()
+	grid_stub.name = "Grid"
+	
+	var ui_stub = autofree(Control.new())
+	ui_stub.name = "UI"
+	
+	parent.add_child(game_manager)
+	parent.add_child(grid_stub)
+	parent.add_child(ui_stub)
 	
 	watch_signals(game_manager)
 	
