@@ -1,9 +1,11 @@
 # Game Design Document: KKJam (Endless Match-3)
 
 ## Overview
-**KKJam** is an endless Match-3 puzzle game built in Godot. Players swap adjacent critters on a grid to match 3 of the same type. Unlike standard Match-3 games where items disappear, matches here merge critters into higher-level musicians (Level 1 → 2 → 3).
+**KKJam** is an endless Match-3 puzzle game built in Godot. Players swap adjacent critters on a grid to match 3 of the same type. Unlike standard Match-3 games where items disappear, matches here merge critters into higher-level musicians (Level 1 → 2 → 3 → 4 → 5).
 
-The goal is to create one Level 3 critter of each type (Drum, Bass, Melody, Harmony). Once all four occupy the "Stage," an "Ultimate Concert" triggers, the song completes, an "Album" is recorded (score counter), and the game loops to the next "Tour Stop" with higher difficulty and tempo.
+The goal is to create one Level 5 critter of each type (Melody, Drums, Pad). Level 3+ critters fly to the "Stage" where they can merge further (3× Level 3 → Level 4, 3× Level 4 → Level 5). Once all three types reach Level 5 on stage, an "Ultimate Concert" triggers, an "Album" is recorded, and the game loops to the next "Tour Stop" with higher difficulty and tempo.
+
+**Gameplay Loop Length**: Achieving one Level 5 requires merging 3 Level 4s (which requires 9 Level 3s, which requires 27 board matches). For all 3 types, that's ~81+ matches minimum - a significantly longer and more strategic loop.
 
 ---
 
@@ -18,13 +20,19 @@ The goal is to create one Level 3 critter of each type (Drum, Bass, Melody, Harm
 - **Cascading**: The extra empty spaces created by the merge are filled by new Level 1 critters dropping from the top.
 
 ### 2. The "Stage" & Collection System
-- **Banking Critters**: When a player creates a Level 3 Critter, it immediately "flies" off the board and takes its spot on the **Stage** (UI area above the grid).
+- **Banking Critters**: When a player creates a Level 3+ Critter, it immediately "flies" off the board and lands on the **Stage** (UI area above the grid).
+- **Stage Merging**: Multiple critters of the same type can occupy the stage simultaneously:
+  - 3× Level 3 → 1× Level 4 (at stage)
+  - 3× Level 4 → 1× Level 5 (at stage, maximum)
 - **Music Layering**:
-  - As soon as a Level 3 critter hits the Stage, its specific "Maximum Intensity" music layer stays permanently active for the rest of the round.
-  - While playing on the grid, the background music reflects the highest level critters currently on the board.
+  - Level 1-2 critters on board: **No music layers** (silent practice)
+  - Level 3 on stage: **Layer 1** (basic intensity)
+  - Level 4 on stage: **Layer 2** (medium intensity)
+  - Level 5 on stage: **Layer 3** (maximum intensity)
+  - Music intensity per critter type = highest level of that type currently on stage
 
 ### 3. The Loop: Concerts & Tours
-- **Trigger**: When the player collects all 4 unique Level 3 critters (Bunny, Cat, Frog, Bird) on the Stage.
+- **Trigger**: When the player has at least one Level 5 critter of each type (Melody, Drums, Pad) on the Stage.
 - **The Concert**:
   - The board locks.
   - "Ultimate Song" animation plays (fireworks, crowd cheering).
@@ -33,7 +41,7 @@ The goal is to create one Level 3 critter of each type (Drum, Bass, Melody, Harm
   - The Stage clears.
   - The grid completely refreshes/scrambles.
   - Global BPM increases.
-  - Hype Meter drains faster.
+  - Difficulty scales (faster gameplay, higher stakes).
 
 ### 4. Shuffle Mechanic (Deadlock Prevention)
 - **Deadlock Detection**: Since merging reduces the number of items, the board can sometimes reach a state with no possible matches.
@@ -73,11 +81,12 @@ The goal is to create one Level 3 critter of each type (Drum, Bass, Melody, Harm
   - Remove matched items, spawn 1 higher-tier item, shift columns down, spawn new Lvl 1s at top.
 
 ### **Critter Evolution**
-- **Drummer Bunny** (Percussion)
-- **Melody Cat** (Melody)
-- **Bass Frog** (Bass)
-- **Harmony Bird** (Harmony)
-- **Evolution**: Lvl 1 (Baby) → Lvl 2 (Teen/Cool) → Lvl 3 (Star).
+- **Melody** (Blue/Cyan) - Lead melodies
+- **Drums** (Red/Pink) - Percussion
+- **Pad** (Green) - Atmospheric synth pad
+- **Evolution**: 
+  - Lvl 1 (Baby) → Lvl 2 (Teen) [Board only, silent]
+  - Lvl 3 (Musician) → Lvl 4 (Star) → Lvl 5 (Legend) [Stage only, adds music layers]
 
 ### **Shuffle Logic**
 - **Trigger**: 
@@ -138,6 +147,15 @@ The goal is to create one Level 3 critter of each type (Drum, Bass, Melody, Harm
 - Implement no-initial-matches generation to ensure clean starts. (DONE)
 - Add visual level indicators (numbers on critters). (DONE)
 - Add bounce animations on click and shake on invalid swap. (DONE)
+
+### **Phase 2.5**: Extended Gameplay Loop (Current)
+- [ ] Extend CritterLevel enum to support Level 4 and Level 5
+- [ ] Update stage system to support multiple critters of same type
+- [ ] Implement stage-based merging logic (3 Level 3s → 1 Level 4, etc.)
+- [ ] Update music layering: only Level 3+ on stage adds music (not board critters)
+- [ ] Update concert trigger: requires one Level 5 of each type
+- [ ] Update visual scaling for Level 4 and Level 5 critters
+- [ ] Test the extended gameplay loop (~81+ matches to win)
 
 ### **Phase 3: The Loop & Shuffle (Day 5)**
 - **Audio Setup**:

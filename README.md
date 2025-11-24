@@ -12,25 +12,28 @@ An endless Match-3 puzzle game built in Godot 4 where you match and merge critte
 - ✅ Click-to-select and swap mechanics
 - ✅ Match-3 detection (horizontal and vertical)
 - ✅ **Merge System**: 3 matching critters merge into 1 higher level
-  - Level 1 + Level 1 + Level 1 → Level 2
-  - Level 2 + Level 2 + Level 2 → Level 3
+  - **On Board**: Level 1 + 1 + 1 → Level 2, Level 2 + 2 + 2 → Level 3
+  - **On Stage**: Level 3 + 3 + 3 → Level 4, Level 4 + 4 + 4 → Level 5 (max)
 - ✅ Gravity and refill logic (critters fall, new ones spawn from top)
 - ✅ Cascading matches (new matches are detected after refills)
-- ✅ 4 critter types with distinct colors:
-  - 🥁 Bunny (Red/Pink) - Drummer
-  - 🎹 Cat (Blue/Cyan) - Melody
-  - 🎸 Frog (Green) - Bass
-  - 🎤 Bird (Yellow/Orange) - Harmony
-- ✅ 3 critter levels with visual progression:
+- ✅ 3 critter types with distinct colors:
+  - 🎹 Melody (Blue/Cyan)
+  - 🥁 Drums (Red/Pink)
+  - 🎛️ Pad (Green)
+- ✅ 5 critter levels with visual progression:
+  - Level 1-2: Board only (no music)
+  - Level 3-5: Stage critters (adds music layers)
   - Visual size increases with level
   - Brightness increases with level
   - Level numbers displayed on each critter
 - ✅ **Stage Collection System**:
-  - Level 3 critters fly to the Stage area at the top
-  - Collected critters persist visually on stage
+  - Level 3+ critters fly to the Stage area at the top
+  - Multiple critters of same type can be on stage simultaneously
+  - Stage critters can merge (3 Level 3s → 1 Level 4, etc.)
   - Each critter type has a dedicated stage position
   - Bouncing animations on stage critters
-- ✅ **Concert Trigger**: When all 4 Level 3 critters are collected
+- ✅ **Concert Trigger**: When all 3 critter types reach Level 5 on stage
+  - Requires 27+ Level 3s per type (81+ total matches)
   - Album counter increments
   - Board completely resets
   - BPM increases for difficulty scaling
@@ -47,11 +50,14 @@ An endless Match-3 puzzle game built in Godot 4 where you match and merge critte
 3. Click a critter to select it (it will brighten and bounce)
 4. Click an adjacent critter to swap them
 5. **Match 3 or more critters** of the same type AND level to merge them:
-   - 3 Level 1s → 1 Level 2 (at the swap location)
-   - 3 Level 2s → 1 Level 3
-6. **Level 3 critters fly to the Stage** at the top and stay there
-7. **Collect all 4 types** (Bunny, Cat, Frog, Bird) to trigger a Concert!
-8. After the concert, the board resets and the game gets faster
+   - **On Board**: 3 Level 1s → 1 Level 2, 3 Level 2s → 1 Level 3
+   - **On Stage**: 3 Level 3s → 1 Level 4, 3 Level 4s → 1 Level 5
+6. **Level 3+ critters fly to the Stage** at the top
+7. **Build your band**: Collect multiple critters on stage and merge them to higher levels
+8. **Music layers activate** based on highest level on stage:
+   - Level 3: Basic layer, Level 4: Medium layer, Level 5: Maximum layer
+9. **Trigger the Concert**: Get one Level 5 of each type (Melody, Drums, Pad)
+10. After the concert, the board resets and the game gets faster
 
 ### Development
 ```bash
