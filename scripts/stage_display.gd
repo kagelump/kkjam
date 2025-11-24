@@ -27,6 +27,9 @@ func _ready():
 		game_manager.stage_reset.connect(_on_stage_reset)
 
 func _on_critter_collected(type: Critter.CritterType, level: Critter.CritterLevel):
+	_add_critter_to_stage(type, level, true)
+
+func _add_critter_to_stage(type: Critter.CritterType, level: Critter.CritterLevel, check_merges: bool = false):
 	var pos = _get_next_position_for_type(type)
 	
 	var critter = critter_scene.instantiate()
@@ -52,8 +55,9 @@ func _on_critter_collected(type: Critter.CritterType, level: Critter.CritterLeve
 		tween.tween_property(critter, "scale", Vector2(1.3, 1.3), 0.5).set_trans(Tween.TRANS_SINE)
 		tween.tween_property(critter, "scale", Vector2(1.2, 1.2), 0.5).set_trans(Tween.TRANS_SINE)
 	
-	# Check for stage merges
-	_check_stage_merges(type)
+	# Check for stage merges (only if requested)
+	if check_merges:
+		_check_stage_merges(type)
 
 func _get_next_position_for_type(type: Critter.CritterType) -> Vector2:
 	var base_pos = stage_base_positions[type]
@@ -96,8 +100,8 @@ func _perform_stage_merge(type: Critter.CritterType, critters_to_merge: Array, n
 		if is_instance_valid(critter):
 			critter.queue_free()
 	
-	# Add the new merged critter
-	_on_critter_collected(type, new_level)
+	# Add the new merged critter (without checking for more merges to avoid recursion)
+	await _add_critter_to_stage(type, new_level, false)
 	
 	# Reorganize remaining critters
 	_reorganize_type(type)
