@@ -25,7 +25,7 @@ var is_selected: bool = false
 var is_moving: bool = false
 
 # Visual size
-const CELL_SIZE = 64
+const CELL_SIZE = 90
 
 # Color mapping for each type
 const TYPE_COLORS = {
@@ -63,6 +63,10 @@ func update_visual():
 	# Update level label
 	if level_label:
 		level_label.text = str(critter_level + 1)
+		# Ensure label is centered and sized correctly
+		var label_size = CELL_SIZE
+		level_label.size = Vector2(label_size, label_size)
+		level_label.position = Vector2(-label_size / 2.0, -label_size / 2.0)
 	
 	# Adjust size based on level (bigger = higher level)
 	var size_multiplier = 0.7 + (critter_level * 0.15)
@@ -72,14 +76,14 @@ func update_visual():
 
 func update_position():
 	# Position in world space based on grid coordinates
-	position = Vector2(grid_x * CELL_SIZE + CELL_SIZE / 2, grid_y * CELL_SIZE + CELL_SIZE / 2)
+	position = Vector2(grid_x * CELL_SIZE + CELL_SIZE / 2.0, grid_y * CELL_SIZE + CELL_SIZE / 2.0)
 
 func move_to_grid_position(x: int, y: int, duration: float = 0.2):
 	grid_x = x
 	grid_y = y
 	is_moving = true
 	
-	var target_pos = Vector2(x * CELL_SIZE + CELL_SIZE / 2, y * CELL_SIZE + CELL_SIZE / 2)
+	var target_pos = Vector2(x * CELL_SIZE + CELL_SIZE / 2.0, y * CELL_SIZE + CELL_SIZE / 2.0)
 	
 	var tween = create_tween()
 	tween.tween_property(self, "position", target_pos, duration)

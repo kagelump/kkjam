@@ -4,7 +4,7 @@ class_name Grid
 # Grid configuration
 const GRID_WIDTH = 8
 const GRID_HEIGHT = 8
-const CELL_SIZE = 64
+const CELL_SIZE = 90
 
 # Grid data - 2D array of Critter objects
 var grid_data: Array = []
@@ -138,8 +138,8 @@ func perform_invalid_swap(x1: int, y1: int, x2: int, y2: int):
 	var critter2 = grid_data[x2][y2]
 	
 	# Swap positions visually (but not in grid data)
-	var pos1 = Vector2(x1 * CELL_SIZE + CELL_SIZE / 2, y1 * CELL_SIZE + CELL_SIZE / 2)
-	var pos2 = Vector2(x2 * CELL_SIZE + CELL_SIZE / 2, y2 * CELL_SIZE + CELL_SIZE / 2)
+	var pos1 = Vector2(x1 * CELL_SIZE + CELL_SIZE / 2.0, y1 * CELL_SIZE + CELL_SIZE / 2.0)
+	var pos2 = Vector2(x2 * CELL_SIZE + CELL_SIZE / 2.0, y2 * CELL_SIZE + CELL_SIZE / 2.0)
 	
 	if critter1:
 		var tween1 = create_tween()
@@ -288,7 +288,7 @@ func _input(event):
 	
 	# Handle mouse/touch drag motion
 	elif event is InputEventMouseMotion:
-		if drag_start_grid_pos.x >= 0 and not is_dragging:
+		if drag_start_grid_pos.x >= 0 and not is_dragging and not is_processing:
 			var current_pos = get_local_mouse_position()
 			var drag_distance = drag_start_pos.distance_to(current_pos)
 			
@@ -310,17 +310,13 @@ func _input(event):
 				
 				# Validate target position
 				if swap_x >= 0 and swap_x < GRID_WIDTH and swap_y >= 0 and swap_y < GRID_HEIGHT:
-					# Select the dragged critter
+					# Get the dragged critter
 					var dragged_critter = grid_data[drag_start_grid_pos.x][drag_start_grid_pos.y]
 					if dragged_critter:
-						selected_critter = dragged_critter
-						selected_critter.set_selected(true)
-						
-						# Attempt swap
+						# Attempt swap (this will set is_processing if valid)
 						swap_critters(drag_start_grid_pos.x, drag_start_grid_pos.y, swap_x, swap_y)
-						selected_critter = null
 				
-				# Reset drag state
+				# Reset drag state immediately
 				drag_start_grid_pos = Vector2i(-1, -1)
 				is_dragging = false
 

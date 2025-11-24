@@ -4,13 +4,13 @@ extends Control
 var critter_scene = preload("res://scenes/critter.tscn")
 
 # Positions for the 4 critters on stage
-# Stage is 512x200. Center Y is 100.
-# X positions: 1/8, 3/8, 5/8, 7/8 of 512
+# Stage is 720x200. Center Y is 100.
+# X positions: 1/8, 3/8, 5/8, 7/8 of 720
 var stage_positions = {
-	Critter.CritterType.BUNNY: Vector2(64, 100),
-	Critter.CritterType.CAT: Vector2(192, 100),
-	Critter.CritterType.FROG: Vector2(320, 100),
-	Critter.CritterType.BIRD: Vector2(448, 100)
+	Critter.CritterType.BUNNY: Vector2(90, 100),
+	Critter.CritterType.CAT: Vector2(270, 100),
+	Critter.CritterType.FROG: Vector2(450, 100),
+	Critter.CritterType.BIRD: Vector2(630, 100)
 }
 
 var active_critters = {}
