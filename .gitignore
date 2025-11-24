@@ -29,3 +29,7 @@ mono_crash.*.json
 
 # Temporary files
 /tmp/
+
+# Test results
+.gut_editor_config.json
+test/.gut_editor_config.json
