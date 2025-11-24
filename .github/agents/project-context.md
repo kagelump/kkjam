@@ -17,6 +17,13 @@ You are an expert on the KKJam project structure and codebase. Your role is to p
 │       ├── testing.md       # Testing procedures
 │       └── project-context.md # This file
 ├── .gitignore               # Git ignore rules
+├── addons/
+│   └── gut/                 # GUT test framework
+├── test/                    # Test suite
+│   ├── unit/                # Unit tests (33 tests)
+│   ├── integration/         # Integration tests (8 tests)
+│   ├── run_tests.gd         # Custom test runner
+│   └── README.md            # Test documentation
 ├── scenes/                  # Godot scene files (.tscn)
 │   ├── main.tscn            # Main game scene
 │   └── critter.tscn         # Reusable critter scene
@@ -26,11 +33,12 @@ You are an expert on the KKJam project structure and codebase. Your role is to p
 │   ├── critter.gd           # Critter properties and behavior
 │   ├── match_controller.gd  # Match detection and merge logic
 │   └── stage_display.gd     # Stage UI for Level 3 critters
+├── Makefile                 # Development commands (test, run, clean)
 ├── icon.svg                 # Project icon
 ├── project.godot            # Godot project configuration
 ├── README.md                # Project overview and status
 ├── TODO.md                  # Complete game design document
-├── TESTING.md               # Testing guide
+├── TEST_FIX_SUMMARY.md      # Test suite setup documentation
 ├── PHASE1_SUMMARY.md        # Phase 1 completion summary
 ├── illustrator_todo.md      # Art asset TODO list
 └── musician_todo.md         # Music asset TODO list
@@ -80,8 +88,9 @@ You are an expert on the KKJam project structure and codebase. Your role is to p
 
 #### README.md
 - Current project status (Phase 2 Complete)
-- Feature list
+- Feature list with 42 passing tests
 - How to play instructions
+- Development commands (Makefile)
 - Project structure overview
 - Development roadmap
 
@@ -92,11 +101,11 @@ You are an expert on the KKJam project structure and codebase. Your role is to p
 - Stretch goals
 - Technical design notes
 
-#### TESTING.md
-- Manual testing procedures
-- Test checklists
-- Known limitations
-- How to run the project
+#### test/README.md
+- Test suite documentation
+- Running tests with Makefile
+- Test organization and coverage
+- Writing new tests guide
 
 ## Development Phases
 
@@ -257,19 +266,39 @@ You are an expert on the KKJam project structure and codebase. Your role is to p
 - Concert trigger and reset
 - Visual feedback and animations
 - Game loop with difficulty scaling
+- **42 automated tests** (33 unit, 8 integration)
 
 ### Known Limitations
 - No audio implementation yet
 - Placeholder visuals (colored squares)
 - No shuffle mechanic (Phase 3)
 - No combo system (Phase 4)
-- Manual testing only
 
 ### Next Priorities
 1. Deadlock detection
 2. Shuffle mechanics
 3. Audio system implementation
 4. Music layer dynamics
+
+## Development Workflow
+
+### Running the Game
+```bash
+make run              # Launch in Godot
+# Or press F5 in Godot editor
+```
+
+### Testing
+```bash
+make test             # Run all 42 tests
+make test-unit        # Run unit tests only
+make test-int         # Run integration tests only
+```
+
+### Before Committing
+1. Run `make test` to ensure all tests pass
+2. Manual gameplay test (F5)
+3. Check console for errors
 
 ## Getting Help
 
@@ -284,9 +313,10 @@ You are an expert on the KKJam project structure and codebase. Your role is to p
 - Maintain design pillars
 
 ### For Testing Questions
-- Check TESTING.md for procedures
+- Check test/README.md for test documentation
 - Reference testing.md agent
-- Use manual testing approach
+- Run `make test` for automated tests
+- Use manual testing for gameplay verification
 
 ## Quality Standards
 

@@ -41,7 +41,7 @@ An endless Match-3 puzzle game built in Godot 4 where you match and merge critte
 
 ### How to Play
 1. Open the project in Godot 4.2+
-2. Run the main scene (`scenes/main.tscn`)
+2. Run the main scene (`scenes/main.tscn`) or use `make run`
 3. Click a critter to select it (it will brighten and bounce)
 4. Click an adjacent critter to swap them
 5. **Match 3 or more critters** of the same type AND level to merge them:
@@ -50,6 +50,14 @@ An endless Match-3 puzzle game built in Godot 4 where you match and merge critte
 6. **Level 3 critters fly to the Stage** at the top and stay there
 7. **Collect all 4 types** (Bunny, Cat, Frog, Bird) to trigger a Concert!
 8. After the concert, the board resets and the game gets faster
+
+### Development
+```bash
+make test       # Run all tests
+make test-unit  # Run unit tests only
+make run        # Launch the game
+make help       # Show all commands
+```
 
 ### Project Structure
 ```

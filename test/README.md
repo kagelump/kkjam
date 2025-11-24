@@ -4,6 +4,40 @@
 
 This test suite provides comprehensive coverage for the KKJam Match-3 game using the GUT (Godot Unit Test) framework.
 
+## Running Tests
+
+### Using Makefile (Recommended)
+```bash
+make test           # Run all tests
+make test-unit      # Run unit tests only
+make test-int       # Run integration tests only
+```
+
+### Using GUT CLI Directly
+```bash
+# Run all tests
+godot --headless -s addons/gut/gut_cmdln.gd -gtest=res://test/
+
+# Run specific test directory
+godot --headless -s addons/gut/gut_cmdln.gd -gtest=res://test/unit/
+
+# Run specific test file
+godot --headless -s addons/gut/gut_cmdln.gd -gtest=res://test/unit/test_critter.gd
+```
+
+### In Godot Editor
+1. Open the project in Godot
+2. Go to the bottom panel and select the "GUT" tab
+3. Click "Run All" to run all tests
+
+## Current Status
+✅ **All 42 tests passing**
+- 6 Critter tests
+- 9 Edge case tests  
+- 9 Game Manager tests
+- 10 Match Controller tests
+- 8 Integration tests
+
 ## Test Organization
 
 ### Unit Tests (`test/unit/`)

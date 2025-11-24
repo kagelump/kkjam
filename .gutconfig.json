@@ -7,6 +7,8 @@
 	"compact_mode": false,
 	"inner_class": "",
 	"opacity": 100,
+	"exit_on_finish": true,
+    "should_print_to_console": true,
 	"panel_options": {
 		"font_size": 16
 	}

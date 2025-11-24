@@ -1,16 +1,16 @@
 extends SceneTree
 
 # Command line test runner for GUT
-# This script can be executed with: godot --headless -s test/run_tests.gd
 # 
-# However, it's recommended to use GUT's built-in CLI instead:
-# godot --headless -s addons/gut/gut_cmdln.gd -gtest=res://test/unit/,res://test/integration/
+# RECOMMENDED: Use GUT's built-in CLI instead:
+#   godot --headless -s addons/gut/gut_cmdln.gd -gtest=res://test/
+#
+# This file exists for reference but the official GUT CLI is more reliable.
 
 func _init():
+	# Wait for main loop
 	var max_iter := 20
 	var iter := 0
-	
-	# Wait for main loop to initialize
 	while(Engine.get_main_loop() == null and iter < max_iter):
 		await create_timer(.01).timeout
 		iter += 1
@@ -31,12 +31,13 @@ func _init():
 	gut.set_should_print_to_console(true)
 	gut.set_log_level(gut.LOG_LEVEL_ALL_ASSERTS)
 	
+	# Connect to finished signal
+	gut.tests_finished.connect(_on_tests_finished.bind(gut))
+	
 	# Run tests
 	gut.test_scripts()
-	
-	# Wait for tests to complete
-	await gut.tests_finished
-	
+
+func _on_tests_finished(gut):
 	# Exit with proper code
 	if gut.get_fail_count() > 0:
 		quit(1)

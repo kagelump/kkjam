@@ -215,9 +215,11 @@ func handle_level_3_created(critter: Critter):
 	# Ensure z_index is high so it flies over everything
 	critter.z_index = 100
 	
-	# Wait for animation then free
-	await tween.finished
-	critter.queue_free()
+	# Free the critter after animation (only if still valid)
+	tween.finished.connect(func():
+		if is_instance_valid(critter):
+			critter.queue_free()
+	)
 
 func reset_board():
 	print("Resetting board...")

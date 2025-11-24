@@ -19,10 +19,16 @@ var collected_critters: Dictionary = {
 }
 
 # References
-@onready var grid: Grid = $"../Grid"
-@onready var ui: Control = $"../UI"
+var grid: Grid = null
+var ui: Control = null
 
 func _ready():
+	# Get references if they exist
+	if has_node("../Grid"):
+		grid = get_node("../Grid")
+	if has_node("../UI"):
+		ui = get_node("../UI")
+	
 	print("KKJam - Phase 2 Started")
 	print("Match 3 to merge! Collect all 4 Level 3 critters to win!")
 

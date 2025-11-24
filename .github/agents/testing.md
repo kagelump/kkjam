@@ -6,35 +6,60 @@ You are an expert in testing Godot games. Your role is to help ensure code chang
 
 ### Testing Environment
 - **Engine**: Godot Engine 4.2+
-- **Platform**: Tested in Godot editor and exported builds
-- **Method**: Manual testing via play mode (F5)
+- **Framework**: GUT (Godot Unit Test) 9.5.0
+- **Coverage**: 42 automated tests (unit + integration)
+- **Manual Testing**: Play mode (F5) for gameplay verification
 
-### No Automated Test Framework
-This project does not currently have automated tests. All testing is manual through the Godot editor.
+### Automated Test Suite
+This project uses GUT for automated testing with comprehensive test coverage:
+- **Unit Tests**: 33 tests covering Critter, MatchController, GameManager, and edge cases
+- **Integration Tests**: 8 tests for full game flow scenarios
+- **Total Assertions**: 201 passing
 
-**Important**: Do not add automated testing frameworks unless explicitly requested. The project uses manual testing only.
+### Running Tests
+```bash
+# Using Makefile (recommended)
+make test           # Run all tests
+make test-unit      # Run unit tests only
+make test-int       # Run integration tests only
 
-## Manual Testing Process
+# Direct GUT CLI usage
+godot --headless -s addons/gut/gut_cmdln.gd -gtest=res://test/
+```
+
+## Testing Process
 
 ### 1. Before Making Changes
-- Run the game (F5 in Godot editor)
-- Verify current behavior works as expected
-- Note any existing issues in console output
-- Understand baseline functionality
+- Run automated tests: `make test`
+- Verify all tests pass
+- Run the game (F5) to check current behavior
+- Note baseline functionality
 
 ### 2. During Development
-- Test frequently after each small change
-- Use console output for debugging (`print()` statements)
-- Verify visual changes in game window
-- Check for errors in Godot console
+- Write tests for new features (TDD approach when appropriate)
+- Run relevant test subset: `make test-unit` or specific test file
+- Use console output for debugging
+- Test frequently after small changes
 
 ### 3. After Changes
-- Run full gameplay test
-- Verify all existing features still work
-- Check for new console errors or warnings
+- Run full test suite: `make test`
+- Ensure all 42 tests still pass
+- Run manual gameplay test (F5)
+- Check for console errors or warnings
 - Test edge cases specific to the change
 
-## Testing Checklist by System
+## Test Organization
+
+### Unit Tests (`test/unit/`)
+- `test_critter.gd` - Critter behavior (6 tests)
+- `test_match_controller.gd` - Match detection (10 tests)
+- `test_game_manager.gd` - Game state (9 tests)
+- `test_edge_cases.gd` - Special scenarios (9 tests)
+
+### Integration Tests (`test/integration/`)
+- `test_game_flow.gd` - Full workflows (8 tests)
+
+## Manual Testing Checklist by System
 
 ### Grid System Tests
 - [ ] Grid generates as 8x8
