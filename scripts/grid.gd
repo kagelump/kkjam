@@ -253,7 +253,8 @@ func handle_level_3_created(critter: Critter):
 	
 	# Wait for animation then free
 	await tween.finished
-	critter.queue_free()
+	if is_instance_valid(critter):
+		critter.queue_free()
 
 func reset_board():
 	print("Resetting board...")
