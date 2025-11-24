@@ -331,13 +331,15 @@ func _internal_helper():
 ### Test Organization
 
 #### Unit Tests (`test/unit/`)
-- `test_critter.gd` - Critter behavior (6 tests)
-- `test_match_controller.gd` - Match detection (10 tests)
-- `test_game_manager.gd` - Game state (9 tests)
-- `test_edge_cases.gd` - Special scenarios (9 tests)
+- `test_critter.gd` - Critter behavior
+- `test_match_controller.gd` - Match detection and merge logic
+- `test_game_manager.gd` - Game state management
+- `test_edge_cases.gd` - Special scenarios and edge cases
+- `test_audio_manager.gd` - Audio system and music layering
+- `test_drag_swap.gd` - Drag and swap mechanics
 
 #### Integration Tests (`test/integration/`)
-- `test_game_flow.gd` - Full workflows (8 tests)
+- `test_game_flow.gd` - Full game workflows
 
 ### Manual Testing Checklist
 
