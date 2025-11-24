@@ -15,7 +15,7 @@ var match_controller: MatchController
 
 # Selection
 var selected_critter: Critter = null
-var is_processing: bool = false
+var processing_matches: bool = false
 var last_swap_target: Vector2 = Vector2(-1, -1)
 
 # Touch/drag support
@@ -92,7 +92,7 @@ func remove_critter(x: int, y: int):
 		critter.queue_free()
 
 func swap_critters(x1: int, y1: int, x2: int, y2: int):
-	if is_processing:
+	if processing_matches:
 		return
 		
 	# Check if positions are adjacent
@@ -102,7 +102,7 @@ func swap_critters(x1: int, y1: int, x2: int, y2: int):
 	if (dx == 1 and dy == 0) or (dx == 0 and dy == 1):
 		# Positions are adjacent
 		if match_controller.would_create_match(x1, y1, x2, y2):
-			is_processing = true
+			processing_matches = true
 			perform_swap(x1, y1, x2, y2)
 		else:
 			print("Swap would not create a match")
@@ -133,7 +133,7 @@ func perform_swap(x1: int, y1: int, x2: int, y2: int):
 
 func perform_invalid_swap(x1: int, y1: int, x2: int, y2: int):
 	# Animate trying to swap and swapping back
-	is_processing = true
+	processing_matches = true
 	var critter1 = grid_data[x1][y1]
 	var critter2 = grid_data[x2][y2]
 	
@@ -153,7 +153,7 @@ func perform_invalid_swap(x1: int, y1: int, x2: int, y2: int):
 	
 	# Wait for animation to finish
 	await get_tree().create_timer(0.3).timeout
-	is_processing = false
+	processing_matches = false
 
 func process_matches():
 	var matches = match_controller.find_matches()
@@ -169,7 +169,7 @@ func process_matches():
 		await get_tree().create_timer(0.3).timeout
 		refill_board()
 	else:
-		is_processing = false
+		processing_matches = false
 
 func refill_board():
 	# Apply gravity - move critters down
@@ -192,7 +192,7 @@ func refill_board():
 		await get_tree().create_timer(0.3).timeout
 		refill_board()
 	else:
-		is_processing = false
+		processing_matches = false
 		# Music is now updated from stage, not from board
 
 func handle_level_3_created(critter: Critter):
@@ -229,7 +229,7 @@ func handle_level_3_created(critter: Critter):
 
 func reset_board():
 	print("Resetting board...")
-	is_processing = true
+	processing_matches = true
 	
 	# Clear all critters
 	for x in range(GRID_WIDTH):
@@ -241,7 +241,7 @@ func reset_board():
 	
 	# Regenerate
 	generate_board()
-	is_processing = false
+	processing_matches = false
 
 func apply_gravity():
 	# Move critters down to fill empty spaces
@@ -259,7 +259,7 @@ func apply_gravity():
 				write_y -= 1
 
 func _input(event):
-	if is_processing:
+	if processing_matches:
 		return
 	
 	# Handle mouse/touch press (start of interaction)
@@ -290,7 +290,7 @@ func _input(event):
 	
 	# Handle mouse/touch drag motion
 	elif event is InputEventMouseMotion:
-		if drag_start_grid_pos.x >= 0 and not is_dragging and not is_processing:
+		if drag_start_grid_pos.x >= 0 and not is_dragging and not processing_matches:
 			var current_pos = get_local_mouse_position()
 			var drag_distance = drag_start_pos.distance_to(current_pos)
 			
@@ -315,7 +315,7 @@ func _input(event):
 					# Get the dragged critter
 					var dragged_critter = grid_data[drag_start_grid_pos.x][drag_start_grid_pos.y]
 					if dragged_critter:
-						# Attempt swap (this will set is_processing if valid)
+						# Attempt swap (this will set processing_matches if valid)
 						swap_critters(drag_start_grid_pos.x, drag_start_grid_pos.y, swap_x, swap_y)
 				
 				# Reset drag state immediately

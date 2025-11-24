@@ -10,11 +10,23 @@ class MockGrid:
 	const GRID_HEIGHT = 8
 	var grid_data: Array = []
 	var critter_container
+	var game_manager
 	
 	func _init():
 		critter_container = Node2D.new()
 		add_child(critter_container)
+		
+		# Create mock GameManager as sibling so get_node("../GameManager") works
+		game_manager = Node.new()
+		game_manager.name = "GameManager"
+		game_manager.set_script(load("res://scripts/game_manager.gd"))
+		
 		initialize_grid()
+	
+	func _ready():
+		# Add GameManager as sibling after being added to tree
+		if get_parent():
+			get_parent().add_child(game_manager)
 	
 	func initialize_grid():
 		grid_data.clear()
@@ -36,12 +48,6 @@ class MockGrid:
 			var critter = grid_data[x][y]
 			grid_data[x][y] = null
 			critter.queue_free()
-	
-	func get_node(path):
-		# Mock GameManager
-		var mock = Node.new()
-		mock.set_script(load("res://scripts/game_manager.gd"))
-		return mock
 
 func test_horizontal_match_detection():
 	var mock_grid = autofree(MockGrid.new())

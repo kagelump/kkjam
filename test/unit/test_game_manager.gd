@@ -40,8 +40,11 @@ func test_concert_increments_album_count():
 	game_manager.name = "GameManager"
 	
 	# Create stub Grid
-	var grid_stub = autofree(double(Grid).new())
-	stub(grid_stub, "reset_board").to_do_nothing()
+	var grid_stub = autofree(Node2D.new())
+	var container = Node2D.new()
+	container.name = "CritterContainer"
+	grid_stub.add_child(container)
+	grid_stub.set_script(preload("res://scripts/grid.gd"))
 	grid_stub.name = "Grid"
 	
 	var ui_stub = autofree(Control.new())
@@ -70,8 +73,11 @@ func test_concert_increases_bpm():
 	game_manager.name = "GameManager"
 	
 	# Create stub Grid
-	var grid_stub = autofree(double(Grid).new())
-	stub(grid_stub, "reset_board").to_do_nothing()
+	var grid_stub = autofree(Node2D.new())
+	var container = Node2D.new()
+	container.name = "CritterContainer"
+	grid_stub.add_child(container)
+	grid_stub.set_script(preload("res://scripts/grid.gd"))
 	grid_stub.name = "Grid"
 	
 	var ui_stub = autofree(Control.new())

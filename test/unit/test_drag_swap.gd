@@ -2,11 +2,12 @@ extends GutTest
 
 # Test drag-to-swap functionality
 
-var grid: Grid
+var grid
 var critter_scene = preload("res://scenes/critter.tscn")
 
 func before_each():
-	grid = autofree(Grid.new())
+	grid = autofree(Node2D.new())
+	grid.set_script(preload("res://scripts/grid.gd"))
 	
 	# Add CritterContainer child before adding grid to tree
 	# This ensures _ready() can find the container when it runs
@@ -35,7 +36,7 @@ func test_drag_threshold_value():
 
 func test_is_processing_blocks_input():
 	# Setup: Set processing flag
-	grid.is_processing = true
+	grid.processing_matches = true
 	
 	# Create a mock input event
 	var press_event = InputEventMouseButton.new()

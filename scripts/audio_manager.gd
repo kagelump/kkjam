@@ -13,8 +13,8 @@ const MAX_SFX_PLAYERS = 10
 
 # Configuration
 const FADE_TIME = 1.0 # Seconds
-const MUSIC_BUS = "Music"
-const SFX_BUS = "SFX"
+const MUSIC_BUS = "Master"
+const SFX_BUS = "Master"
 
 # Asset Paths
 const BGM_PATHS = {

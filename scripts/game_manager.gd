@@ -11,7 +11,7 @@ var albums_completed: int = 0
 var current_bpm: int = 100
 
 # References
-var grid: Grid = null
+var grid = null
 var ui: Control = null
 var stage_display = null
 
