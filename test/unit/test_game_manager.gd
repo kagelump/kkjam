@@ -105,7 +105,7 @@ func test_concert_increments_album_count():
 	game_manager.collect_critter(Critter.CritterType.FROG)
 	game_manager.collect_critter(Critter.CritterType.BIRD)
 	
-	await wait_frames(2)
+	await wait_physics_frames(2)
 	
 	assert_eq(game_manager.albums_completed, initial_albums + 1, "Album count should increment by 1")
 
@@ -138,7 +138,7 @@ func test_concert_increases_bpm():
 	game_manager.collect_critter(Critter.CritterType.FROG)
 	game_manager.collect_critter(Critter.CritterType.BIRD)
 	
-	await wait_frames(2)
+	await wait_physics_frames(2)
 	
 	assert_eq(game_manager.current_bpm, initial_bpm + 10, "BPM should increase by 10")
 

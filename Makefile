@@ -24,19 +24,19 @@ help:
 .PHONY: test
 test:
 	@echo "Running all tests..."
-	@$(GODOT) --headless -s addons/gut/gut_cmdln.gd -gtest=res://test/
+	@$(GODOT) --headless -s addons/gut/gut_cmdln.gd -gtest=res://test
 
 # Run unit tests only
 .PHONY: test-unit
 test-unit:
 	@echo "Running unit tests..."
-	@$(GODOT) --headless -s addons/gut/gut_cmdln.gd -gtest=res://test/unit/
+	@$(GODOT) --headless -s addons/gut/gut_cmdln.gd -gtest=res://test/unit
 
 # Run integration tests only
 .PHONY: test-int
 test-int:
 	@echo "Running integration tests..."
-	@$(GODOT) --headless -s addons/gut/gut_cmdln.gd -gtest=res://test/integration/
+	@$(GODOT) --headless -s addons/gut/gut_cmdln.gd -gtest=res://test/integration
 
 # Run the game
 .PHONY: run

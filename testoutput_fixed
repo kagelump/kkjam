@@ -1,0 +1,849 @@
+Running all tests...
+Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org
+
+---  GUT  ---
+[1m[INFO]:  [0musing [/Users/ryantseng/Library/Application Support/Godot/app_userdata/KKJam] for temporary output.
+Godot version:  4.5.1
+GUT version:  9.5.0
+[31m[ERROR]:  [0mCould not find script:  res://test/
+[4m
+
+res://test/unit/test_critter.gd
+[0m* test_critter_initialization
+* test_critter_type_names
+* test_critter_levels
+* test_critter_selection
+* test_critter_position_update
+* test_critter_color_types
+[1m6/6 passed.
+[0m[4m
+
+res://test/unit/test_drag_swap.gd
+[0m* test_drag_state_initialization
+[33m    192 Orphans[0m
+[33m        * [Critter:<Node2D#68769810308>(critter.gd)] + 2
+        * [Critter:<Node2D#68920805261>(critter.gd)] + 2
+        * [Critter:<Node2D#69071800214>(critter.gd)] + 2
+        * [Critter:<Node2D#69222795167>(critter.gd)] + 2
+        * [Critter:<Node2D#69373790120>(critter.gd)] + 2
+        * [Critter:<Node2D#69524785073>(critter.gd)] + 2
+        * [Critter:<Node2D#69675780026>(critter.gd)] + 2
+        * [Critter:<Node2D#69826774979>(critter.gd)] + 2
+        * [Critter:<Node2D#69977769932>(critter.gd)] + 2
+        * [Critter:<Node2D#70128764885>(critter.gd)] + 2
+        * [Critter:<Node2D#70279759838>(critter.gd)] + 2
+        * [Critter:<Node2D#70430754791>(critter.gd)] + 2
+        * [Critter:<Node2D#70581749744>(critter.gd)] + 2
+        * [Critter:<Node2D#70732744697>(critter.gd)] + 2
+        * [Critter:<Node2D#70883739650>(critter.gd)] + 2
+        * [Critter:<Node2D#71034734603>(critter.gd)] + 2
+        * [Critter:<Node2D#71185729556>(critter.gd)] + 2
+        * [Critter:<Node2D#71336724509>(critter.gd)] + 2
+        * [Critter:<Node2D#71487719462>(critter.gd)] + 2
+        * [Critter:<Node2D#71638714415>(critter.gd)] + 2
+        * [Critter:<Node2D#71789709368>(critter.gd)] + 2
+        * [Critter:<Node2D#71940704321>(critter.gd)] + 2
+        * [Critter:<Node2D#72091699274>(critter.gd)] + 2
+        * [Critter:<Node2D#72242694227>(critter.gd)] + 2
+        * [Critter:<Node2D#72393689180>(critter.gd)] + 2
+        * [Critter:<Node2D#72544684133>(critter.gd)] + 2
+        * [Critter:<Node2D#72695679086>(critter.gd)] + 2
+        * [Critter:<Node2D#72846674039>(critter.gd)] + 2
+        * [Critter:<Node2D#72997668992>(critter.gd)] + 2
+        * [Critter:<Node2D#73148663945>(critter.gd)] + 2
+        * [Critter:<Node2D#73299658898>(critter.gd)] + 2
+        * [Critter:<Node2D#73450653851>(critter.gd)] + 2
+        * [Critter:<Node2D#73601648804>(critter.gd)] + 2
+        * [Critter:<Node2D#73752643757>(critter.gd)] + 2
+        * [Critter:<Node2D#73903638710>(critter.gd)] + 2
+        * [Critter:<Node2D#74054633663>(critter.gd)] + 2
+        * [Critter:<Node2D#74205628616>(critter.gd)] + 2
+        * [Critter:<Node2D#74356623569>(critter.gd)] + 2
+        * [Critter:<Node2D#74507618522>(critter.gd)] + 2
+        * [Critter:<Node2D#74658613475>(critter.gd)] + 2
+        * [Critter:<Node2D#74809608428>(critter.gd)] + 2
+        * [Critter:<Node2D#74960603381>(critter.gd)] + 2
+        * [Critter:<Node2D#75111598334>(critter.gd)] + 2
+        * [Critter:<Node2D#75262593287>(critter.gd)] + 2
+        * [Critter:<Node2D#75413588240>(critter.gd)] + 2
+        * [Critter:<Node2D#75564583193>(critter.gd)] + 2
+        * [Critter:<Node2D#75715578146>(critter.gd)] + 2
+        * [Critter:<Node2D#75866573099>(critter.gd)] + 2
+        * [Critter:<Node2D#76017568052>(critter.gd)] + 2
+        * [Critter:<Node2D#76168563005>(critter.gd)] + 2
+        * [Critter:<Node2D#76319557958>(critter.gd)] + 2
+        * [Critter:<Node2D#76470552911>(critter.gd)] + 2
+        * [Critter:<Node2D#76621547864>(critter.gd)] + 2
+        * [Critter:<Node2D#76772542817>(critter.gd)] + 2
+        * [Critter:<Node2D#76923537770>(critter.gd)] + 2
+        * [Critter:<Node2D#77074532723>(critter.gd)] + 2
+        * [Critter:<Node2D#77225527676>(critter.gd)] + 2
+        * [Critter:<Node2D#77376522629>(critter.gd)] + 2
+        * [Critter:<Node2D#77527517582>(critter.gd)] + 2
+        * [Critter:<Node2D#77678512535>(critter.gd)] + 2
+        * [Critter:<Node2D#77829507488>(critter.gd)] + 2
+        * [Critter:<Node2D#77980502441>(critter.gd)] + 2
+        * [Critter:<Node2D#78131497394>(critter.gd)] + 2
+        * [Critter:<Node2D#78282492347>(critter.gd)] + 2[0m
+* test_drag_threshold_value
+[33m    192 Orphans[0m
+[33m        * [Critter:<Node2D#79624669702>(critter.gd)] + 2
+        * [Critter:<Node2D#79775664655>(critter.gd)] + 2
+        * [Critter:<Node2D#79926659608>(critter.gd)] + 2
+        * [Critter:<Node2D#80077654561>(critter.gd)] + 2
+        * [Critter:<Node2D#80228649514>(critter.gd)] + 2
+        * [Critter:<Node2D#80379644467>(critter.gd)] + 2
+        * [Critter:<Node2D#80530639420>(critter.gd)] + 2
+        * [Critter:<Node2D#80681634373>(critter.gd)] + 2
+        * [Critter:<Node2D#80832629326>(critter.gd)] + 2
+        * [Critter:<Node2D#80983624279>(critter.gd)] + 2
+        * [Critter:<Node2D#81134619232>(critter.gd)] + 2
+        * [Critter:<Node2D#81285614185>(critter.gd)] + 2
+        * [Critter:<Node2D#81436609138>(critter.gd)] + 2
+        * [Critter:<Node2D#81587604091>(critter.gd)] + 2
+        * [Critter:<Node2D#81738599044>(critter.gd)] + 2
+        * [Critter:<Node2D#81889593997>(critter.gd)] + 2
+        * [Critter:<Node2D#82040588950>(critter.gd)] + 2
+        * [Critter:<Node2D#82191583903>(critter.gd)] + 2
+        * [Critter:<Node2D#82342578856>(critter.gd)] + 2
+        * [Critter:<Node2D#82493573809>(critter.gd)] + 2
+        * [Critter:<Node2D#82644568762>(critter.gd)] + 2
+        * [Critter:<Node2D#82795563715>(critter.gd)] + 2
+        * [Critter:<Node2D#82946558668>(critter.gd)] + 2
+        * [Critter:<Node2D#83097553621>(critter.gd)] + 2
+        * [Critter:<Node2D#83248548574>(critter.gd)] + 2
+        * [Critter:<Node2D#83399543527>(critter.gd)] + 2
+        * [Critter:<Node2D#83550538480>(critter.gd)] + 2
+        * [Critter:<Node2D#83701533433>(critter.gd)] + 2
+        * [Critter:<Node2D#83852528386>(critter.gd)] + 2
+        * [Critter:<Node2D#84003523339>(critter.gd)] + 2
+        * [Critter:<Node2D#84154518292>(critter.gd)] + 2
+        * [Critter:<Node2D#84305513245>(critter.gd)] + 2
+        * [Critter:<Node2D#84456508198>(critter.gd)] + 2
+        * [Critter:<Node2D#84607503151>(critter.gd)] + 2
+        * [Critter:<Node2D#84758498104>(critter.gd)] + 2
+        * [Critter:<Node2D#84909493057>(critter.gd)] + 2
+        * [Critter:<Node2D#85060488010>(critter.gd)] + 2
+        * [Critter:<Node2D#85211482963>(critter.gd)] + 2
+        * [Critter:<Node2D#85362477916>(critter.gd)] + 2
+        * [Critter:<Node2D#85513472869>(critter.gd)] + 2
+        * [Critter:<Node2D#85664467822>(critter.gd)] + 2
+        * [Critter:<Node2D#85815462775>(critter.gd)] + 2
+        * [Critter:<Node2D#85966457728>(critter.gd)] + 2
+        * [Critter:<Node2D#86117452681>(critter.gd)] + 2
+        * [Critter:<Node2D#86268447634>(critter.gd)] + 2
+        * [Critter:<Node2D#86419442587>(critter.gd)] + 2
+        * [Critter:<Node2D#86570437540>(critter.gd)] + 2
+        * [Critter:<Node2D#86721432493>(critter.gd)] + 2
+        * [Critter:<Node2D#86872427446>(critter.gd)] + 2
+        * [Critter:<Node2D#87023422399>(critter.gd)] + 2
+        * [Critter:<Node2D#87174417352>(critter.gd)] + 2
+        * [Critter:<Node2D#87325412305>(critter.gd)] + 2
+        * [Critter:<Node2D#87476407258>(critter.gd)] + 2
+        * [Critter:<Node2D#87627402211>(critter.gd)] + 2
+        * [Critter:<Node2D#87778397164>(critter.gd)] + 2
+        * [Critter:<Node2D#87929392117>(critter.gd)] + 2
+        * [Critter:<Node2D#88080387070>(critter.gd)] + 2
+        * [Critter:<Node2D#88231382023>(critter.gd)] + 2
+        * [Critter:<Node2D#88382376976>(critter.gd)] + 2
+        * [Critter:<Node2D#88533371929>(critter.gd)] + 2
+        * [Critter:<Node2D#88684366882>(critter.gd)] + 2
+        * [Critter:<Node2D#88835361835>(critter.gd)] + 2
+        * [Critter:<Node2D#88986356788>(critter.gd)] + 2
+        * [Critter:<Node2D#89137351741>(critter.gd)] + 2[0m
+* test_is_processing_blocks_input
+[33m    192 Orphans[0m
+[33m        * [Critter:<Node2D#90462751880>(critter.gd)] + 2
+        * [Critter:<Node2D#90613746833>(critter.gd)] + 2
+        * [Critter:<Node2D#90764741786>(critter.gd)] + 2
+        * [Critter:<Node2D#90915736739>(critter.gd)] + 2
+        * [Critter:<Node2D#91066731692>(critter.gd)] + 2
+        * [Critter:<Node2D#91217726645>(critter.gd)] + 2
+        * [Critter:<Node2D#91368721598>(critter.gd)] + 2
+        * [Critter:<Node2D#91519716551>(critter.gd)] + 2
+        * [Critter:<Node2D#91670711504>(critter.gd)] + 2
+        * [Critter:<Node2D#91821706457>(critter.gd)] + 2
+        * [Critter:<Node2D#91972701410>(critter.gd)] + 2
+        * [Critter:<Node2D#92123696363>(critter.gd)] + 2
+        * [Critter:<Node2D#92274691316>(critter.gd)] + 2
+        * [Critter:<Node2D#92425686269>(critter.gd)] + 2
+        * [Critter:<Node2D#92576681222>(critter.gd)] + 2
+        * [Critter:<Node2D#92727676175>(critter.gd)] + 2
+        * [Critter:<Node2D#92878671128>(critter.gd)] + 2
+        * [Critter:<Node2D#93029666081>(critter.gd)] + 2
+        * [Critter:<Node2D#93180661034>(critter.gd)] + 2
+        * [Critter:<Node2D#93331655987>(critter.gd)] + 2
+        * [Critter:<Node2D#93482650940>(critter.gd)] + 2
+        * [Critter:<Node2D#93633645893>(critter.gd)] + 2
+        * [Critter:<Node2D#93784640846>(critter.gd)] + 2
+        * [Critter:<Node2D#93935635799>(critter.gd)] + 2
+        * [Critter:<Node2D#94086630752>(critter.gd)] + 2
+        * [Critter:<Node2D#94237625705>(critter.gd)] + 2
+        * [Critter:<Node2D#94388620658>(critter.gd)] + 2
+        * [Critter:<Node2D#94539615611>(critter.gd)] + 2
+        * [Critter:<Node2D#94690610564>(critter.gd)] + 2
+        * [Critter:<Node2D#94841605517>(critter.gd)] + 2
+        * [Critter:<Node2D#94992600470>(critter.gd)] + 2
+        * [Critter:<Node2D#95143595423>(critter.gd)] + 2
+        * [Critter:<Node2D#95294590376>(critter.gd)] + 2
+        * [Critter:<Node2D#95445585329>(critter.gd)] + 2
+        * [Critter:<Node2D#95596580282>(critter.gd)] + 2
+        * [Critter:<Node2D#95747575235>(critter.gd)] + 2
+        * [Critter:<Node2D#95898570188>(critter.gd)] + 2
+        * [Critter:<Node2D#96049565141>(critter.gd)] + 2
+        * [Critter:<Node2D#96200560094>(critter.gd)] + 2
+        * [Critter:<Node2D#96351555047>(critter.gd)] + 2
+        * [Critter:<Node2D#96502550000>(critter.gd)] + 2
+        * [Critter:<Node2D#96653544953>(critter.gd)] + 2
+        * [Critter:<Node2D#96804539906>(critter.gd)] + 2
+        * [Critter:<Node2D#96955534859>(critter.gd)] + 2
+        * [Critter:<Node2D#97106529812>(critter.gd)] + 2
+        * [Critter:<Node2D#97257524765>(critter.gd)] + 2
+        * [Critter:<Node2D#97408519718>(critter.gd)] + 2
+        * [Critter:<Node2D#97559514671>(critter.gd)] + 2
+        * [Critter:<Node2D#97710509624>(critter.gd)] + 2
+        * [Critter:<Node2D#97861504577>(critter.gd)] + 2
+        * [Critter:<Node2D#98012499530>(critter.gd)] + 2
+        * [Critter:<Node2D#98163494483>(critter.gd)] + 2
+        * [Critter:<Node2D#98314489436>(critter.gd)] + 2
+        * [Critter:<Node2D#98465484389>(critter.gd)] + 2
+        * [Critter:<Node2D#98616479342>(critter.gd)] + 2
+        * [Critter:<Node2D#98767474295>(critter.gd)] + 2
+        * [Critter:<Node2D#98918469248>(critter.gd)] + 2
+        * [Critter:<Node2D#99069464201>(critter.gd)] + 2
+        * [Critter:<Node2D#99220459154>(critter.gd)] + 2
+        * [Critter:<Node2D#99371454107>(critter.gd)] + 2
+        * [Critter:<Node2D#99522449060>(critter.gd)] + 2
+        * [Critter:<Node2D#99673444013>(critter.gd)] + 2
+        * [Critter:<Node2D#99824438966>(critter.gd)] + 2
+        * [Critter:<Node2D#99975433919>(critter.gd)] + 2[0m
+* test_drag_state_variables_exist
+[33m    192 Orphans[0m
+[33m        * [Critter:<Node2D#101317611274>(critter.gd)] + 2
+        * [Critter:<Node2D#101468606227>(critter.gd)] + 2
+        * [Critter:<Node2D#101619601180>(critter.gd)] + 2
+        * [Critter:<Node2D#101770596133>(critter.gd)] + 2
+        * [Critter:<Node2D#101921591086>(critter.gd)] + 2
+        * [Critter:<Node2D#102072586039>(critter.gd)] + 2
+        * [Critter:<Node2D#102223580992>(critter.gd)] + 2
+        * [Critter:<Node2D#102374575945>(critter.gd)] + 2
+        * [Critter:<Node2D#102525570898>(critter.gd)] + 2
+        * [Critter:<Node2D#102676565851>(critter.gd)] + 2
+        * [Critter:<Node2D#102827560804>(critter.gd)] + 2
+        * [Critter:<Node2D#102978555757>(critter.gd)] + 2
+        * [Critter:<Node2D#103129550710>(critter.gd)] + 2
+        * [Critter:<Node2D#103280545663>(critter.gd)] + 2
+        * [Critter:<Node2D#103431540616>(critter.gd)] + 2
+        * [Critter:<Node2D#103582535569>(critter.gd)] + 2
+        * [Critter:<Node2D#103733530522>(critter.gd)] + 2
+        * [Critter:<Node2D#103884525475>(critter.gd)] + 2
+        * [Critter:<Node2D#104035520428>(critter.gd)] + 2
+        * [Critter:<Node2D#104186515381>(critter.gd)] + 2
+        * [Critter:<Node2D#104337510334>(critter.gd)] + 2
+        * [Critter:<Node2D#104488505287>(critter.gd)] + 2
+        * [Critter:<Node2D#104639500240>(critter.gd)] + 2
+        * [Critter:<Node2D#104790495193>(critter.gd)] + 2
+        * [Critter:<Node2D#104941490146>(critter.gd)] + 2
+        * [Critter:<Node2D#105092485099>(critter.gd)] + 2
+        * [Critter:<Node2D#105243480052>(critter.gd)] + 2
+        * [Critter:<Node2D#105394475005>(critter.gd)] + 2
+        * [Critter:<Node2D#105545469958>(critter.gd)] + 2
+        * [Critter:<Node2D#105696464911>(critter.gd)] + 2
+        * [Critter:<Node2D#105847459864>(critter.gd)] + 2
+        * [Critter:<Node2D#105998454817>(critter.gd)] + 2
+        * [Critter:<Node2D#106149449770>(critter.gd)] + 2
+        * [Critter:<Node2D#106300444723>(critter.gd)] + 2
+        * [Critter:<Node2D#106451439676>(critter.gd)] + 2
+        * [Critter:<Node2D#106602434629>(critter.gd)] + 2
+        * [Critter:<Node2D#106753429582>(critter.gd)] + 2
+        * [Critter:<Node2D#106904424535>(critter.gd)] + 2
+        * [Critter:<Node2D#107055419488>(critter.gd)] + 2
+        * [Critter:<Node2D#107206414441>(critter.gd)] + 2
+        * [Critter:<Node2D#107357409394>(critter.gd)] + 2
+        * [Critter:<Node2D#107508404347>(critter.gd)] + 2
+        * [Critter:<Node2D#107659399300>(critter.gd)] + 2
+        * [Critter:<Node2D#107810394253>(critter.gd)] + 2
+        * [Critter:<Node2D#107961389206>(critter.gd)] + 2
+        * [Critter:<Node2D#108112384159>(critter.gd)] + 2
+        * [Critter:<Node2D#108263379112>(critter.gd)] + 2
+        * [Critter:<Node2D#108414374065>(critter.gd)] + 2
+        * [Critter:<Node2D#108565369018>(critter.gd)] + 2
+        * [Critter:<Node2D#108716363971>(critter.gd)] + 2
+        * [Critter:<Node2D#108867358924>(critter.gd)] + 2
+        * [Critter:<Node2D#109018353877>(critter.gd)] + 2
+        * [Critter:<Node2D#109169348830>(critter.gd)] + 2
+        * [Critter:<Node2D#109320343783>(critter.gd)] + 2
+        * [Critter:<Node2D#109471338736>(critter.gd)] + 2
+        * [Critter:<Node2D#109622333689>(critter.gd)] + 2
+        * [Critter:<Node2D#109773328642>(critter.gd)] + 2
+        * [Critter:<Node2D#109924323595>(critter.gd)] + 2
+        * [Critter:<Node2D#110075318548>(critter.gd)] + 2
+        * [Critter:<Node2D#110226313501>(critter.gd)] + 2
+        * [Critter:<Node2D#110377308454>(critter.gd)] + 2
+        * [Critter:<Node2D#110528303407>(critter.gd)] + 2
+        * [Critter:<Node2D#110679298360>(critter.gd)] + 2
+        * [Critter:<Node2D#110830293313>(critter.gd)] + 2[0m
+* test_grid_cell_size_matches_layout
+[33m    192 Orphans[0m
+[33m        * [Critter:<Node2D#112155693452>(critter.gd)] + 2
+        * [Critter:<Node2D#112306688405>(critter.gd)] + 2
+        * [Critter:<Node2D#112457683358>(critter.gd)] + 2
+        * [Critter:<Node2D#112608678311>(critter.gd)] + 2
+        * [Critter:<Node2D#112759673264>(critter.gd)] + 2
+        * [Critter:<Node2D#112910668217>(critter.gd)] + 2
+        * [Critter:<Node2D#113061663170>(critter.gd)] + 2
+        * [Critter:<Node2D#113212658123>(critter.gd)] + 2
+        * [Critter:<Node2D#113363653076>(critter.gd)] + 2
+        * [Critter:<Node2D#113514648029>(critter.gd)] + 2
+        * [Critter:<Node2D#113665642982>(critter.gd)] + 2
+        * [Critter:<Node2D#113816637935>(critter.gd)] + 2
+        * [Critter:<Node2D#113967632888>(critter.gd)] + 2
+        * [Critter:<Node2D#114118627841>(critter.gd)] + 2
+        * [Critter:<Node2D#114269622794>(critter.gd)] + 2
+        * [Critter:<Node2D#114420617747>(critter.gd)] + 2
+        * [Critter:<Node2D#114571612700>(critter.gd)] + 2
+        * [Critter:<Node2D#114722607653>(critter.gd)] + 2
+        * [Critter:<Node2D#114873602606>(critter.gd)] + 2
+        * [Critter:<Node2D#115024597559>(critter.gd)] + 2
+        * [Critter:<Node2D#115175592512>(critter.gd)] + 2
+        * [Critter:<Node2D#115326587465>(critter.gd)] + 2
+        * [Critter:<Node2D#115477582418>(critter.gd)] + 2
+        * [Critter:<Node2D#115628577371>(critter.gd)] + 2
+        * [Critter:<Node2D#115779572324>(critter.gd)] + 2
+        * [Critter:<Node2D#115930567277>(critter.gd)] + 2
+        * [Critter:<Node2D#116081562230>(critter.gd)] + 2
+        * [Critter:<Node2D#116232557183>(critter.gd)] + 2
+        * [Critter:<Node2D#116383552136>(critter.gd)] + 2
+        * [Critter:<Node2D#116534547089>(critter.gd)] + 2
+        * [Critter:<Node2D#116685542042>(critter.gd)] + 2
+        * [Critter:<Node2D#116836536995>(critter.gd)] + 2
+        * [Critter:<Node2D#116987531948>(critter.gd)] + 2
+        * [Critter:<Node2D#117138526901>(critter.gd)] + 2
+        * [Critter:<Node2D#117289521854>(critter.gd)] + 2
+        * [Critter:<Node2D#117440516807>(critter.gd)] + 2
+        * [Critter:<Node2D#117591511760>(critter.gd)] + 2
+        * [Critter:<Node2D#117742506713>(critter.gd)] + 2
+        * [Critter:<Node2D#117893501666>(critter.gd)] + 2
+        * [Critter:<Node2D#118044496619>(critter.gd)] + 2
+        * [Critter:<Node2D#118195491572>(critter.gd)] + 2
+        * [Critter:<Node2D#118346486525>(critter.gd)] + 2
+        * [Critter:<Node2D#118497481478>(critter.gd)] + 2
+        * [Critter:<Node2D#118648476431>(critter.gd)] + 2
+        * [Critter:<Node2D#118799471384>(critter.gd)] + 2
+        * [Critter:<Node2D#118950466337>(critter.gd)] + 2
+        * [Critter:<Node2D#119101461290>(critter.gd)] + 2
+        * [Critter:<Node2D#119252456243>(critter.gd)] + 2
+        * [Critter:<Node2D#119403451196>(critter.gd)] + 2
+        * [Critter:<Node2D#119554446149>(critter.gd)] + 2
+        * [Critter:<Node2D#119705441102>(critter.gd)] + 2
+        * [Critter:<Node2D#119856436055>(critter.gd)] + 2
+        * [Critter:<Node2D#120007431008>(critter.gd)] + 2
+        * [Critter:<Node2D#120158425961>(critter.gd)] + 2
+        * [Critter:<Node2D#120309420914>(critter.gd)] + 2
+        * [Critter:<Node2D#120460415867>(critter.gd)] + 2
+        * [Critter:<Node2D#120611410820>(critter.gd)] + 2
+        * [Critter:<Node2D#120762405773>(critter.gd)] + 2
+        * [Critter:<Node2D#120913400726>(critter.gd)] + 2
+        * [Critter:<Node2D#121064395679>(critter.gd)] + 2
+        * [Critter:<Node2D#121215390632>(critter.gd)] + 2
+        * [Critter:<Node2D#121366385585>(critter.gd)] + 2
+        * [Critter:<Node2D#121517380538>(critter.gd)] + 2
+        * [Critter:<Node2D#121668375491>(critter.gd)] + 2[0m
+[33m960 orphans[0m
+[1m5/5 passed.
+[0m[4m
+
+res://test/unit/test_edge_cases.gd
+[0m* test_critter_move_animation
+* test_all_critter_type_combinations
+* test_critter_size_increases_with_level
+* test_concert_triggers_exactly_once_with_duplicates
+KKJam - Phase 2 Started
+Match 3 to merge! Collect all 4 Level 3 critters to win!
+Collected Level 3 Critter: BUNNY
+Collected Level 3 Critter: CAT
+Collected Level 3 Critter: FROG
+Collected Level 3 Critter: BIRD
+ULTIMATE CONCERT TRIGGERED!
+Album completed! Total albums: 1
+Stage cleared for next tour stop
+Collected Level 3 Critter: BUNNY
+Collected Level 3 Critter: CAT
+* test_bpm_scaling_multiple_albums
+KKJam - Phase 2 Started
+Match 3 to merge! Collect all 4 Level 3 critters to win!
+Collected Level 3 Critter: BUNNY
+Collected Level 3 Critter: CAT
+Collected Level 3 Critter: FROG
+Collected Level 3 Critter: BIRD
+ULTIMATE CONCERT TRIGGERED!
+Album completed! Total albums: 1
+Stage cleared for next tour stop
+Collected Level 3 Critter: BUNNY
+Collected Level 3 Critter: CAT
+Collected Level 3 Critter: FROG
+Collected Level 3 Critter: BIRD
+ULTIMATE CONCERT TRIGGERED!
+Album completed! Total albums: 2
+Stage cleared for next tour stop
+Collected Level 3 Critter: BUNNY
+Collected Level 3 Critter: CAT
+Collected Level 3 Critter: FROG
+Collected Level 3 Critter: BIRD
+ULTIMATE CONCERT TRIGGERED!
+Album completed! Total albums: 3
+Stage cleared for next tour stop
+* test_l_shaped_matches_dont_count
+* test_t_shaped_matches
+* test_edge_position_matches
+* test_corner_matches
+[1m9/9 passed.
+[0m[4m
+
+res://test/unit/test_game_manager.gd
+[0m* test_game_manager_initialization
+* test_collection_state_initialization
+* test_add_score
+* test_collect_single_critter
+Collected Level 3 Critter: BUNNY
+* test_collect_all_critters_triggers_concert
+KKJam - Phase 2 Started
+Match 3 to merge! Collect all 4 Level 3 critters to win!
+Collected Level 3 Critter: BUNNY
+Collected Level 3 Critter: CAT
+Collected Level 3 Critter: FROG
+Collected Level 3 Critter: BIRD
+ULTIMATE CONCERT TRIGGERED!
+Album completed! Total albums: 1
+Stage cleared for next tour stop
+* test_concert_increments_album_count
+KKJam - Phase 2 Started
+Match 3 to merge! Collect all 4 Level 3 critters to win!
+Collected Level 3 Critter: BUNNY
+Collected Level 3 Critter: CAT
+Collected Level 3 Critter: FROG
+Collected Level 3 Critter: BIRD
+ULTIMATE CONCERT TRIGGERED!
+Album completed! Total albums: 1
+Stage cleared for next tour stop
+* test_concert_increases_bpm
+KKJam - Phase 2 Started
+Match 3 to merge! Collect all 4 Level 3 critters to win!
+Collected Level 3 Critter: BUNNY
+Collected Level 3 Critter: CAT
+Collected Level 3 Critter: FROG
+Collected Level 3 Critter: BIRD
+ULTIMATE CONCERT TRIGGERED!
+Album completed! Total albums: 1
+Stage cleared for next tour stop
+* test_reset_stage_clears_collection
+KKJam - Phase 2 Started
+Match 3 to merge! Collect all 4 Level 3 critters to win!
+Collected Level 3 Critter: BUNNY
+Collected Level 3 Critter: CAT
+Stage cleared for next tour stop
+* test_duplicate_collection_ignored
+Collected Level 3 Critter: BUNNY
+[1m9/9 passed.
+[0m[4m
+
+res://test/unit/test_match_controller.gd
+[0m* test_horizontal_match_detection
+* test_vertical_match_detection
+* test_no_match_with_different_types
+* test_no_match_with_different_levels
+* test_match_of_four
+* test_match_of_five
+* test_multiple_matches
+* test_would_create_match_horizontal
+* test_would_not_create_match
+* test_check_matches_at_position
+[1m10/10 passed.
+[0m[4m
+
+res://test/integration/test_game_flow.gd
+[0m* test_scene_loads
+KKJam - Phase 2 Started
+Match 3 to merge! Collect all 4 Level 3 critters to win!
+* test_scene_has_required_nodes
+KKJam - Phase 2 Started
+Match 3 to merge! Collect all 4 Level 3 critters to win!
+* test_grid_initializes_with_critters
+KKJam - Phase 2 Started
+Match 3 to merge! Collect all 4 Level 3 critters to win!
+    [DEPRECATED]:  wait_frames has been replaced with wait_physics_frames which is counted in _physics_process.  wait_process_frames has also been added which is counted in _process.
+* test_no_initial_matches
+KKJam - Phase 2 Started
+Match 3 to merge! Collect all 4 Level 3 critters to win!
+    [DEPRECATED]:  wait_frames has been replaced with wait_physics_frames which is counted in _physics_process.  wait_process_frames has also been added which is counted in _process.
+* test_grid_contains_only_level_1_critters_initially
+KKJam - Phase 2 Started
+Match 3 to merge! Collect all 4 Level 3 critters to win!
+    [DEPRECATED]:  wait_frames has been replaced with wait_physics_frames which is counted in _physics_process.  wait_process_frames has also been added which is counted in _process.
+* test_grid_contains_all_critter_types
+KKJam - Phase 2 Started
+Match 3 to merge! Collect all 4 Level 3 critters to win!
+    [DEPRECATED]:  wait_frames has been replaced with wait_physics_frames which is counted in _physics_process.  wait_process_frames has also been added which is counted in _process.
+* test_game_manager_references_grid
+KKJam - Phase 2 Started
+Match 3 to merge! Collect all 4 Level 3 critters to win!
+    [DEPRECATED]:  wait_frames has been replaced with wait_physics_frames which is counted in _physics_process.  wait_process_frames has also been added which is counted in _process.
+* test_stage_display_connects_to_game_manager
+KKJam - Phase 2 Started
+Match 3 to merge! Collect all 4 Level 3 critters to win!
+    [DEPRECATED]:  wait_frames has been replaced with wait_physics_frames which is counted in _physics_process.  wait_process_frames has also been added which is counted in _process.
+[1m8/8 passed.
+[0m
+
+
+
+[33m==============================================[0m
+[33m= 960 Orphans[0m
+[33m==============================================[0m
+test_drag_swap.gd
+    - test_drag_state_initialization
+[33m        * [Critter:<Node2D#68769810308>(critter.gd)] + 2
+        * [Critter:<Node2D#68920805261>(critter.gd)] + 2
+        * [Critter:<Node2D#69071800214>(critter.gd)] + 2
+        * [Critter:<Node2D#69222795167>(critter.gd)] + 2
+        * [Critter:<Node2D#69373790120>(critter.gd)] + 2
+        * [Critter:<Node2D#69524785073>(critter.gd)] + 2
+        * [Critter:<Node2D#69675780026>(critter.gd)] + 2
+        * [Critter:<Node2D#69826774979>(critter.gd)] + 2
+        * [Critter:<Node2D#69977769932>(critter.gd)] + 2
+        * [Critter:<Node2D#70128764885>(critter.gd)] + 2
+        * [Critter:<Node2D#70279759838>(critter.gd)] + 2
+        * [Critter:<Node2D#70430754791>(critter.gd)] + 2
+        * [Critter:<Node2D#70581749744>(critter.gd)] + 2
+        * [Critter:<Node2D#70732744697>(critter.gd)] + 2
+        * [Critter:<Node2D#70883739650>(critter.gd)] + 2
+        * [Critter:<Node2D#71034734603>(critter.gd)] + 2
+        * [Critter:<Node2D#71185729556>(critter.gd)] + 2
+        * [Critter:<Node2D#71336724509>(critter.gd)] + 2
+        * [Critter:<Node2D#71487719462>(critter.gd)] + 2
+        * [Critter:<Node2D#71638714415>(critter.gd)] + 2
+        * [Critter:<Node2D#71789709368>(critter.gd)] + 2
+        * [Critter:<Node2D#71940704321>(critter.gd)] + 2
+        * [Critter:<Node2D#72091699274>(critter.gd)] + 2
+        * [Critter:<Node2D#72242694227>(critter.gd)] + 2
+        * [Critter:<Node2D#72393689180>(critter.gd)] + 2
+        * [Critter:<Node2D#72544684133>(critter.gd)] + 2
+        * [Critter:<Node2D#72695679086>(critter.gd)] + 2
+        * [Critter:<Node2D#72846674039>(critter.gd)] + 2
+        * [Critter:<Node2D#72997668992>(critter.gd)] + 2
+        * [Critter:<Node2D#73148663945>(critter.gd)] + 2
+        * [Critter:<Node2D#73299658898>(critter.gd)] + 2
+        * [Critter:<Node2D#73450653851>(critter.gd)] + 2
+        * [Critter:<Node2D#73601648804>(critter.gd)] + 2
+        * [Critter:<Node2D#73752643757>(critter.gd)] + 2
+        * [Critter:<Node2D#73903638710>(critter.gd)] + 2
+        * [Critter:<Node2D#74054633663>(critter.gd)] + 2
+        * [Critter:<Node2D#74205628616>(critter.gd)] + 2
+        * [Critter:<Node2D#74356623569>(critter.gd)] + 2
+        * [Critter:<Node2D#74507618522>(critter.gd)] + 2
+        * [Critter:<Node2D#74658613475>(critter.gd)] + 2
+        * [Critter:<Node2D#74809608428>(critter.gd)] + 2
+        * [Critter:<Node2D#74960603381>(critter.gd)] + 2
+        * [Critter:<Node2D#75111598334>(critter.gd)] + 2
+        * [Critter:<Node2D#75262593287>(critter.gd)] + 2
+        * [Critter:<Node2D#75413588240>(critter.gd)] + 2
+        * [Critter:<Node2D#75564583193>(critter.gd)] + 2
+        * [Critter:<Node2D#75715578146>(critter.gd)] + 2
+        * [Critter:<Node2D#75866573099>(critter.gd)] + 2
+        * [Critter:<Node2D#76017568052>(critter.gd)] + 2
+        * [Critter:<Node2D#76168563005>(critter.gd)] + 2
+        * [Critter:<Node2D#76319557958>(critter.gd)] + 2
+        * [Critter:<Node2D#76470552911>(critter.gd)] + 2
+        * [Critter:<Node2D#76621547864>(critter.gd)] + 2
+        * [Critter:<Node2D#76772542817>(critter.gd)] + 2
+        * [Critter:<Node2D#76923537770>(critter.gd)] + 2
+        * [Critter:<Node2D#77074532723>(critter.gd)] + 2
+        * [Critter:<Node2D#77225527676>(critter.gd)] + 2
+        * [Critter:<Node2D#77376522629>(critter.gd)] + 2
+        * [Critter:<Node2D#77527517582>(critter.gd)] + 2
+        * [Critter:<Node2D#77678512535>(critter.gd)] + 2
+        * [Critter:<Node2D#77829507488>(critter.gd)] + 2
+        * [Critter:<Node2D#77980502441>(critter.gd)] + 2
+        * [Critter:<Node2D#78131497394>(critter.gd)] + 2
+        * [Critter:<Node2D#78282492347>(critter.gd)] + 2[0m
+    - test_drag_threshold_value
+[33m        * [Critter:<Node2D#79624669702>(critter.gd)] + 2
+        * [Critter:<Node2D#79775664655>(critter.gd)] + 2
+        * [Critter:<Node2D#79926659608>(critter.gd)] + 2
+        * [Critter:<Node2D#80077654561>(critter.gd)] + 2
+        * [Critter:<Node2D#80228649514>(critter.gd)] + 2
+        * [Critter:<Node2D#80379644467>(critter.gd)] + 2
+        * [Critter:<Node2D#80530639420>(critter.gd)] + 2
+        * [Critter:<Node2D#80681634373>(critter.gd)] + 2
+        * [Critter:<Node2D#80832629326>(critter.gd)] + 2
+        * [Critter:<Node2D#80983624279>(critter.gd)] + 2
+        * [Critter:<Node2D#81134619232>(critter.gd)] + 2
+        * [Critter:<Node2D#81285614185>(critter.gd)] + 2
+        * [Critter:<Node2D#81436609138>(critter.gd)] + 2
+        * [Critter:<Node2D#81587604091>(critter.gd)] + 2
+        * [Critter:<Node2D#81738599044>(critter.gd)] + 2
+        * [Critter:<Node2D#81889593997>(critter.gd)] + 2
+        * [Critter:<Node2D#82040588950>(critter.gd)] + 2
+        * [Critter:<Node2D#82191583903>(critter.gd)] + 2
+        * [Critter:<Node2D#82342578856>(critter.gd)] + 2
+        * [Critter:<Node2D#82493573809>(critter.gd)] + 2
+        * [Critter:<Node2D#82644568762>(critter.gd)] + 2
+        * [Critter:<Node2D#82795563715>(critter.gd)] + 2
+        * [Critter:<Node2D#82946558668>(critter.gd)] + 2
+        * [Critter:<Node2D#83097553621>(critter.gd)] + 2
+        * [Critter:<Node2D#83248548574>(critter.gd)] + 2
+        * [Critter:<Node2D#83399543527>(critter.gd)] + 2
+        * [Critter:<Node2D#83550538480>(critter.gd)] + 2
+        * [Critter:<Node2D#83701533433>(critter.gd)] + 2
+        * [Critter:<Node2D#83852528386>(critter.gd)] + 2
+        * [Critter:<Node2D#84003523339>(critter.gd)] + 2
+        * [Critter:<Node2D#84154518292>(critter.gd)] + 2
+        * [Critter:<Node2D#84305513245>(critter.gd)] + 2
+        * [Critter:<Node2D#84456508198>(critter.gd)] + 2
+        * [Critter:<Node2D#84607503151>(critter.gd)] + 2
+        * [Critter:<Node2D#84758498104>(critter.gd)] + 2
+        * [Critter:<Node2D#84909493057>(critter.gd)] + 2
+        * [Critter:<Node2D#85060488010>(critter.gd)] + 2
+        * [Critter:<Node2D#85211482963>(critter.gd)] + 2
+        * [Critter:<Node2D#85362477916>(critter.gd)] + 2
+        * [Critter:<Node2D#85513472869>(critter.gd)] + 2
+        * [Critter:<Node2D#85664467822>(critter.gd)] + 2
+        * [Critter:<Node2D#85815462775>(critter.gd)] + 2
+        * [Critter:<Node2D#85966457728>(critter.gd)] + 2
+        * [Critter:<Node2D#86117452681>(critter.gd)] + 2
+        * [Critter:<Node2D#86268447634>(critter.gd)] + 2
+        * [Critter:<Node2D#86419442587>(critter.gd)] + 2
+        * [Critter:<Node2D#86570437540>(critter.gd)] + 2
+        * [Critter:<Node2D#86721432493>(critter.gd)] + 2
+        * [Critter:<Node2D#86872427446>(critter.gd)] + 2
+        * [Critter:<Node2D#87023422399>(critter.gd)] + 2
+        * [Critter:<Node2D#87174417352>(critter.gd)] + 2
+        * [Critter:<Node2D#87325412305>(critter.gd)] + 2
+        * [Critter:<Node2D#87476407258>(critter.gd)] + 2
+        * [Critter:<Node2D#87627402211>(critter.gd)] + 2
+        * [Critter:<Node2D#87778397164>(critter.gd)] + 2
+        * [Critter:<Node2D#87929392117>(critter.gd)] + 2
+        * [Critter:<Node2D#88080387070>(critter.gd)] + 2
+        * [Critter:<Node2D#88231382023>(critter.gd)] + 2
+        * [Critter:<Node2D#88382376976>(critter.gd)] + 2
+        * [Critter:<Node2D#88533371929>(critter.gd)] + 2
+        * [Critter:<Node2D#88684366882>(critter.gd)] + 2
+        * [Critter:<Node2D#88835361835>(critter.gd)] + 2
+        * [Critter:<Node2D#88986356788>(critter.gd)] + 2
+        * [Critter:<Node2D#89137351741>(critter.gd)] + 2[0m
+    - test_is_processing_blocks_input
+[33m        * [Critter:<Node2D#90462751880>(critter.gd)] + 2
+        * [Critter:<Node2D#90613746833>(critter.gd)] + 2
+        * [Critter:<Node2D#90764741786>(critter.gd)] + 2
+        * [Critter:<Node2D#90915736739>(critter.gd)] + 2
+        * [Critter:<Node2D#91066731692>(critter.gd)] + 2
+        * [Critter:<Node2D#91217726645>(critter.gd)] + 2
+        * [Critter:<Node2D#91368721598>(critter.gd)] + 2
+        * [Critter:<Node2D#91519716551>(critter.gd)] + 2
+        * [Critter:<Node2D#91670711504>(critter.gd)] + 2
+        * [Critter:<Node2D#91821706457>(critter.gd)] + 2
+        * [Critter:<Node2D#91972701410>(critter.gd)] + 2
+        * [Critter:<Node2D#92123696363>(critter.gd)] + 2
+        * [Critter:<Node2D#92274691316>(critter.gd)] + 2
+        * [Critter:<Node2D#92425686269>(critter.gd)] + 2
+        * [Critter:<Node2D#92576681222>(critter.gd)] + 2
+        * [Critter:<Node2D#92727676175>(critter.gd)] + 2
+        * [Critter:<Node2D#92878671128>(critter.gd)] + 2
+        * [Critter:<Node2D#93029666081>(critter.gd)] + 2
+        * [Critter:<Node2D#93180661034>(critter.gd)] + 2
+        * [Critter:<Node2D#93331655987>(critter.gd)] + 2
+        * [Critter:<Node2D#93482650940>(critter.gd)] + 2
+        * [Critter:<Node2D#93633645893>(critter.gd)] + 2
+        * [Critter:<Node2D#93784640846>(critter.gd)] + 2
+        * [Critter:<Node2D#93935635799>(critter.gd)] + 2
+        * [Critter:<Node2D#94086630752>(critter.gd)] + 2
+        * [Critter:<Node2D#94237625705>(critter.gd)] + 2
+        * [Critter:<Node2D#94388620658>(critter.gd)] + 2
+        * [Critter:<Node2D#94539615611>(critter.gd)] + 2
+        * [Critter:<Node2D#94690610564>(critter.gd)] + 2
+        * [Critter:<Node2D#94841605517>(critter.gd)] + 2
+        * [Critter:<Node2D#94992600470>(critter.gd)] + 2
+        * [Critter:<Node2D#95143595423>(critter.gd)] + 2
+        * [Critter:<Node2D#95294590376>(critter.gd)] + 2
+        * [Critter:<Node2D#95445585329>(critter.gd)] + 2
+        * [Critter:<Node2D#95596580282>(critter.gd)] + 2
+        * [Critter:<Node2D#95747575235>(critter.gd)] + 2
+        * [Critter:<Node2D#95898570188>(critter.gd)] + 2
+        * [Critter:<Node2D#96049565141>(critter.gd)] + 2
+        * [Critter:<Node2D#96200560094>(critter.gd)] + 2
+        * [Critter:<Node2D#96351555047>(critter.gd)] + 2
+        * [Critter:<Node2D#96502550000>(critter.gd)] + 2
+        * [Critter:<Node2D#96653544953>(critter.gd)] + 2
+        * [Critter:<Node2D#96804539906>(critter.gd)] + 2
+        * [Critter:<Node2D#96955534859>(critter.gd)] + 2
+        * [Critter:<Node2D#97106529812>(critter.gd)] + 2
+        * [Critter:<Node2D#97257524765>(critter.gd)] + 2
+        * [Critter:<Node2D#97408519718>(critter.gd)] + 2
+        * [Critter:<Node2D#97559514671>(critter.gd)] + 2
+        * [Critter:<Node2D#97710509624>(critter.gd)] + 2
+        * [Critter:<Node2D#97861504577>(critter.gd)] + 2
+        * [Critter:<Node2D#98012499530>(critter.gd)] + 2
+        * [Critter:<Node2D#98163494483>(critter.gd)] + 2
+        * [Critter:<Node2D#98314489436>(critter.gd)] + 2
+        * [Critter:<Node2D#98465484389>(critter.gd)] + 2
+        * [Critter:<Node2D#98616479342>(critter.gd)] + 2
+        * [Critter:<Node2D#98767474295>(critter.gd)] + 2
+        * [Critter:<Node2D#98918469248>(critter.gd)] + 2
+        * [Critter:<Node2D#99069464201>(critter.gd)] + 2
+        * [Critter:<Node2D#99220459154>(critter.gd)] + 2
+        * [Critter:<Node2D#99371454107>(critter.gd)] + 2
+        * [Critter:<Node2D#99522449060>(critter.gd)] + 2
+        * [Critter:<Node2D#99673444013>(critter.gd)] + 2
+        * [Critter:<Node2D#99824438966>(critter.gd)] + 2
+        * [Critter:<Node2D#99975433919>(critter.gd)] + 2[0m
+    - test_drag_state_variables_exist
+[33m        * [Critter:<Node2D#101317611274>(critter.gd)] + 2
+        * [Critter:<Node2D#101468606227>(critter.gd)] + 2
+        * [Critter:<Node2D#101619601180>(critter.gd)] + 2
+        * [Critter:<Node2D#101770596133>(critter.gd)] + 2
+        * [Critter:<Node2D#101921591086>(critter.gd)] + 2
+        * [Critter:<Node2D#102072586039>(critter.gd)] + 2
+        * [Critter:<Node2D#102223580992>(critter.gd)] + 2
+        * [Critter:<Node2D#102374575945>(critter.gd)] + 2
+        * [Critter:<Node2D#102525570898>(critter.gd)] + 2
+        * [Critter:<Node2D#102676565851>(critter.gd)] + 2
+        * [Critter:<Node2D#102827560804>(critter.gd)] + 2
+        * [Critter:<Node2D#102978555757>(critter.gd)] + 2
+        * [Critter:<Node2D#103129550710>(critter.gd)] + 2
+        * [Critter:<Node2D#103280545663>(critter.gd)] + 2
+        * [Critter:<Node2D#103431540616>(critter.gd)] + 2
+        * [Critter:<Node2D#103582535569>(critter.gd)] + 2
+        * [Critter:<Node2D#103733530522>(critter.gd)] + 2
+        * [Critter:<Node2D#103884525475>(critter.gd)] + 2
+        * [Critter:<Node2D#104035520428>(critter.gd)] + 2
+        * [Critter:<Node2D#104186515381>(critter.gd)] + 2
+        * [Critter:<Node2D#104337510334>(critter.gd)] + 2
+        * [Critter:<Node2D#104488505287>(critter.gd)] + 2
+        * [Critter:<Node2D#104639500240>(critter.gd)] + 2
+        * [Critter:<Node2D#104790495193>(critter.gd)] + 2
+        * [Critter:<Node2D#104941490146>(critter.gd)] + 2
+        * [Critter:<Node2D#105092485099>(critter.gd)] + 2
+        * [Critter:<Node2D#105243480052>(critter.gd)] + 2
+        * [Critter:<Node2D#105394475005>(critter.gd)] + 2
+        * [Critter:<Node2D#105545469958>(critter.gd)] + 2
+        * [Critter:<Node2D#105696464911>(critter.gd)] + 2
+        * [Critter:<Node2D#105847459864>(critter.gd)] + 2
+        * [Critter:<Node2D#105998454817>(critter.gd)] + 2
+        * [Critter:<Node2D#106149449770>(critter.gd)] + 2
+        * [Critter:<Node2D#106300444723>(critter.gd)] + 2
+        * [Critter:<Node2D#106451439676>(critter.gd)] + 2
+        * [Critter:<Node2D#106602434629>(critter.gd)] + 2
+        * [Critter:<Node2D#106753429582>(critter.gd)] + 2
+        * [Critter:<Node2D#106904424535>(critter.gd)] + 2
+        * [Critter:<Node2D#107055419488>(critter.gd)] + 2
+        * [Critter:<Node2D#107206414441>(critter.gd)] + 2
+        * [Critter:<Node2D#107357409394>(critter.gd)] + 2
+        * [Critter:<Node2D#107508404347>(critter.gd)] + 2
+        * [Critter:<Node2D#107659399300>(critter.gd)] + 2
+        * [Critter:<Node2D#107810394253>(critter.gd)] + 2
+        * [Critter:<Node2D#107961389206>(critter.gd)] + 2
+        * [Critter:<Node2D#108112384159>(critter.gd)] + 2
+        * [Critter:<Node2D#108263379112>(critter.gd)] + 2
+        * [Critter:<Node2D#108414374065>(critter.gd)] + 2
+        * [Critter:<Node2D#108565369018>(critter.gd)] + 2
+        * [Critter:<Node2D#108716363971>(critter.gd)] + 2
+        * [Critter:<Node2D#108867358924>(critter.gd)] + 2
+        * [Critter:<Node2D#109018353877>(critter.gd)] + 2
+        * [Critter:<Node2D#109169348830>(critter.gd)] + 2
+        * [Critter:<Node2D#109320343783>(critter.gd)] + 2
+        * [Critter:<Node2D#109471338736>(critter.gd)] + 2
+        * [Critter:<Node2D#109622333689>(critter.gd)] + 2
+        * [Critter:<Node2D#109773328642>(critter.gd)] + 2
+        * [Critter:<Node2D#109924323595>(critter.gd)] + 2
+        * [Critter:<Node2D#110075318548>(critter.gd)] + 2
+        * [Critter:<Node2D#110226313501>(critter.gd)] + 2
+        * [Critter:<Node2D#110377308454>(critter.gd)] + 2
+        * [Critter:<Node2D#110528303407>(critter.gd)] + 2
+        * [Critter:<Node2D#110679298360>(critter.gd)] + 2
+        * [Critter:<Node2D#110830293313>(critter.gd)] + 2[0m
+    - test_grid_cell_size_matches_layout
+[33m        * [Critter:<Node2D#112155693452>(critter.gd)] + 2
+        * [Critter:<Node2D#112306688405>(critter.gd)] + 2
+        * [Critter:<Node2D#112457683358>(critter.gd)] + 2
+        * [Critter:<Node2D#112608678311>(critter.gd)] + 2
+        * [Critter:<Node2D#112759673264>(critter.gd)] + 2
+        * [Critter:<Node2D#112910668217>(critter.gd)] + 2
+        * [Critter:<Node2D#113061663170>(critter.gd)] + 2
+        * [Critter:<Node2D#113212658123>(critter.gd)] + 2
+        * [Critter:<Node2D#113363653076>(critter.gd)] + 2
+        * [Critter:<Node2D#113514648029>(critter.gd)] + 2
+        * [Critter:<Node2D#113665642982>(critter.gd)] + 2
+        * [Critter:<Node2D#113816637935>(critter.gd)] + 2
+        * [Critter:<Node2D#113967632888>(critter.gd)] + 2
+        * [Critter:<Node2D#114118627841>(critter.gd)] + 2
+        * [Critter:<Node2D#114269622794>(critter.gd)] + 2
+        * [Critter:<Node2D#114420617747>(critter.gd)] + 2
+        * [Critter:<Node2D#114571612700>(critter.gd)] + 2
+        * [Critter:<Node2D#114722607653>(critter.gd)] + 2
+        * [Critter:<Node2D#114873602606>(critter.gd)] + 2
+        * [Critter:<Node2D#115024597559>(critter.gd)] + 2
+        * [Critter:<Node2D#115175592512>(critter.gd)] + 2
+        * [Critter:<Node2D#115326587465>(critter.gd)] + 2
+        * [Critter:<Node2D#115477582418>(critter.gd)] + 2
+        * [Critter:<Node2D#115628577371>(critter.gd)] + 2
+        * [Critter:<Node2D#115779572324>(critter.gd)] + 2
+        * [Critter:<Node2D#115930567277>(critter.gd)] + 2
+        * [Critter:<Node2D#116081562230>(critter.gd)] + 2
+        * [Critter:<Node2D#116232557183>(critter.gd)] + 2
+        * [Critter:<Node2D#116383552136>(critter.gd)] + 2
+        * [Critter:<Node2D#116534547089>(critter.gd)] + 2
+        * [Critter:<Node2D#116685542042>(critter.gd)] + 2
+        * [Critter:<Node2D#116836536995>(critter.gd)] + 2
+        * [Critter:<Node2D#116987531948>(critter.gd)] + 2
+        * [Critter:<Node2D#117138526901>(critter.gd)] + 2
+        * [Critter:<Node2D#117289521854>(critter.gd)] + 2
+        * [Critter:<Node2D#117440516807>(critter.gd)] + 2
+        * [Critter:<Node2D#117591511760>(critter.gd)] + 2
+        * [Critter:<Node2D#117742506713>(critter.gd)] + 2
+        * [Critter:<Node2D#117893501666>(critter.gd)] + 2
+        * [Critter:<Node2D#118044496619>(critter.gd)] + 2
+        * [Critter:<Node2D#118195491572>(critter.gd)] + 2
+        * [Critter:<Node2D#118346486525>(critter.gd)] + 2
+        * [Critter:<Node2D#118497481478>(critter.gd)] + 2
+        * [Critter:<Node2D#118648476431>(critter.gd)] + 2
+        * [Critter:<Node2D#118799471384>(critter.gd)] + 2
+        * [Critter:<Node2D#118950466337>(critter.gd)] + 2
+        * [Critter:<Node2D#119101461290>(critter.gd)] + 2
+        * [Critter:<Node2D#119252456243>(critter.gd)] + 2
+        * [Critter:<Node2D#119403451196>(critter.gd)] + 2
+        * [Critter:<Node2D#119554446149>(critter.gd)] + 2
+        * [Critter:<Node2D#119705441102>(critter.gd)] + 2
+        * [Critter:<Node2D#119856436055>(critter.gd)] + 2
+        * [Critter:<Node2D#120007431008>(critter.gd)] + 2
+        * [Critter:<Node2D#120158425961>(critter.gd)] + 2
+        * [Critter:<Node2D#120309420914>(critter.gd)] + 2
+        * [Critter:<Node2D#120460415867>(critter.gd)] + 2
+        * [Critter:<Node2D#120611410820>(critter.gd)] + 2
+        * [Critter:<Node2D#120762405773>(critter.gd)] + 2
+        * [Critter:<Node2D#120913400726>(critter.gd)] + 2
+        * [Critter:<Node2D#121064395679>(critter.gd)] + 2
+        * [Critter:<Node2D#121215390632>(critter.gd)] + 2
+        * [Critter:<Node2D#121366385585>(critter.gd)] + 2
+        * [Critter:<Node2D#121517380538>(critter.gd)] + 2
+        * [Critter:<Node2D#121668375491>(critter.gd)] + 2[0m
+
+
+[33m==============================================
+[0m[33m= Run Summary
+[0m[33m==============================================
+[0m
+Totals
+------
+Errors                1
+Deprecated            6
+
+Scripts               6
+Tests                47
+Passing Tests        47
+Asserts             212
+Orphans             960
+Time              1.663s
+
+
+[32m---- All tests passed! ----
+[0m

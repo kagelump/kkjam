@@ -61,8 +61,8 @@ func test_critter_position_update():
 	
 	critter.initialize(Critter.CritterType.BUNNY, Critter.CritterLevel.LEVEL_1, 3, 4)
 	
-	var expected_x = 3 * critter.CELL_SIZE + critter.CELL_SIZE / 2
-	var expected_y = 4 * critter.CELL_SIZE + critter.CELL_SIZE / 2
+	var expected_x = float(3 * critter.CELL_SIZE + critter.CELL_SIZE / 2)
+	var expected_y = float(4 * critter.CELL_SIZE + critter.CELL_SIZE / 2)
 	
 	assert_eq(critter.position.x, expected_x, "X position should be calculated correctly")
 	assert_eq(critter.position.y, expected_y, "Y position should be calculated correctly")

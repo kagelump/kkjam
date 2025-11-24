@@ -7,14 +7,20 @@ var critter_scene = preload("res://scenes/critter.tscn")
 
 func before_each():
 	grid = autofree(Grid.new())
-	add_child_autofree(grid)
 	
-	# Add CritterContainer child
+	# Add CritterContainer child before adding grid to tree
+	# This ensures _ready() can find the container when it runs
 	var container = Node2D.new()
 	container.name = "CritterContainer"
 	grid.add_child(container)
 	
-	# Initialize the grid
+	add_child_autofree(grid)
+	
+	# Clear any critters created by _ready() to ensure clean state
+	for child in container.get_children():
+		child.free()
+	
+	# Initialize the grid data
 	grid.initialize_grid()
 
 func test_drag_state_initialization():

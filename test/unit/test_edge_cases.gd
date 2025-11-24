@@ -47,7 +47,7 @@ func test_critter_size_increases_with_level():
 		
 		critter.initialize(Critter.CritterType.BUNNY, level, 0, 0)
 		
-		await wait_frames(1)
+		await wait_physics_frames(1)
 		
 		if critter.sprite:
 			sizes.append(critter.sprite.size.x)
