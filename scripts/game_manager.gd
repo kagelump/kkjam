@@ -2,7 +2,7 @@ extends Node
 class_name GameManager
 
 signal concert_triggered
-signal critter_collected(type)
+signal critter_collected(type, level)
 signal stage_reset
 
 # Game state
@@ -10,16 +10,10 @@ var score: int = 0
 var albums_completed: int = 0
 var current_bpm: int = 100
 
-# Collection state
-var collected_critters: Dictionary = {
-	Critter.CritterType.MELODY: false,
-	Critter.CritterType.DRUMS: false,
-	Critter.CritterType.PAD: false
-}
-
 # References
 var grid: Grid = null
 var ui: Control = null
+var stage_display = null
 
 func _ready():
 	# Get references if they exist
@@ -27,12 +21,14 @@ func _ready():
 		grid = get_node("../Grid")
 	if has_node("../UI"):
 		ui = get_node("../UI")
+	if has_node("../StageBackground"):
+		stage_display = get_node("../StageBackground")
 	
 	# Start BGM
 	AudioManager.start_music()
 	
-	print("KKJam - Phase 2 Started")
-	print("Match 3 to merge! Collect all 4 Level 3 critters to win!")
+	print("KKJam - Phase 2.5 Started")
+	print("Match 3 to merge! Get Level 5 of each type to trigger concert!")
 
 func add_score(points: int):
 	score += points
@@ -42,21 +38,24 @@ func update_ui():
 	# Will be implemented when UI is added
 	pass
 
-func collect_critter(type: Critter.CritterType):
-	if not collected_critters[type]:
-		collected_critters[type] = true
-		emit_signal("critter_collected", type)
-		print("Collected Level 3 Critter: ", Critter.CritterType.keys()[type])
-		check_concert_condition()
+func collect_critter(type: Critter.CritterType, level: Critter.CritterLevel):
+	emit_signal("critter_collected", type, level)
+	print("Collected Level ", level + 1, " ", Critter.CritterType.keys()[type], " Critter")
+	# Note: concert checking is now done in stage_display after merges
 
 func check_concert_condition():
-	var all_collected = true
-	for type in collected_critters:
-		if not collected_critters[type]:
-			all_collected = false
+	# Check if we have at least one Level 5 of each type on stage
+	if not stage_display:
+		return
+	
+	var has_all_level_5 = true
+	for type in [Critter.CritterType.MELODY, Critter.CritterType.DRUMS, Critter.CritterType.PAD]:
+		var max_level = stage_display.get_max_level_for_type(type)
+		if max_level < Critter.CritterLevel.LEVEL_5:
+			has_all_level_5 = false
 			break
 	
-	if all_collected:
+	if has_all_level_5:
 		trigger_concert()
 
 func trigger_concert():
@@ -76,7 +75,5 @@ func complete_album():
 		grid.reset_board()
 
 func reset_stage():
-	for type in collected_critters:
-		collected_critters[type] = false
 	emit_signal("stage_reset")
 	print("Stage cleared for next tour stop")

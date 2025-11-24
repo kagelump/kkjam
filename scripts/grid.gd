@@ -193,44 +193,15 @@ func refill_board():
 		refill_board()
 	else:
 		is_processing = false
-		update_music_state()
-
-func update_music_state():
-	# Scan board for max level of each critter type
-	var max_levels = {
-		Critter.CritterType.MELODY: 0,
-		Critter.CritterType.DRUMS: 0,
-		Critter.CritterType.PAD: 0
-	}
-	
-	for x in range(GRID_WIDTH):
-		for y in range(GRID_HEIGHT):
-			var critter = grid_data[x][y]
-			if critter:
-				var type = critter.critter_type
-				var level = 0
-				match critter.critter_level:
-					Critter.CritterLevel.LEVEL_1: level = 1
-					Critter.CritterLevel.LEVEL_2: level = 2
-					Critter.CritterLevel.LEVEL_3: level = 3
-				
-				if level > max_levels[type]:
-					max_levels[type] = level
-	
-	# Update Audio Manager
-	AudioManager.update_music_intensity(
-		max_levels[Critter.CritterType.MELODY],
-		max_levels[Critter.CritterType.DRUMS],
-		max_levels[Critter.CritterType.PAD]
-	)
+		# Music is now updated from stage, not from board
 
 func handle_level_3_created(critter: Critter):
-	print("Level 3 Created! Flying to stage...")
+	print("Level 3+ Created! Flying to stage...")
 	
-	# Notify Game Manager
+	# Notify Game Manager with level
 	var game_manager = get_node("../GameManager")
 	if game_manager:
-		game_manager.collect_critter(critter.critter_type)
+		game_manager.collect_critter(critter.critter_type, critter.critter_level)
 	
 	# Get target position from StageDisplay
 	var stage_bg = get_node("../StageBackground")

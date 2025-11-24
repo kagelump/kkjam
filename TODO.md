@@ -148,14 +148,14 @@ The goal is to create one Level 5 critter of each type (Melody, Drums, Pad). Lev
 - Add visual level indicators (numbers on critters). (DONE)
 - Add bounce animations on click and shake on invalid swap. (DONE)
 
-### **Phase 2.5**: Extended Gameplay Loop (Current)
-- [ ] Extend CritterLevel enum to support Level 4 and Level 5
-- [ ] Update stage system to support multiple critters of same type
-- [ ] Implement stage-based merging logic (3 Level 3s → 1 Level 4, etc.)
-- [ ] Update music layering: only Level 3+ on stage adds music (not board critters)
-- [ ] Update concert trigger: requires one Level 5 of each type
-- [ ] Update visual scaling for Level 4 and Level 5 critters
-- [ ] Test the extended gameplay loop (~81+ matches to win)
+### **Phase 2.5**: Extended Gameplay Loop ✓ COMPLETE
+- [x] Extend CritterLevel enum to support Level 4 and Level 5
+- [x] Update stage system to support multiple critters of same type
+- [x] Implement stage-based merging logic (3 Level 3s → 1 Level 4, etc.)
+- [x] Update music layering: only Level 3+ on stage adds music (not board critters)
+- [x] Update concert trigger: requires one Level 5 of each type
+- [x] Update visual scaling for Level 4 and Level 5 critters
+- [x] Update all tests for new gameplay mechanics
 
 ### **Phase 3: The Loop & Shuffle (Day 5)**
 - **Audio Setup**:

@@ -12,7 +12,9 @@ enum CritterType {
 enum CritterLevel {
 	LEVEL_1,  # Baby
 	LEVEL_2,  # Teen
-	LEVEL_3   # Star
+	LEVEL_3,  # Musician (Stage)
+	LEVEL_4,  # Star (Stage)
+	LEVEL_5   # Legend (Stage)
 }
 
 # Properties
@@ -67,7 +69,17 @@ func update_visual():
 		level_label.position = Vector2(-label_size / 2.0, -label_size / 2.0)
 	
 	# Adjust size based on level (bigger = higher level)
-	var size_multiplier = 0.7 + (critter_level * 0.15)
+	# Level 1-2: Board sizes (smaller)
+	# Level 3-5: Stage sizes (progressively larger)
+	var size_multiplier: float
+	match critter_level:
+		CritterLevel.LEVEL_1: size_multiplier = 0.7
+		CritterLevel.LEVEL_2: size_multiplier = 0.85
+		CritterLevel.LEVEL_3: size_multiplier = 1.0
+		CritterLevel.LEVEL_4: size_multiplier = 1.15
+		CritterLevel.LEVEL_5: size_multiplier = 1.3
+		_: size_multiplier = 0.7
+	
 	var visual_size = CELL_SIZE * size_multiplier
 	sprite.size = Vector2(visual_size, visual_size)
 	sprite.position = Vector2(-visual_size / 2, -visual_size / 2)

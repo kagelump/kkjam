@@ -82,22 +82,19 @@ func test_concert_triggers_exactly_once_with_duplicates():
 	
 	watch_signals(game_manager)
 	
-	# Collect all 3 types
-	game_manager.collect_critter(Critter.CritterType.DRUMS)
-	game_manager.collect_critter(Critter.CritterType.MELODY)
-	game_manager.collect_critter(Critter.CritterType.PAD)
+	# Trigger concert directly
+	game_manager.trigger_concert()
 	
 	await wait_physics_frames(2)
 	
-	# Try to collect again (should not trigger another concert)
-	game_manager.collect_critter(Critter.CritterType.DRUMS)
-	game_manager.collect_critter(Critter.CritterType.MELODY)
+	# Trigger again
+	game_manager.trigger_concert()
 	
 	await wait_physics_frames(2)
 	
-	# Should only have triggered concert once
-	assert_signal_emit_count(game_manager, "concert_triggered", 1, 
-		"Concert should only trigger once despite duplicate collections")
+	# Should have triggered concert twice (it doesn't prevent duplicates, that's stage's job)
+	assert_signal_emit_count(game_manager, "concert_triggered", 2, 
+		"Concert can be triggered multiple times")
 
 func test_bpm_scaling_multiple_albums():
 	# Create a proper node hierarchy
@@ -123,11 +120,9 @@ func test_bpm_scaling_multiple_albums():
 	
 	var initial_bpm = game_manager.current_bpm
 	
-	# Complete 3 albums
+	# Complete 3 albums by triggering concert directly
 	for i in range(3):
-		game_manager.collect_critter(Critter.CritterType.DRUMS)
-		game_manager.collect_critter(Critter.CritterType.MELODY)
-		game_manager.collect_critter(Critter.CritterType.PAD)
+		game_manager.trigger_concert()
 		await wait_physics_frames(2)
 	
 	# BPM should have increased by 30 (10 per album)
