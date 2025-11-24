@@ -674,3 +674,10 @@ func _internal_helper():
 ---
 
 **This document consolidates all agent instructions. Individual agent files in `.github/agents/` are now deprecated. Use this single AGENTS.md file as the authoritative source for all project guidance.**
+
+**Note**: This file reflects the current state of the project (Phase 2.5). The old individual agent files contained outdated information:
+- Old files mentioned 4 critter types (BUNNY, CAT, FROG, BIRD), now there are 3 (MELODY, DRUMS, PAD)
+- Old files mentioned 3 levels, now the system supports 5 levels (1-5)
+- Old files mentioned 42 total tests (33 unit + 8 integration), now there are 50 tests (42 unit + 8 integration)
+- Old files mentioned concert triggers at Level 3, now it requires Level 5 of each type
+
