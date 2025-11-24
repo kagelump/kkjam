@@ -13,7 +13,8 @@ help:
 	@echo "  make test-unit     - Run unit tests only"
 	@echo "  make test-int      - Run integration tests only"
 	@echo "  make run           - Run the game"
-	@echo "  make export-web    - Export game for web (requires export templates)"
+	@echo "  make export-web    - Export game for web (release)"
+	@echo "  make web-dev       - Export debug web build and serve locally"
 	@echo "  make serve         - Serve exported web build locally (port 8000)"
 	@echo "  make clean         - Clean temporary files"
 	@echo "  make help          - Show this help message"
@@ -51,6 +52,18 @@ export-web:
 	@mkdir -p build/web
 	@$(GODOT) --headless --export-release "Web" build/web/index.html
 	@echo "Export complete: build/web/index.html"
+
+# Export web debug build and serve
+.PHONY: web-dev
+web-dev:
+	@echo "Exporting debug web build..."
+	@mkdir -p build/web
+	@$(GODOT) --headless --export-debug "Web" build/web/index.html
+	@echo "Export complete: build/web/index.html"
+	@echo ""
+	@echo "Starting web server at http://localhost:8000"
+	@echo "Press Ctrl+C to stop"
+	@cd build/web && python3 -m http.server 8000
 
 # Serve web build locally
 .PHONY: serve
