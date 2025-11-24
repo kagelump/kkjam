@@ -85,9 +85,10 @@ func _internal_helper():
 ## Project-Specific Guidelines
 
 ### Critter System
-- Critters have types: BUNNY, CAT, FROG, BIRD
-- Critters have levels: 1, 2, 3
-- Level 3 critters fly to the Stage
+- Critters have types: MELODY, DRUMS, PAD
+- Critters have levels: 1, 2, 3, 4, 5
+- Levels 1-2 are board-only
+- Levels 3-5 fly to the Stage
 - Use the `Critter` class for all critter logic
 
 ### Grid System
@@ -98,12 +99,15 @@ func _internal_helper():
 
 ### Game Loop
 - Game state is managed by `GameManager`
+- Audio system managed by `AudioManager` (autoload singleton)
 - Use signals for cross-component communication
-- Stage collection triggers concerts when all 4 types are collected
+- Stage collection triggers concerts when all 3 types reach Level 5
 
 ### Match and Merge Logic
 - Matches require 3+ critters of same type AND level
 - Matches merge into 1 higher-level critter at swap location
+- Board merging: 3 Level 1s → 1 Level 2, 3 Level 2s → 1 Level 3
+- Stage merging: 3 Level 3s → 1 Level 4, 3 Level 4s → 1 Level 5
 - Cascading matches are automatically detected after refills
 - Use `MatchController` for all match-related logic
 
@@ -136,7 +140,9 @@ func _internal_helper():
 
 ## Important Notes
 - This project uses Godot 4.x syntax (not Godot 3.x)
-- The project is currently in Phase 2 (complete)
-- Phase 3 adds shuffle mechanics and audio
+- Phase 2.5 is complete (includes extended 5-level system and audio)
+- Phase 3 adds shuffle mechanics and deadlock detection
+- Phase 4 adds combo system and particle effects
 - Follow the patterns established in existing scripts
 - Maintain backward compatibility with existing features
+- AudioManager is an autoload singleton (`res://scripts/audio_manager.gd`)

@@ -12,9 +12,9 @@ You are an expert in testing Godot games. Your role is to help ensure code chang
 
 ### Automated Test Suite
 This project uses GUT for automated testing with comprehensive test coverage:
-- **Unit Tests**: 33 tests covering Critter, MatchController, GameManager, and edge cases
-- **Integration Tests**: 8 tests for full game flow scenarios
-- **Total Assertions**: 201 passing
+- **Unit Tests**: Tests covering Critter, MatchController, GameManager, AudioManager, DragSwap, and edge cases
+- **Integration Tests**: Tests for full game flow scenarios
+- Tests are in `test/unit/` and `test/integration/`
 
 ### Running Tests
 ```bash
@@ -51,13 +51,15 @@ godot --headless -s addons/gut/gut_cmdln.gd -gtest=res://test/
 ## Test Organization
 
 ### Unit Tests (`test/unit/`)
-- `test_critter.gd` - Critter behavior (6 tests)
-- `test_match_controller.gd` - Match detection (10 tests)
-- `test_game_manager.gd` - Game state (9 tests)
-- `test_edge_cases.gd` - Special scenarios (9 tests)
+- `test_critter.gd` - Critter behavior
+- `test_match_controller.gd` - Match detection
+- `test_game_manager.gd` - Game state management
+- `test_edge_cases.gd` - Special scenarios
+- `test_audio_manager.gd` - Audio system
+- `test_drag_swap.gd` - Drag-and-drop mechanics
 
 ### Integration Tests (`test/integration/`)
-- `test_game_flow.gd` - Full workflows (8 tests)
+- `test_game_flow.gd` - Full game workflows
 
 ## Manual Testing Checklist by System
 
@@ -160,12 +162,13 @@ godot --headless -s addons/gut/gut_cmdln.gd -gtest=res://test/
 - Concert trigger
 - Board reset
 - Visual polish (bounce, shake, fly animations)
+- Stage-based merging (Level 3 → 4 → 5)
+- Audio system with dynamic layering
 
 ### Phase 3 (Planned)
 - Deadlock detection
 - Shuffle mechanics
-- Audio layering
-- BPM scaling
+- Enhanced BPM scaling
 
 ### Phase 4 (Planned)
 - Combo system
