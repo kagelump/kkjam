@@ -1,9 +1,25 @@
-[gd_scene load_steps=2 format=3 uid="uid://bkf4t7xvylj3x"]
+[gd_scene load_steps=3 format=3 uid="uid://bkf4t7xvylj3x"]
 
 [ext_resource type="Script" path="res://scripts/critter.gd" id="1_critter"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+border_color = Color(1, 1, 0, 1)
+
 [node name="Critter" type="Node2D"]
 script = ExtResource("1_critter")
+
+[node name="SelectionBorder" type="Panel" parent="."]
+visible = false
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_1")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_left = -32.0

@@ -37,6 +37,7 @@ const TYPE_COLORS = {
 
 @onready var sprite: ColorRect = $ColorRect
 @onready var level_label: Label = $LevelLabel
+@onready var selection_border: Panel = $SelectionBorder
 
 func _ready():
 	update_visual()
@@ -83,6 +84,12 @@ func update_visual():
 	var visual_size = CELL_SIZE * size_multiplier
 	sprite.size = Vector2(visual_size, visual_size)
 	sprite.position = Vector2(-visual_size / 2, -visual_size / 2)
+	
+	# Update selection border size to match
+	if selection_border:
+		var border_size = visual_size + 8  # Slightly larger than sprite
+		selection_border.size = Vector2(border_size, border_size)
+		selection_border.position = Vector2(-border_size / 2, -border_size / 2)
 
 func update_position():
 	# Position in world space based on grid coordinates
@@ -108,6 +115,10 @@ func set_selected(selected: bool):
 			sprite.modulate = Color(1.2, 1.2, 1.2)
 		else:
 			sprite.modulate = Color(1.0, 1.0, 1.0)
+	
+	# Show/hide selection border
+	if selection_border:
+		selection_border.visible = selected
 
 func play_click_animation():
 	# Bounce animation when clicked

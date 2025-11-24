@@ -299,6 +299,15 @@ func _input(event):
 				is_dragging = true
 				var drag_delta = current_pos - drag_start_pos
 				
+				# Get the dragged critter and show selection border
+				var dragged_critter = grid_data[drag_start_grid_pos.x][drag_start_grid_pos.y]
+				if dragged_critter:
+					# Clear previous selection if any
+					if selected_critter and selected_critter != dragged_critter:
+						selected_critter.set_selected(false)
+					selected_critter = dragged_critter
+					selected_critter.set_selected(true)
+				
 				# Determine primary direction (horizontal or vertical)
 				var swap_x = drag_start_grid_pos.x
 				var swap_y = drag_start_grid_pos.y
@@ -312,10 +321,8 @@ func _input(event):
 				
 				# Validate target position
 				if swap_x >= 0 and swap_x < GRID_WIDTH and swap_y >= 0 and swap_y < GRID_HEIGHT:
-					# Get the dragged critter
-					var dragged_critter = grid_data[drag_start_grid_pos.x][drag_start_grid_pos.y]
+					# Attempt swap (this will set processing_matches if valid)
 					if dragged_critter:
-						# Attempt swap (this will set processing_matches if valid)
 						swap_critters(drag_start_grid_pos.x, drag_start_grid_pos.y, swap_x, swap_y)
 				
 				# Reset drag state immediately
