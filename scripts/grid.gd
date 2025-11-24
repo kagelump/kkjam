@@ -18,6 +18,12 @@ var selected_critter: Critter = null
 var is_processing: bool = false
 var last_swap_target: Vector2 = Vector2(-1, -1)
 
+# Touch/drag support
+var drag_start_pos: Vector2 = Vector2.ZERO
+var drag_start_grid_pos: Vector2i = Vector2i(-1, -1)
+var is_dragging: bool = false
+const DRAG_THRESHOLD: float = 20.0  # Minimum pixels to trigger a drag
+
 func _ready():
 	match_controller = MatchController.new(self)
 	initialize_grid()
@@ -253,14 +259,70 @@ func apply_gravity():
 func _input(event):
 	if is_processing:
 		return
-		
+	
+	# Handle mouse/touch press (start of interaction)
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		var mouse_pos = get_local_mouse_position()
 		var grid_x = int(mouse_pos.x / CELL_SIZE)
 		var grid_y = int(mouse_pos.y / CELL_SIZE)
 		
 		if grid_x >= 0 and grid_x < GRID_WIDTH and grid_y >= 0 and grid_y < GRID_HEIGHT:
-			handle_click(grid_x, grid_y)
+			# Store drag start position
+			drag_start_pos = mouse_pos
+			drag_start_grid_pos = Vector2i(grid_x, grid_y)
+			is_dragging = false
+	
+	# Handle mouse/touch release (end of interaction)
+	elif event is InputEventMouseButton and not event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		if is_dragging:
+			# Drag release - already handled in motion
+			is_dragging = false
+			if selected_critter:
+				selected_critter.set_selected(false)
+				selected_critter = null
+		elif drag_start_grid_pos.x >= 0:
+			# This was a tap/click, not a drag
+			handle_click(drag_start_grid_pos.x, drag_start_grid_pos.y)
+		
+		drag_start_grid_pos = Vector2i(-1, -1)
+	
+	# Handle mouse/touch drag motion
+	elif event is InputEventMouseMotion:
+		if drag_start_grid_pos.x >= 0 and not is_dragging:
+			var current_pos = get_local_mouse_position()
+			var drag_distance = drag_start_pos.distance_to(current_pos)
+			
+			# Check if we've dragged far enough to trigger a swap
+			if drag_distance > DRAG_THRESHOLD:
+				is_dragging = true
+				var drag_delta = current_pos - drag_start_pos
+				
+				# Determine primary direction (horizontal or vertical)
+				var swap_x = drag_start_grid_pos.x
+				var swap_y = drag_start_grid_pos.y
+				
+				if abs(drag_delta.x) > abs(drag_delta.y):
+					# Horizontal drag
+					swap_x += 1 if drag_delta.x > 0 else -1
+				else:
+					# Vertical drag
+					swap_y += 1 if drag_delta.y > 0 else -1
+				
+				# Validate target position
+				if swap_x >= 0 and swap_x < GRID_WIDTH and swap_y >= 0 and swap_y < GRID_HEIGHT:
+					# Select the dragged critter
+					var dragged_critter = grid_data[drag_start_grid_pos.x][drag_start_grid_pos.y]
+					if dragged_critter:
+						selected_critter = dragged_critter
+						selected_critter.set_selected(true)
+						
+						# Attempt swap
+						swap_critters(drag_start_grid_pos.x, drag_start_grid_pos.y, swap_x, swap_y)
+						selected_critter = null
+				
+				# Reset drag state
+				drag_start_grid_pos = Vector2i(-1, -1)
+				is_dragging = false
 
 func handle_click(x: int, y: int):
 	var clicked_critter = grid_data[x][y]
