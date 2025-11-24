@@ -18,16 +18,16 @@ const SFX_BUS = "SFX"
 
 # Asset Paths
 const BGM_PATHS = {
-	"c1_layer1": "res://BGM/c1_layer1.wav",
-	"c1_layer2": "res://BGM/c1_layer2.wav",
-	"c1_layer3": "res://BGM/c1_layer3.wav",
-	"c2_layer1": "res://BGM/c2_layer1.wav",
-	"c2_layer2": "res://BGM/c2_layer2.wav",
-	"c2_layer3": "res://BGM/c2_layer3.wav",
-	"c3_layer1": "res://BGM/c3_layer1.wav",
-	"c3_layer2": "res://BGM/c3_layer2.wav",
-	"c3_layer3": "res://BGM/c3_layer3.wav",
-	"permanent_bgm": "res://BGM/permanent_bgm.wav"
+	"c1_layer1": "res://BGM/c1_layer1.mp3",
+	"c1_layer2": "res://BGM/c1_layer2.mp3",
+	"c1_layer3": "res://BGM/c1_layer3.mp3",
+	"c2_layer1": "res://BGM/c2_layer1.mp3",
+	"c2_layer2": "res://BGM/c2_layer2.mp3",
+	"c2_layer3": "res://BGM/c2_layer3.mp3",
+	"c3_layer1": "res://BGM/c3_layer1.mp3",
+	"c3_layer2": "res://BGM/c3_layer2.mp3",
+	"c3_layer3": "res://BGM/c3_layer3.mp3",
+	"permanent_bgm": "res://BGM/permanent_bgm.mp3"
 }
 
 const SFX_PATHS = {
@@ -48,10 +48,7 @@ func setup_audio():
 	for key in BGM_PATHS:
 		var stream = load(BGM_PATHS[key])
 		if stream:
-			if stream is AudioStreamWAV:
-				stream.loop_mode = AudioStreamWAV.LOOP_FORWARD
-			elif stream is AudioStreamOggVorbis:
-				stream.loop = true
+			stream.loop = true
 				
 			var player = AudioStreamPlayer.new()
 			player.stream = stream
