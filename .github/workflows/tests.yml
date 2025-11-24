@@ -9,6 +9,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     permissions:
       contents: read
     
@@ -20,6 +21,11 @@ jobs:
         wget https://github.com/godotengine/godot/releases/download/4.2.2-stable/Godot_v4.2.2-stable_linux.x86_64.zip
         unzip Godot_v4.2.2-stable_linux.x86_64.zip
         chmod +x Godot_v4.2.2-stable_linux.x86_64
+    
+    - name: Import Assets
+      run: |
+        # Import all assets before running tests to avoid hanging
+        ./Godot_v4.2.2-stable_linux.x86_64 --headless --import --quit
         
     - name: Run Tests
       run: |
