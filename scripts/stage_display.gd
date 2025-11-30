@@ -107,7 +107,10 @@ func _check_stage_merges(type: Critter.CritterType):
 			# Only merge if not at max level
 			if next_level <= Critter.CritterLevel.LEVEL_5:
 				_perform_stage_merge(type, group.slice(0, 3), next_level)
-				return  # Only process one merge at a time
+				# Process only one merge at a time to prevent race conditions with
+				# concurrent async operations. _perform_stage_merge will re-check
+				# for additional merges after completing.
+				return
 
 func _perform_stage_merge(type: Critter.CritterType, critters_to_merge: Array, new_level: Critter.CritterLevel):
 	if _is_merging or not is_inside_tree():

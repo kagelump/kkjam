@@ -35,11 +35,12 @@ func _ready():
 
 func _process(_delta: float):
 	# Safety timeout: if processing_matches stays true for too long, reset it
-	if processing_matches and _processing_start_time > 0.0:
-		var elapsed = Time.get_ticks_msec() / 1000.0 - _processing_start_time
-		if elapsed > PROCESSING_TIMEOUT:
-			push_warning("Grid: Processing timeout reached, resetting state")
-			_reset_processing_state()
+	if not processing_matches or _processing_start_time <= 0.0:
+		return
+	var elapsed = Time.get_ticks_msec() / 1000.0 - _processing_start_time
+	if elapsed > PROCESSING_TIMEOUT:
+		push_warning("Grid: Processing timeout reached, resetting state")
+		_reset_processing_state()
 
 func initialize_grid():
 	# Initialize 2D array
@@ -102,6 +103,9 @@ func remove_critter(x: int, y: int):
 		var critter = grid_data[x][y]
 		grid_data[x][y] = null
 		critter.queue_free()
+
+func _is_valid_grid_position(x: int, y: int) -> bool:
+	return x >= 0 and x < GRID_WIDTH and y >= 0 and y < GRID_HEIGHT
 
 func swap_critters(x1: int, y1: int, x2: int, y2: int):
 	if processing_matches:
@@ -267,7 +271,7 @@ func handle_level_3_created(critter: Critter):
 		target_pos = stage_bg.get_global_stage_position(critter.critter_type)
 	
 	# Remove from grid data immediately so it doesn't block gravity
-	if critter.grid_x >= 0 and critter.grid_x < GRID_WIDTH and critter.grid_y >= 0 and critter.grid_y < GRID_HEIGHT:
+	if _is_valid_grid_position(critter.grid_x, critter.grid_y):
 		grid_data[critter.grid_x][critter.grid_y] = null
 	
 	# Animate flying to stage
@@ -333,7 +337,7 @@ func _input(event):
 		var grid_x = int(mouse_pos.x / CELL_SIZE)
 		var grid_y = int(mouse_pos.y / CELL_SIZE)
 		
-		if grid_x >= 0 and grid_x < GRID_WIDTH and grid_y >= 0 and grid_y < GRID_HEIGHT:
+		if _is_valid_grid_position(grid_x, grid_y):
 			# Store drag start position
 			drag_start_pos = mouse_pos
 			drag_start_grid_pos = Vector2i(grid_x, grid_y)
@@ -385,10 +389,14 @@ func _input(event):
 					swap_y += 1 if drag_delta.y > 0 else -1
 				
 				# Validate target position
-				if swap_x >= 0 and swap_x < GRID_WIDTH and swap_y >= 0 and swap_y < GRID_HEIGHT:
+				if _is_valid_grid_position(swap_x, swap_y):
 					# Attempt swap (this will set processing_matches if valid)
 					if dragged_critter:
 						swap_critters(drag_start_grid_pos.x, drag_start_grid_pos.y, swap_x, swap_y)
+				
+				# Reset drag state immediately
+				drag_start_grid_pos = Vector2i(-1, -1)
+				is_dragging = false
 				
 				# Reset drag state immediately
 				drag_start_grid_pos = Vector2i(-1, -1)
