@@ -21,6 +21,9 @@ var stage_critters = {
 
 const CRITTER_SPACING = 30.0  # Horizontal spacing between critters of same type
 
+# Track if stage is currently processing a merge to avoid overlapping operations
+var _is_merging: bool = false
+
 func _ready():
 	if game_manager:
 		game_manager.critter_collected.connect(_on_critter_collected)
@@ -30,9 +33,15 @@ func _on_critter_collected(type: Critter.CritterType, level: Critter.CritterLeve
 	_add_critter_to_stage(type, level, true)
 
 func _add_critter_to_stage(type: Critter.CritterType, level: Critter.CritterLevel, check_merges: bool = false):
+	if not is_inside_tree():
+		return
+	
 	var pos = _get_next_position_for_type(type)
 	
 	var critter = critter_scene.instantiate()
+	if not critter:
+		return
+	
 	critter.visible = false # Start hidden, wait for grid animation
 	add_child(critter)
 	
@@ -46,17 +55,22 @@ func _add_critter_to_stage(type: Critter.CritterType, level: Critter.CritterLeve
 	stage_critters[type].append(critter)
 	
 	# Wait for grid animation (0.6s) then show
-	await get_tree().create_timer(0.6).timeout
-	if is_instance_valid(critter):
+	var tree = get_tree()
+	if tree:
+		await tree.create_timer(0.6).timeout
+	
+	if is_instance_valid(critter) and is_inside_tree():
 		critter.visible = true
 		
 		# Add a simple bounce animation
-		var tween = create_tween().set_loops()
-		tween.tween_property(critter, "scale", Vector2(1.3, 1.3), 0.5).set_trans(Tween.TRANS_SINE)
-		tween.tween_property(critter, "scale", Vector2(1.2, 1.2), 0.5).set_trans(Tween.TRANS_SINE)
+		var tween = create_tween()
+		if tween:
+			tween.set_loops()
+			tween.tween_property(critter, "scale", Vector2(1.3, 1.3), 0.5).set_trans(Tween.TRANS_SINE)
+			tween.tween_property(critter, "scale", Vector2(1.2, 1.2), 0.5).set_trans(Tween.TRANS_SINE)
 	
-	# Check for stage merges (only if requested)
-	if check_merges:
+	# Check for stage merges (only if requested and not already merging)
+	if check_merges and not _is_merging:
 		_check_stage_merges(type)
 
 func _get_next_position_for_type(type: Critter.CritterType) -> Vector2:
@@ -68,6 +82,9 @@ func _get_next_position_for_type(type: Critter.CritterType) -> Vector2:
 	return base_pos + Vector2(-offset_x + (count % 3) * CRITTER_SPACING, 0)
 
 func _check_stage_merges(type: Critter.CritterType):
+	if _is_merging or not is_inside_tree():
+		return
+	
 	var critters = stage_critters[type]
 	
 	# Group by level
@@ -90,9 +107,16 @@ func _check_stage_merges(type: Critter.CritterType):
 			# Only merge if not at max level
 			if next_level <= Critter.CritterLevel.LEVEL_5:
 				_perform_stage_merge(type, group.slice(0, 3), next_level)
+				return  # Only process one merge at a time
 
 func _perform_stage_merge(type: Critter.CritterType, critters_to_merge: Array, new_level: Critter.CritterLevel):
-	print("Stage merge! 3x Level ", critters_to_merge[0].critter_level + 1, " -> 1x Level ", new_level + 1)
+	if _is_merging or not is_inside_tree():
+		return
+	
+	_is_merging = true
+	
+	if critters_to_merge.size() > 0 and is_instance_valid(critters_to_merge[0]):
+		print("Stage merge! 3x Level ", critters_to_merge[0].critter_level + 1, " -> 1x Level ", new_level + 1)
 	
 	# Remove the 3 critters from stage
 	for critter in critters_to_merge:
@@ -109,9 +133,15 @@ func _perform_stage_merge(type: Critter.CritterType, critters_to_merge: Array, n
 	# Update music based on new stage state
 	_update_music_from_stage()
 	
+	_is_merging = false
+	
 	# Check concert condition
-	if game_manager:
+	if game_manager and is_instance_valid(game_manager):
 		game_manager.check_concert_condition()
+	
+	# Check for additional merges (now that we're done with this one)
+	if is_inside_tree():
+		_check_stage_merges(type)
 
 func _reorganize_type(type: Critter.CritterType):
 	# Reposition all critters of this type
@@ -129,7 +159,8 @@ func _reorganize_type(type: Critter.CritterType):
 		var target_pos = base_pos + Vector2(-offset_x + i * CRITTER_SPACING, 0)
 		
 		var tween = create_tween()
-		tween.tween_property(valid_critters[i], "position", target_pos, 0.3)
+		if tween:
+			tween.tween_property(valid_critters[i], "position", target_pos, 0.3)
 
 func _update_music_from_stage():
 	# Calculate max level for each critter type on stage
@@ -167,6 +198,7 @@ func get_max_level_for_type(type: Critter.CritterType) -> int:
 	return max_level
 
 func _on_stage_reset():
+	_is_merging = false  # Reset merging state
 	for type in stage_critters:
 		for critter in stage_critters[type]:
 			if is_instance_valid(critter):

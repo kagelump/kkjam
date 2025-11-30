@@ -103,12 +103,20 @@ func move_to_grid_position(x: int, y: int, duration: float = 0.2):
 	var target_pos = Vector2(x * CELL_SIZE + CELL_SIZE / 2.0, y * CELL_SIZE + CELL_SIZE / 2.0)
 	
 	var tween = create_tween()
-	tween.tween_property(self, "position", target_pos, duration)
-	tween.tween_callback(func(): is_moving = false)
+	if tween:
+		tween.tween_property(self, "position", target_pos, duration)
+		tween.tween_callback(func(): 
+			if is_instance_valid(self):
+				is_moving = false
+		)
+	else:
+		# Fallback: directly set position if tween fails
+		position = target_pos
+		is_moving = false
 
 func set_selected(selected: bool):
 	is_selected = selected
-	if sprite:
+	if sprite and is_instance_valid(sprite):
 		# Visual feedback for selection
 		if selected:
 			play_click_animation()
@@ -117,14 +125,17 @@ func set_selected(selected: bool):
 			sprite.modulate = Color(1.0, 1.0, 1.0)
 	
 	# Show/hide selection border
-	if selection_border:
+	if selection_border and is_instance_valid(selection_border):
 		selection_border.visible = selected
 
 func play_click_animation():
+	if not is_inside_tree():
+		return
 	# Bounce animation when clicked
 	var tween = create_tween()
-	tween.tween_property(self, "scale", Vector2(1.2, 1.2), 0.1)
-	tween.tween_property(self, "scale", Vector2(1.0, 1.0), 0.1)
+	if tween:
+		tween.tween_property(self, "scale", Vector2(1.2, 1.2), 0.1)
+		tween.tween_property(self, "scale", Vector2(1.0, 1.0), 0.1)
 
 func get_type_name() -> String:
 	match critter_type:

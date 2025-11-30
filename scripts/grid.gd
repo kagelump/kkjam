@@ -24,10 +24,22 @@ var drag_start_grid_pos: Vector2i = Vector2i(-1, -1)
 var is_dragging: bool = false
 const DRAG_THRESHOLD: float = 20.0  # Minimum pixels to trigger a drag
 
+# Safety timeout for processing state
+const PROCESSING_TIMEOUT: float = 10.0
+var _processing_start_time: float = 0.0
+
 func _ready():
 	match_controller = MatchController.new(self)
 	initialize_grid()
 	generate_board()
+
+func _process(_delta: float):
+	# Safety timeout: if processing_matches stays true for too long, reset it
+	if processing_matches and _processing_start_time > 0.0:
+		var elapsed = Time.get_ticks_msec() / 1000.0 - _processing_start_time
+		if elapsed > PROCESSING_TIMEOUT:
+			push_warning("Grid: Processing timeout reached, resetting state")
+			_reset_processing_state()
 
 func initialize_grid():
 	# Initialize 2D array
@@ -102,13 +114,25 @@ func swap_critters(x1: int, y1: int, x2: int, y2: int):
 	if (dx == 1 and dy == 0) or (dx == 0 and dy == 1):
 		# Positions are adjacent
 		if match_controller.would_create_match(x1, y1, x2, y2):
-			processing_matches = true
+			_start_processing()
 			perform_swap(x1, y1, x2, y2)
 		else:
 			print("Swap would not create a match")
 			perform_invalid_swap(x1, y1, x2, y2)
 	else:
 		print("Critters are not adjacent")
+
+func _start_processing():
+	processing_matches = true
+	_processing_start_time = Time.get_ticks_msec() / 1000.0
+
+func _reset_processing_state():
+	processing_matches = false
+	_processing_start_time = 0.0
+	last_swap_target = Vector2(-1, -1)
+	if selected_critter and is_instance_valid(selected_critter):
+		selected_critter.set_selected(false)
+	selected_critter = null
 
 func perform_swap(x1: int, y1: int, x2: int, y2: int):
 	var critter1 = grid_data[x1][y1]
@@ -122,18 +146,23 @@ func perform_swap(x1: int, y1: int, x2: int, y2: int):
 	grid_data[x2][y2] = critter1
 	
 	# Animate swap
-	if critter1:
+	if critter1 and is_instance_valid(critter1):
 		critter1.move_to_grid_position(x2, y2)
-	if critter2:
+	if critter2 and is_instance_valid(critter2):
 		critter2.move_to_grid_position(x1, y1)
 	
 	# Wait for animation, then process matches
-	await get_tree().create_timer(0.25).timeout
-	process_matches()
+	var tree = get_tree()
+	if tree:
+		await tree.create_timer(0.25).timeout
+		if is_inside_tree():
+			process_matches()
+		else:
+			_reset_processing_state()
 
 func perform_invalid_swap(x1: int, y1: int, x2: int, y2: int):
 	# Animate trying to swap and swapping back
-	processing_matches = true
+	_start_processing()
 	var critter1 = grid_data[x1][y1]
 	var critter2 = grid_data[x2][y2]
 	
@@ -141,21 +170,27 @@ func perform_invalid_swap(x1: int, y1: int, x2: int, y2: int):
 	var pos1 = Vector2(x1 * CELL_SIZE + CELL_SIZE / 2.0, y1 * CELL_SIZE + CELL_SIZE / 2.0)
 	var pos2 = Vector2(x2 * CELL_SIZE + CELL_SIZE / 2.0, y2 * CELL_SIZE + CELL_SIZE / 2.0)
 	
-	if critter1:
+	if critter1 and is_instance_valid(critter1):
 		var tween1 = create_tween()
 		tween1.tween_property(critter1, "position", pos2, 0.15)
 		tween1.tween_property(critter1, "position", pos1, 0.15)
 	
-	if critter2:
+	if critter2 and is_instance_valid(critter2):
 		var tween2 = create_tween()
 		tween2.tween_property(critter2, "position", pos1, 0.15)
 		tween2.tween_property(critter2, "position", pos2, 0.15)
 	
 	# Wait for animation to finish
-	await get_tree().create_timer(0.3).timeout
-	processing_matches = false
+	var tree = get_tree()
+	if tree:
+		await tree.create_timer(0.3).timeout
+	_reset_processing_state()
 
 func process_matches():
+	if not is_inside_tree():
+		_reset_processing_state()
+		return
+	
 	var matches = match_controller.find_matches()
 	
 	if matches.size() > 0:
@@ -166,12 +201,21 @@ func process_matches():
 		last_swap_target = Vector2(-1, -1)
 		
 		# Wait a bit before refilling
-		await get_tree().create_timer(0.3).timeout
-		refill_board()
+		var tree = get_tree()
+		if tree:
+			await tree.create_timer(0.3).timeout
+			if is_inside_tree():
+				refill_board()
+			else:
+				_reset_processing_state()
 	else:
-		processing_matches = false
+		_reset_processing_state()
 
 func refill_board():
+	if not is_inside_tree():
+		_reset_processing_state()
+		return
+	
 	# Apply gravity - move critters down
 	apply_gravity()
 	
@@ -182,38 +226,57 @@ func refill_board():
 				spawn_critter(x, y)
 	
 	# Wait for falling animation
-	await get_tree().create_timer(0.3).timeout
+	var tree = get_tree()
+	if tree:
+		await tree.create_timer(0.3).timeout
+	
+	if not is_inside_tree():
+		_reset_processing_state()
+		return
 	
 	# Check for new matches created by refill
 	var matches = match_controller.find_matches()
 	if matches.size() > 0:
 		print("Cascade! Found ", matches.size(), " new matches")
 		match_controller.resolve_matches(matches) # No swap target for cascades
-		await get_tree().create_timer(0.3).timeout
-		refill_board()
+		if tree:
+			await tree.create_timer(0.3).timeout
+			if is_inside_tree():
+				refill_board()
+			else:
+				_reset_processing_state()
 	else:
-		processing_matches = false
+		_reset_processing_state()
 		# Music is now updated from stage, not from board
 
 func handle_level_3_created(critter: Critter):
+	if not is_instance_valid(critter):
+		return
+	
 	print("Level 3+ Created! Flying to stage...")
 	
 	# Notify Game Manager with level
-	var game_manager = get_node("../GameManager")
+	var game_manager = get_node_or_null("../GameManager")
 	if game_manager:
 		game_manager.collect_critter(critter.critter_type, critter.critter_level)
 	
 	# Get target position from StageDisplay
-	var stage_bg = get_node("../StageBackground")
+	var stage_bg = get_node_or_null("../StageBackground")
 	var target_pos = Vector2(360, -100) # Default fallback
 	if stage_bg and stage_bg.has_method("get_global_stage_position"):
 		target_pos = stage_bg.get_global_stage_position(critter.critter_type)
 	
 	# Remove from grid data immediately so it doesn't block gravity
-	grid_data[critter.grid_x][critter.grid_y] = null
+	if critter.grid_x >= 0 and critter.grid_x < GRID_WIDTH and critter.grid_y >= 0 and critter.grid_y < GRID_HEIGHT:
+		grid_data[critter.grid_x][critter.grid_y] = null
 	
 	# Animate flying to stage
 	var tween = create_tween()
+	if not tween:
+		if is_instance_valid(critter):
+			critter.queue_free()
+		return
+	
 	tween.set_parallel(true)
 	# Use global_position for movement between containers
 	tween.tween_property(critter, "global_position", target_pos, 0.6).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT)
@@ -229,7 +292,7 @@ func handle_level_3_created(critter: Critter):
 
 func reset_board():
 	print("Resetting board...")
-	processing_matches = true
+	_start_processing()
 	
 	# Clear all critters
 	for x in range(GRID_WIDTH):
@@ -237,11 +300,13 @@ func reset_board():
 			remove_critter(x, y)
 	
 	# Wait a bit
-	await get_tree().create_timer(0.5).timeout
+	var tree = get_tree()
+	if tree:
+		await tree.create_timer(0.5).timeout
 	
 	# Regenerate
 	generate_board()
-	processing_matches = false
+	_reset_processing_state()
 
 func apply_gravity():
 	# Move critters down to fill empty spaces
