@@ -18,6 +18,10 @@ var selected_critter: Critter = null
 var processing_matches: bool = false
 var last_swap_target: Vector2 = Vector2(-1, -1)
 
+# Cascade safety
+const MAX_CASCADE_DEPTH: int = 50
+var cascade_depth: int = 0
+
 # Touch/drag support
 var drag_start_pos: Vector2 = Vector2.ZERO
 var drag_start_grid_pos: Vector2i = Vector2i(-1, -1)
@@ -156,6 +160,7 @@ func perform_invalid_swap(x1: int, y1: int, x2: int, y2: int):
 	processing_matches = false
 
 func process_matches():
+	cascade_depth = 0
 	var matches = match_controller.find_matches()
 	
 	if matches.size() > 0:
@@ -172,6 +177,12 @@ func process_matches():
 		processing_matches = false
 
 func refill_board():
+	cascade_depth += 1
+	if cascade_depth > MAX_CASCADE_DEPTH:
+		push_warning("Max cascade depth reached, breaking cascade loop.")
+		processing_matches = false
+		return
+	
 	# Apply gravity - move critters down
 	apply_gravity()
 	
@@ -196,36 +207,38 @@ func refill_board():
 		# Music is now updated from stage, not from board
 
 func handle_level_3_created(critter: Critter):
+	if not is_instance_valid(critter):
+		return
+	
 	print("Level 3+ Created! Flying to stage...")
 	
+	# Remove from grid data immediately so it doesn't block gravity
+	if critter.grid_x >= 0 and critter.grid_x < GRID_WIDTH and critter.grid_y >= 0 and critter.grid_y < GRID_HEIGHT:
+		grid_data[critter.grid_x][critter.grid_y] = null
+	
 	# Notify Game Manager with level
-	var game_manager = get_node("../GameManager")
+	var game_manager = get_node_or_null("../GameManager")
 	if game_manager:
 		game_manager.collect_critter(critter.critter_type, critter.critter_level)
 	
 	# Get target position from StageDisplay
-	var stage_bg = get_node("../StageBackground")
+	var stage_bg = get_node_or_null("../StageBackground")
 	var target_pos = Vector2(360, -100) # Default fallback
 	if stage_bg and stage_bg.has_method("get_global_stage_position"):
 		target_pos = stage_bg.get_global_stage_position(critter.critter_type)
 	
-	# Remove from grid data immediately so it doesn't block gravity
-	grid_data[critter.grid_x][critter.grid_y] = null
-	
-	# Animate flying to stage
+	# Animate flying to stage (fire-and-forget, don't await)
 	var tween = create_tween()
 	tween.set_parallel(true)
-	# Use global_position for movement between containers
 	tween.tween_property(critter, "global_position", target_pos, 0.6).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT)
-	# Scale up to match stage size
 	tween.tween_property(critter, "scale", Vector2(1.2, 1.2), 0.6)
-	# Ensure z_index is high so it flies over everything
 	critter.z_index = 100
 	
-	# Wait for animation then free
-	await tween.finished
-	if is_instance_valid(critter):
-		critter.queue_free()
+	# Clean up after animation without blocking the match/refill flow
+	tween.finished.connect(func():
+		if is_instance_valid(critter):
+			critter.queue_free()
+	)
 
 func reset_board():
 	print("Resetting board...")
