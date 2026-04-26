@@ -29,7 +29,7 @@ This document consolidates all agent instructions for working on the KKJam proje
 - Visual feedback and animations
 - Game loop with difficulty scaling
 - Audio system integration
-- **50 automated tests** (42 unit, 8 integration)
+- **56 automated tests** (47 unit, 9 integration)
 
 #### Known Limitations
 - Placeholder visuals (colored squares)
@@ -41,46 +41,40 @@ This document consolidates all agent instructions for working on the KKJam proje
 ## Repository Structure
 
 ```
-/home/runner/work/kkjam/kkjam/
+kkjam/
 ├── .git/                    # Git repository data
 ├── .github/
 │   └── workflows/
-│       └── deploy.yml       # GitHub Pages deployment automation
-├── .gitignore               # Git ignore rules
-├── .gutconfig.json          # GUT test framework configuration
-├── addons/
-│   └── gut/                 # GUT test framework
-├── BGM/                     # Background music and audio assets
-│   ├── PLAN.md             # Music implementation plan
-│   └── COMPRESSION_GUIDE.md # Audio compression guidelines
-├── test/                    # Test suite
-│   ├── unit/                # Unit tests (42 tests)
-│   ├── integration/         # Integration tests (8 tests)
-│   ├── run_tests.gd         # Custom test runner
-│   └── README.md            # Test documentation
-├── scenes/                  # Godot scene files (.tscn)
-│   ├── main.tscn            # Main game scene
-│   └── critter.tscn         # Reusable critter scene
-├── scripts/                 # GDScript files (.gd)
-│   ├── game_manager.gd      # Game state and orchestration
-│   ├── grid.gd              # Grid management and input handling
-│   ├── critter.gd           # Critter properties and behavior
-│   ├── match_controller.gd  # Match detection and merge logic
-│   ├── stage_display.gd     # Stage UI for Level 3+ critters
-│   └── audio_manager.gd     # Audio system and music layering
-├── progress_docs/           # Project progress documentation
-│   ├── DEPLOYMENT.md        # GitHub Pages deployment guide
-│   ├── TESTING.md           # Testing procedures
-│   ├── PHASE1_SUMMARY.md    # Phase 1 completion summary
-│   ├── TEST_FIX_SUMMARY.md  # Test suite setup documentation
-│   └── TEST_IMPLEMENTATION_SUMMARY.md
-├── Makefile                 # Development commands (test, run, export, clean)
-├── export_presets.cfg       # Godot export configuration for web
-├── icon.svg                 # Project icon
-├── project.godot            # Godot project configuration
-├── README.md                # Project overview and status
-├── TODO.md                  # Complete game design document
-└── AGENTS.md                # This file - consolidated agent instructions
+│       ├── deploy.yml      # GitHub Pages deployment automation
+│       └── tests.yml       # Runs `make test` on push and PR
+├── .gitignore
+├── .gutconfig.json         # GUT test framework configuration
+├── addons/gut/             # GUT test framework
+├── BGM/                    # Background music and SFX (see PLAN.md, COMPRESSION_GUIDE.md)
+├── test/
+│   ├── unit/               # Unit tests
+│   ├── integration/        # Integration tests
+│   └── README.md
+├── scenes/
+│   ├── main.tscn
+│   └── critter.tscn
+├── scripts/
+│   ├── audio_manager.gd    # Autoload: music and SFX
+│   ├── game_manager.gd
+│   ├── grid.gd
+│   ├── critter.gd
+│   ├── match_controller.gd
+│   └── stage_display.gd
+├── progress_docs/
+│   ├── DEPLOYMENT.md
+│   └── TESTING.md
+├── Makefile
+├── export_presets.cfg
+├── icon.svg
+├── project.godot
+├── README.md
+├── TODO.md
+└── AGENTS.md
 ```
 
 ---
@@ -98,9 +92,9 @@ This document consolidates all agent instructions for working on the KKJam proje
 
 ```bash
 # Testing (ALWAYS use Makefile commands)
-make test           # Run all 50 tests
-make test-unit      # Run unit tests only (42 tests)
-make test-int       # Run integration tests only (8 tests)
+make test           # Run all 56 tests
+make test-unit      # Run unit tests only (47 tests)
+make test-int       # Run integration tests only (9 tests)
 
 # Running the Game
 make run            # Launch game in Godot
@@ -304,8 +298,8 @@ func _internal_helper():
 ### Testing Framework
 - **Engine**: Godot Engine 4.2+
 - **Framework**: GUT (Godot Unit Test) 9.5.0
-- **Coverage**: 50 automated tests (42 unit + 8 integration)
-- **Total Assertions**: 201+ passing
+- **Coverage**: 56 automated tests (47 unit + 9 integration)
+- **Total Assertions**: 236+ passing
 
 ### Testing Process
 
@@ -322,7 +316,7 @@ func _internal_helper():
 
 #### 3. After Changes
 - Run full test suite: `make test`
-- Ensure all 50 tests still pass
+- Ensure all 56 tests still pass
 - Run manual gameplay test: `make run`
 - Check for console errors or warnings
 - Test edge cases specific to the change
@@ -617,7 +611,6 @@ func _internal_helper():
 - `README.md` - Project overview and current status
 - `TODO.md` - Complete game design specification
 - `progress_docs/TESTING.md` - Detailed testing procedures
-- `progress_docs/PHASE1_SUMMARY.md` - Phase 1 implementation details
 - `progress_docs/DEPLOYMENT.md` - GitHub Pages deployment guide
 - `test/README.md` - Test suite documentation
 - `BGM/PLAN.md` - Music implementation plan
@@ -678,6 +671,6 @@ func _internal_helper():
 **Note**: This file reflects the current state of the project (Phase 2.5). The old individual agent files contained outdated information:
 - Old files mentioned 4 critter types (BUNNY, CAT, FROG, BIRD), now there are 3 (MELODY, DRUMS, PAD)
 - Old files mentioned 3 levels, now the system supports 5 levels (1-5)
-- Old files mentioned 42 total tests (33 unit + 8 integration), now there are 50 tests (42 unit + 8 integration)
+- Old files mentioned 42 total tests (33 unit + 8 integration); current count is 56 tests (47 unit + 9 integration)
 - Old files mentioned concert triggers at Level 3, now it requires Level 5 of each type
 

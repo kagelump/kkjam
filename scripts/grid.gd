@@ -1,6 +1,12 @@
 extends Node2D
 class_name Grid
 
+signal score_earned(points: int)
+signal level_3_plus_merged(critter: Critter)
+
+@export var stage_display_path: NodePath = NodePath("../StageBackground")
+var _stage_display: Node
+
 # Grid configuration
 const GRID_WIDTH = 8
 const GRID_HEIGHT = 8
@@ -29,9 +35,13 @@ var is_dragging: bool = false
 const DRAG_THRESHOLD: float = 20.0  # Minimum pixels to trigger a drag
 
 func _ready():
+	_stage_display = get_node_or_null(stage_display_path) as Node
 	match_controller = MatchController.new(self)
 	initialize_grid()
 	generate_board()
+
+func add_match_score(points: int) -> void:
+	emit_signal("score_earned", points)
 
 func initialize_grid():
 	# Initialize 2D array
@@ -179,8 +189,10 @@ func process_matches():
 func refill_board():
 	cascade_depth += 1
 	if cascade_depth > MAX_CASCADE_DEPTH:
-		push_warning("Max cascade depth reached, breaking cascade loop.")
-		processing_matches = false
+		push_warning("Max cascade depth reached. Resetting board to recover.")
+		print("Max cascade depth reached. Resetting board.")
+		cascade_depth = 0
+		await reset_board()
 		return
 	
 	# Apply gravity - move critters down
@@ -216,16 +228,10 @@ func handle_level_3_created(critter: Critter):
 	if critter.grid_x >= 0 and critter.grid_x < GRID_WIDTH and critter.grid_y >= 0 and critter.grid_y < GRID_HEIGHT:
 		grid_data[critter.grid_x][critter.grid_y] = null
 	
-	# Notify Game Manager with level
-	var game_manager = get_node_or_null("../GameManager")
-	if game_manager:
-		game_manager.collect_critter(critter.critter_type, critter.critter_level)
-	
-	# Get target position from StageDisplay
-	var stage_bg = get_node_or_null("../StageBackground")
-	var target_pos = Vector2(360, -100) # Default fallback
-	if stage_bg and stage_bg.has_method("get_global_stage_position"):
-		target_pos = stage_bg.get_global_stage_position(critter.critter_type)
+	emit_signal("level_3_plus_merged", critter)
+	var target_pos: Vector2 = Vector2(360, -100)
+	if is_instance_valid(_stage_display) and _stage_display.has_method("get_global_stage_position"):
+		target_pos = _stage_display.get_global_stage_position(critter.critter_type)
 	
 	# Animate flying to stage (fire-and-forget, don't await)
 	var tween = create_tween()
@@ -243,6 +249,7 @@ func handle_level_3_created(critter: Critter):
 func reset_board():
 	print("Resetting board...")
 	processing_matches = true
+	cascade_depth = 0
 	
 	# Clear all critters
 	for x in range(GRID_WIDTH):

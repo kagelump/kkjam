@@ -56,10 +56,7 @@ func test_concert_increments_album_count():
 	
 	var initial_albums = game_manager.albums_completed
 	
-	# Trigger concert directly
-	game_manager.trigger_concert()
-	
-	await wait_physics_frames(2)
+	await game_manager.trigger_concert()
 	
 	assert_eq(game_manager.albums_completed, initial_albums + 1, "Album count should increment by 1")
 
@@ -89,10 +86,7 @@ func test_concert_increases_bpm():
 	
 	var initial_bpm = game_manager.current_bpm
 	
-	# Trigger concert directly
-	game_manager.trigger_concert()
-	
-	await wait_physics_frames(2)
+	await game_manager.trigger_concert()
 	
 	assert_eq(game_manager.current_bpm, initial_bpm + 10, "BPM should increase by 10")
 

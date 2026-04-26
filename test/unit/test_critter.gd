@@ -30,8 +30,10 @@ func test_critter_levels():
 	var critter = critter_scene.instantiate()
 	add_child_autofree(critter)
 	
-	# Test all three levels
-	for level in [Critter.CritterLevel.LEVEL_1, Critter.CritterLevel.LEVEL_2, Critter.CritterLevel.LEVEL_3]:
+	for level in [
+		Critter.CritterLevel.LEVEL_1, Critter.CritterLevel.LEVEL_2, Critter.CritterLevel.LEVEL_3,
+		Critter.CritterLevel.LEVEL_4, Critter.CritterLevel.LEVEL_5
+	]:
 		critter.initialize(Critter.CritterType.DRUMS, level, 0, 0)
 		assert_eq(critter.critter_level, level, "Critter level should be set correctly")
 

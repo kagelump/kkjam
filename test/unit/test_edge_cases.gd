@@ -25,7 +25,10 @@ func test_critter_move_animation():
 func test_all_critter_type_combinations():
 	# Test all combinations of types and levels
 	for type in [Critter.CritterType.MELODY, Critter.CritterType.DRUMS, Critter.CritterType.PAD]:
-		for level in [Critter.CritterLevel.LEVEL_1, Critter.CritterLevel.LEVEL_2, Critter.CritterLevel.LEVEL_3]:
+		for level in [
+			Critter.CritterLevel.LEVEL_1, Critter.CritterLevel.LEVEL_2, Critter.CritterLevel.LEVEL_3,
+			Critter.CritterLevel.LEVEL_4, Critter.CritterLevel.LEVEL_5
+		]:
 			var critter = critter_scene.instantiate()
 			add_child_autofree(critter)
 			
@@ -41,7 +44,10 @@ func test_all_critter_type_combinations():
 func test_critter_size_increases_with_level():
 	var sizes = []
 	
-	for level in [Critter.CritterLevel.LEVEL_1, Critter.CritterLevel.LEVEL_2, Critter.CritterLevel.LEVEL_3]:
+	for level in [
+		Critter.CritterLevel.LEVEL_1, Critter.CritterLevel.LEVEL_2, Critter.CritterLevel.LEVEL_3,
+		Critter.CritterLevel.LEVEL_4, Critter.CritterLevel.LEVEL_5
+	]:
 		var critter = critter_scene.instantiate()
 		add_child_autofree(critter)
 		
@@ -52,10 +58,9 @@ func test_critter_size_increases_with_level():
 		if critter.sprite:
 			sizes.append(critter.sprite.size.x)
 	
-	# Verify sizes increase
-	if sizes.size() == 3:
-		assert_true(sizes[1] > sizes[0], "Level 2 should be larger than Level 1")
-		assert_true(sizes[2] > sizes[1], "Level 3 should be larger than Level 2")
+	if sizes.size() == 5:
+		for s in range(1, 5):
+			assert_true(sizes[s] > sizes[s - 1], "Size should increase with each level up to 5")
 
 # Test GameManager edge cases
 func test_concert_triggers_exactly_once_with_duplicates():
@@ -165,6 +170,9 @@ class MockGridForEdgeCases:
 		var mock = Node.new()
 		mock.set_script(load("res://scripts/game_manager.gd"))
 		return mock
+
+	func add_match_score(points: int) -> void:
+		get_node("x").add_score(points)
 
 func test_l_shaped_matches_dont_count():
 	# L-shaped formations should not be considered matches

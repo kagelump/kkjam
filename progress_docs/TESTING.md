@@ -13,12 +13,17 @@ This project uses [GUT (Godot Unit Test)](https://github.com/bitwes/Gut) for aut
 4. View test results in the GUT panel
 
 #### Option 2: Using Command Line
-Run tests from the terminal using:
+From the project root (see `Makefile`):
 ```bash
-godot --headless -s test/run_tests.gd
+make test          # All tests
+make test-unit     # Unit only
+make test-int      # Integration only
 ```
 
-This will run all tests and exit with code 0 on success or 1 on failure.
+Or GUT directly:
+```bash
+godot --headless -s addons/gut/gut_cmdln.gd -gtest=res://test/
+```
 
 ### Test Structure
 
@@ -32,7 +37,7 @@ test/
 │   └── test_game_manager.gd  # Tests for GameManager
 ├── integration/               # Integration tests
 │   └── test_game_flow.gd     # Tests for overall game flow
-└── run_tests.gd              # Command-line test runner
+└── README.md
 ```
 
 ### Test Coverage
@@ -41,7 +46,7 @@ Current test coverage includes:
 
 **Critter Tests (`test_critter.gd`)**:
 - Critter initialization
-- Type names (Bunny, Cat, Frog, Bird)
+- Type names (MELODY, DRUMS, PAD)
 - Level system (Level 1, 2, 3)
 - Selection mechanics
 - Position calculations
@@ -60,7 +65,7 @@ Current test coverage includes:
 **GameManager Tests (`test_game_manager.gd`)**:
 - Score tracking
 - Critter collection system
-- Concert trigger when all 4 critter types collected
+- Concert trigger when all 3 types reach Level 5 on stage
 - Album completion and counting
 - BPM scaling with difficulty
 - Stage reset functionality

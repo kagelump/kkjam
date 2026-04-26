@@ -2,9 +2,9 @@
 
 An endless Match-3 puzzle game built in Godot 4 where you match and merge critters into musicians to create the ultimate band!
 
-**🎮 [Play Live on GitHub Pages](https://kagelump.github.io/kkjam/)** | [Deployment Guide](DEPLOYMENT.md)
+**🎮 [Play Live on GitHub Pages](https://kagelump.github.io/kkjam/)** | [Deployment Guide](progress_docs/DEPLOYMENT.md)
 
-## Current Status: Phase 2 Complete ✓
+## Current Status: Phase 2.5 Complete ✓
 
 ### Implemented Features (Phase 1 & 2)
 - ✅ 8x8 grid generation with randomized Level 1 critters
@@ -74,24 +74,22 @@ make help       # Show all commands
   - critter.tscn       # Reusable critter scene
 
 /scripts/
+  - audio_manager.gd   # Autoload: dynamic music layering and SFX playback
   - game_manager.gd    # Main game logic coordinator
   - grid.gd            # Grid management and input handling
   - critter.gd         # Critter properties and behavior
   - match_controller.gd # Match detection and resolution
   - stage_display.gd   # Stage UI for collected Level 3 critters
 
-/assets/
-  - /sprites/          # (Placeholder - using colored squares for now)
-  - /audio/            # (Placeholder for future music implementation)
+/BGM/
+  # Background music (.mp3) and SFX (.wav) assets
 ```
 
 ### Next Steps (Phase 3 - The Loop & Shuffle)
 - [ ] Implement deadlock detection (check all possible swaps)
 - [ ] Implement shuffle mechanic (randomize grid when no moves available)
 - [ ] Add manual shuffle button with cooldown
-- [ ] Create MusicLayers node with 4 AudioStreamPlayer children
-- [ ] Implement dynamic music layering based on grid state
-- [ ] Add full audio integration (Drums, Bass, Melody, Harmony stems)
+- [ ] Implement full audio integration with loop/shuffle (3 stems: Drums, Melody, Pad; `AudioManager` autoload)
 - [ ] Implement BPM scaling with Album count
 
 ### Next Steps (Phase 4 - Polish & Combo System)

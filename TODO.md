@@ -158,13 +158,11 @@ The goal is to create one Level 5 critter of each type (Melody, Drums, Pad). Lev
 - [x] Update all tests for new gameplay mechanics
 
 ### **Phase 3: The Loop & Shuffle (Day 5)**
-- **Audio Setup**:
-  - Create `MusicLayers` node with 4 `AudioStreamPlayer` children (Drums, Bass, Melody, Harmony).
-  - Route them to a custom "Music" audio bus.
+- **Audio**: In-game music uses the `AudioManager` autoload (dynamic `AudioStreamPlayer` pool, 3 stems). Optional: custom Music bus routing for export builds.
 - Implement Deadlock Detection (check all possible swaps).
 - Implement Shuffle Mechanic (randomize grid array).
 - Implement Difficulty Scaling (Album count -> Speed/BPM).
-- Add Audio Layering system.
+- Tighten full audio integration (BPM, stems) with loop/shuffle.
 
 ### **Phase 4**: Polish (Day 6-7)
 - Animations (Swap, Pop, Fly).

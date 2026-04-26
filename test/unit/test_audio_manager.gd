@@ -92,6 +92,17 @@ func test_start_music_does_not_restart_if_playing():
 	# For now, let's just implement the fix in AudioManager as it's safer.
 	pass
 
+func test_update_music_intensity_sweep_combinations():
+	await wait_process_frames(1)
+	if audio_manager.layer_players.is_empty():
+		fail_test("Audio layers not ready")
+		return
+	for a in 4:
+		for b in 4:
+			for c in 4:
+				audio_manager.update_music_intensity(a, b, c)
+	assert_not_null(audio_manager, "update_music_intensity should complete without nulling the manager")
+
 func test_permanent_bgm_always_on():
 	# Verify permanent_bgm exists and starts at full volume
 	

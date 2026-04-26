@@ -25,13 +25,13 @@ func test_scene_has_required_nodes():
 func test_status_label_is_current_and_below_grid():
 	var scene = main_scene.instantiate()
 	add_child_autofree(scene)
-
+	
 	await wait_frames(5)
-
+	
 	var grid_background = scene.get_node("GridBackground") as ColorRect
 	var score_label = scene.get_node("UI/ScoreLabel") as Label
 	var instructions_label = scene.get_node("UI/InstructionsLabel") as Label
-
+	
 	assert_not_null(score_label, "ScoreLabel should exist")
 	assert_false(score_label.text.contains("Phase 1 MVP"), "ScoreLabel should not show stale Phase 1 copy")
 	assert_true(score_label.text.contains("Score: 0"), "ScoreLabel should show current score")
@@ -97,8 +97,8 @@ func test_grid_contains_all_critter_types():
 			if critter != null:
 				types_found[critter.critter_type] = true
 	
-	# We should have all 4 types (high probability with 64 cells and 4 types)
-	assert_true(types_found.size() >= 3, "Should have at least 3 different critter types")
+	# We should have all 3 types (high probability with 64 cells and 3 types)
+	assert_eq(types_found.size(), 3, "Should have all 3 critter types")
 
 func test_game_manager_references_grid():
 	var scene = main_scene.instantiate()

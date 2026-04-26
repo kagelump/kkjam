@@ -147,6 +147,11 @@ func _update_layer_volume(layer_name: String, active: bool):
 	var tween = create_tween()
 	tween.tween_property(player, "volume_db", target_vol, FADE_TIME)
 
+func play_concert_cue() -> void:
+	play_sfx("match_large")
+	if layer_players.has("full_track_almost_done"):
+		_update_layer_volume("full_track_almost_done", true)
+
 func play_sfx(sfx_name: String):
 	if not sfx_streams.has(sfx_name):
 		return

@@ -26,10 +26,10 @@ func _ready():
 		game_manager.critter_collected.connect(_on_critter_collected)
 		game_manager.stage_reset.connect(_on_stage_reset)
 
-func _on_critter_collected(type: Critter.CritterType, level: Critter.CritterLevel):
-	_add_critter_to_stage(type, level, true)
+func _on_critter_collected(type: Critter.CritterType, level: Critter.CritterLevel) -> void:
+	await _add_critter_to_stage(type, level, true)
 
-func _add_critter_to_stage(type: Critter.CritterType, level: Critter.CritterLevel, check_merges: bool = false):
+func _add_critter_to_stage(type: Critter.CritterType, level: Critter.CritterLevel, check_merges: bool = false) -> void:
 	var pos = _get_next_position_for_type(type)
 	
 	var critter = critter_scene.instantiate()
@@ -55,49 +55,42 @@ func _add_critter_to_stage(type: Critter.CritterType, level: Critter.CritterLeve
 		tween.tween_property(critter, "scale", Vector2(1.3, 1.3), 0.5).set_trans(Tween.TRANS_SINE)
 		tween.tween_property(critter, "scale", Vector2(1.2, 1.2), 0.5).set_trans(Tween.TRANS_SINE)
 	
-	# Check for stage merges (only if requested)
 	if check_merges:
-		_check_stage_merges(type)
+		await _check_stage_merges(type)
 
 func _get_next_position_for_type(type: Critter.CritterType) -> Vector2:
-	var base_pos = stage_base_positions[type]
-	var count = stage_critters[type].size()
-	
-	# Arrange critters horizontally around the base position
-	var offset_x = (count - 1) * CRITTER_SPACING / 2.0
-	return base_pos + Vector2(-offset_x + (count % 3) * CRITTER_SPACING, 0)
+	var base_pos: Vector2 = stage_base_positions[type]
+	var count: int = stage_critters[type].size()
+	var n: int = count + 1
+	var offset: float = (n - 1) * CRITTER_SPACING / 2.0
+	var idx: int = count
+	return base_pos + Vector2(-offset + idx * CRITTER_SPACING, 0)
 
-func _check_stage_merges(type: Critter.CritterType):
-	# Loop to handle chain merges (e.g. 3x L3 -> L4, then 3x L4 -> L5)
-	var merged = true
+func _check_stage_merges(type: Critter.CritterType) -> void:
+	var merged: bool = true
 	while merged:
 		merged = false
-		var critters = stage_critters[type]
-		
-		# Group by level
-		var level_groups = {}
+		var critters: Array = stage_critters[type]
+		var level_groups: Dictionary = {}
 		for critter in critters:
 			if not is_instance_valid(critter):
 				continue
-			var level = critter.critter_level
-			if not level_groups.has(level):
-				level_groups[level] = []
-			level_groups[level].append(critter)
-		
-		# Check each level for merges (need 3 of same level)
-		for level in level_groups:
-			var group = level_groups[level]
+			var lv: int = critter.critter_level
+			if not level_groups.has(lv):
+				level_groups[lv] = []
+			(level_groups[lv] as Array).append(critter)
+		for lv in level_groups:
+			var group: Array = level_groups[lv]
 			if group.size() >= 3:
-				# Can merge! 3 of this level -> 1 of next level
-				var next_level = level + 1
-				
-				# Only merge if not at max level
+				var next_level: int = (lv as int) + 1
 				if next_level <= Critter.CritterLevel.LEVEL_5:
-					_perform_stage_merge(type, group.slice(0, 3), next_level)
+					await _perform_stage_merge(
+						type, (group as Array).slice(0, 3), next_level)
 					merged = true
-					break  # Restart the while loop with updated critter list
+					break
 
-func _perform_stage_merge(type: Critter.CritterType, critters_to_merge: Array, new_level: Critter.CritterLevel):
+func _perform_stage_merge(
+	type: Critter.CritterType, critters_to_merge: Array, new_level: Critter.CritterLevel) -> void:
 	print("Stage merge! 3x Level ", critters_to_merge[0].critter_level + 1, " -> 1x Level ", new_level + 1)
 	
 	# Remove the 3 critters from stage
@@ -106,18 +99,14 @@ func _perform_stage_merge(type: Critter.CritterType, critters_to_merge: Array, n
 		if is_instance_valid(critter):
 			critter.queue_free()
 	
-	# Add the new merged critter (without checking for more merges — the loop in _check_stage_merges handles chaining)
-	_add_critter_to_stage(type, new_level, false)
-	
-	# Reorganize remaining critters
+	await _add_critter_to_stage(type, new_level, false)
 	_reorganize_type(type)
 	
 	# Update music based on new stage state
 	_update_music_from_stage()
 	
-	# Check concert condition
 	if game_manager:
-		game_manager.check_concert_condition()
+		await game_manager.check_concert_condition()
 
 func _reorganize_type(type: Critter.CritterType):
 	# Reposition all critters of this type

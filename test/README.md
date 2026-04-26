@@ -31,12 +31,7 @@ godot --headless -s addons/gut/gut_cmdln.gd -gtest=res://test/unit/test_critter.
 3. Click "Run All" to run all tests
 
 ## Current Status
-✅ **All 42 tests passing**
-- 6 Critter tests
-- 9 Edge case tests  
-- 9 Game Manager tests
-- 10 Match Controller tests
-- 8 Integration tests
+See `make test` for the live count. Baseline: **56 tests** (47 unit, 9 integration), per `AGENTS.md`.
 
 ## Test Organization
 
@@ -49,7 +44,7 @@ Tests the Critter class which represents individual game pieces.
 
 **Test Cases:**
 - `test_critter_initialization()` - Verifies proper initialization with type, level, and grid position
-- `test_critter_type_names()` - Validates that each critter type has the correct name (Bunny, Cat, Frog, Bird)
+- `test_critter_type_names()` - Validates that each critter type has the correct name (MELODY, DRUMS, PAD)
 - `test_critter_levels()` - Tests all three levels (LEVEL_1, LEVEL_2, LEVEL_3)
 - `test_critter_selection()` - Validates selection and deselection mechanics
 - `test_critter_position_update()` - Ensures correct position calculation based on grid coordinates
@@ -78,7 +73,7 @@ Tests the GameManager class that handles game state and progression.
 - `test_collection_state_initialization()` - Ensures all critters start uncollected
 - `test_add_score()` - Tests score accumulation
 - `test_collect_single_critter()` - Tests collecting a single critter and signal emission
-- `test_collect_all_critters_triggers_concert()` - Validates concert trigger when all 4 types collected
+- `test_collect_all_critters_triggers_concert()` - Validates concert trigger when all 3 types reach Level 5
 - `test_concert_increments_album_count()` - Ensures album count increases after concert
 - `test_concert_increases_bpm()` - Validates difficulty scaling (BPM increase)
 - `test_reset_stage_clears_collection()` - Tests stage reset functionality
@@ -110,13 +105,7 @@ Tests the overall game flow and component interactions.
 4. View results in the GUT panel
 
 ### From Command Line
-```bash
-godot --headless -s test/run_tests.gd
-```
-
-This runs all tests headlessly and exits with:
-- Exit code 0: All tests passed
-- Exit code 1: One or more tests failed
+Use `make test` (recommended) or the GUT examples at the top of this file.
 
 ### In CI/CD
 Tests automatically run via GitHub Actions on:

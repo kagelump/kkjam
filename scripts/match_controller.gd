@@ -90,58 +90,98 @@ func find_matches() -> Array:
 	
 	return matches
 
+func _uf_find(parent: Array, i: int) -> int:
+	if parent[i] != i:
+		parent[i] = _uf_find(parent, parent[i])
+	return parent[i]
+
+func _uf_union(parent: Array, a: int, b: int) -> void:
+	var ra: int = _uf_find(parent, a)
+	var rb: int = _uf_find(parent, b)
+	if ra != rb:
+		parent[ra] = rb
+
+func _cell_key(c) -> String:
+	return "%d,%d" % [c.grid_x, c.grid_y]
+
+# Group line matches that share a critter (L / T / +) into one connected component; resolve each once.
+# Dedupe by grid cell, not only object reference, so the same cell from two line matches always merges.
+func _merge_components_from_matches(matches: Array) -> Array:
+	var key_to_i: Dictionary = {}
+	var all_critters: Array = []
+	for m in matches:
+		for c in m["critters"]:
+			var k: String = _cell_key(c)
+			if not key_to_i.has(k):
+				key_to_i[k] = all_critters.size()
+				all_critters.append(c)
+	var n: int = all_critters.size()
+	if n == 0:
+		return []
+	var parent: Array = []
+	for i in range(n):
+		parent.append(i)
+	for m in matches:
+		var cr: Array = m["critters"]
+		if cr.is_empty():
+			continue
+		var i0: int = key_to_i[_cell_key(cr[0])]
+		for t in range(1, cr.size()):
+			_uf_union(parent, i0, key_to_i[_cell_key(cr[t])])
+	var root_to_critters: Dictionary = {}
+	for i in range(n):
+		var r: int = _uf_find(parent, i)
+		if not root_to_critters.has(r):
+			root_to_critters[r] = []
+		(root_to_critters[r] as Array).append(all_critters[i])
+	return root_to_critters.values()
+
+func _pick_merge_cell_for_component(
+	comp: Array, swap_target: Vector2) -> Vector2i:
+	if swap_target != Vector2(-1, -1):
+		var sx: int = int(swap_target.x)
+		var sy: int = int(swap_target.y)
+		for critter in comp:
+			if critter.grid_x == sx and critter.grid_y == sy:
+				return Vector2i(sx, sy)
+	# Stable middle by grid position
+	var sorted_comp: Array = comp.duplicate()
+	sorted_comp.sort_custom(func(a, b) -> bool:
+		if a.grid_x != b.grid_x:
+			return a.grid_x < b.grid_x
+		return a.grid_y < b.grid_y
+	)
+	var mid: Critter = sorted_comp[sorted_comp.size() / 2]
+	return Vector2i(mid.grid_x, mid.grid_y)
+
 # Resolve matches: remove critters and create merged critter
 func resolve_matches(matches: Array, swap_target: Vector2 = Vector2(-1, -1)):
-	for match in matches:
-		var critters = match["critters"]
-		var critter_type = match["type"]
-		var critter_level = match["level"]
-		
-		# Determine merge location
-		var merge_x = match["merge_x"]
-		var merge_y = match["merge_y"]
-		
-		# If swap_target is valid and is part of this match, use it as merge location
-		if swap_target != Vector2(-1, -1):
-			for critter in critters:
-				if critter.grid_x == int(swap_target.x) and critter.grid_y == int(swap_target.y):
-					merge_x = int(swap_target.x)
-					merge_y = int(swap_target.y)
-					break
-		else:
-			# If no swap target (e.g. cascade match), try to use the middle critter
-			if critters.size() >= 3:
-				var middle_critter = critters[critters.size() / 2]
-				merge_x = middle_critter.grid_x
-				merge_y = middle_critter.grid_y
-		
+	var components: Array = _merge_components_from_matches(matches)
+	for comp in components:
+		if comp.is_empty():
+			continue
+		var critters: Array = comp
+		var critter_type = critters[0].critter_type
+		var critter_level = critters[0].critter_level
+		var merge_pos: Vector2i = _pick_merge_cell_for_component(critters, swap_target)
+		var merge_x: int = merge_pos.x
+		var merge_y: int = merge_pos.y
 		# Remove all matched critters from grid
 		for critter in critters:
 			grid.remove_critter(critter.grid_x, critter.grid_y)
-		
 		# Create a new merged critter at the merge location
-		var next_level = critter_level + 1
-		
+		var next_level: int = critter_level + 1
 		if next_level <= Critter.CritterLevel.LEVEL_3:
-			# Spawn the upgraded critter
 			var new_critter = grid.spawn_critter(merge_x, merge_y, next_level)
-			# Set type explicitly to match the merged ones (spawn_critter randomizes type by default)
 			new_critter.initialize(critter_type, next_level, merge_x, merge_y)
-			
 			print("Merged into Level ", ["1", "2", "3"][next_level], " at ", merge_x, ",", merge_y)
-			
-			# Check if we created a Level 3 critter
 			if next_level == Critter.CritterLevel.LEVEL_3:
 				grid.handle_level_3_created(new_critter)
 		else:
-			# Should not happen if max level is 3, but just in case
 			print("Max level reached!")
-		
-		# Add score
-		var points = 10 * (critter_level + 1) * critters.size()
-		grid.get_node("../GameManager").add_score(points)
-		
-		# Play SFX
+		var points: int = 10 * (critter_level + 1) * critters.size()
+		if grid.has_method("add_match_score"):
+			grid.add_match_score(points)
 		if critters.size() >= 5:
 			AudioManager.play_sfx("match_large")
 		elif critters.size() >= 4:

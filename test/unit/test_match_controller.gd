@@ -42,7 +42,22 @@ class MockGrid:
 		critter.initialize(type, level, x, y)
 		grid_data[x][y] = critter
 		return critter
-	
+
+	func spawn_critter(x: int, y: int, level: Critter.CritterLevel = Critter.CritterLevel.LEVEL_1) -> Critter:
+		var cs = preload("res://scenes/critter.tscn")
+		var c = cs.instantiate()
+		critter_container.add_child(c)
+		var t = randi() % Critter.CritterType.size()
+		c.initialize(t, level, x, y)
+		grid_data[x][y] = c
+		return c
+
+	func handle_level_3_created(_c: Critter) -> void:
+		pass
+
+	func add_match_score(points: int) -> void:
+		game_manager.add_score(points)
+
 	func remove_critter(x: int, y: int):
 		if grid_data[x][y] != null:
 			var critter = grid_data[x][y]
@@ -55,7 +70,7 @@ func test_horizontal_match_detection():
 	
 	var match_controller = MatchController.new(mock_grid)
 	
-	# Create a horizontal match of 3 bunnies at level 1
+	# Create a horizontal match of 3 DRUMS at level 1
 	mock_grid.create_critter(Critter.CritterType.DRUMS, Critter.CritterLevel.LEVEL_1, 0, 0)
 	mock_grid.create_critter(Critter.CritterType.DRUMS, Critter.CritterLevel.LEVEL_1, 1, 0)
 	mock_grid.create_critter(Critter.CritterType.DRUMS, Critter.CritterLevel.LEVEL_1, 2, 0)
@@ -73,7 +88,7 @@ func test_vertical_match_detection():
 	
 	var match_controller = MatchController.new(mock_grid)
 	
-	# Create a vertical match of 3 cats at level 1
+	# Create a vertical match of 3 MELODY at level 1
 	mock_grid.create_critter(Critter.CritterType.MELODY, Critter.CritterLevel.LEVEL_1, 0, 0)
 	mock_grid.create_critter(Critter.CritterType.MELODY, Critter.CritterLevel.LEVEL_1, 0, 1)
 	mock_grid.create_critter(Critter.CritterType.MELODY, Critter.CritterLevel.LEVEL_1, 0, 2)
@@ -158,6 +173,45 @@ func test_multiple_matches():
 	var matches = match_controller.find_matches()
 	
 	assert_eq(matches.size(), 2, "Should find exactly 2 matches")
+
+func test_l_shape_resolves_to_one_merged_critter():
+	var mock_grid = autofree(MockGrid.new())
+	add_child_autofree(mock_grid)
+	var match_controller = MatchController.new(mock_grid)
+	mock_grid.create_critter(Critter.CritterType.DRUMS, Critter.CritterLevel.LEVEL_1, 0, 0)
+	mock_grid.create_critter(Critter.CritterType.DRUMS, Critter.CritterLevel.LEVEL_1, 1, 0)
+	mock_grid.create_critter(Critter.CritterType.DRUMS, Critter.CritterLevel.LEVEL_1, 2, 0)
+	mock_grid.create_critter(Critter.CritterType.DRUMS, Critter.CritterLevel.LEVEL_1, 0, 1)
+	mock_grid.create_critter(Critter.CritterType.DRUMS, Critter.CritterLevel.LEVEL_1, 0, 2)
+	var matches = match_controller.find_matches()
+	assert_eq(matches.size(), 2, "L-shape is two line matches that share a corner")
+	match_controller.resolve_matches(matches, Vector2(-1, -1))
+	var count = 0
+	var only: Critter = null
+	for x in range(8):
+		for y in range(8):
+			if mock_grid.grid_data[x][y] != null:
+				count += 1
+				only = mock_grid.grid_data[x][y]
+	assert_eq(count, 1, "Overlapping line matches should merge into a single L2")
+	assert_eq(only.critter_level, Critter.CritterLevel.LEVEL_2)
+
+func test_disjoint_line_matches_resolve_separately():
+	var mock_grid = autofree(MockGrid.new())
+	add_child_autofree(mock_grid)
+	var match_controller = MatchController.new(mock_grid)
+	for i in range(3):
+		mock_grid.create_critter(Critter.CritterType.DRUMS, Critter.CritterLevel.LEVEL_1, i, 0)
+		mock_grid.create_critter(Critter.CritterType.MELODY, Critter.CritterLevel.LEVEL_1, i, 2)
+	var matches = match_controller.find_matches()
+	assert_eq(matches.size(), 2)
+	match_controller.resolve_matches(matches, Vector2(-1, -1))
+	var count = 0
+	for x in range(8):
+		for y in range(8):
+			if mock_grid.grid_data[x][y] != null:
+				count += 1
+	assert_eq(count, 2, "Non-overlapping matches produce two merged critters")
 
 func test_would_create_match_horizontal():
 	var mock_grid = autofree(MockGrid.new())

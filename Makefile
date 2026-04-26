@@ -79,5 +79,5 @@ clean:
 	@find . -name ".DS_Store" -delete
 	@rm -rf .godot/mono_crash.*.json
 	@rm -rf build/
-	@echo "Clean complete."
+	@rm -rf dist/
 	@echo "Clean complete."

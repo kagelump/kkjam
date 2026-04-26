@@ -36,16 +36,6 @@ script = ExtResource("1_grid")
 [node name="GameManager" type="Node" parent="."]
 script = ExtResource("2_game_manager")
 
-[node name="MusicLayers" type="Node" parent="."]
-
-[node name="Drums" type="AudioStreamPlayer" parent="MusicLayers"]
-
-[node name="Bass" type="AudioStreamPlayer" parent="MusicLayers"]
-
-[node name="Melody" type="AudioStreamPlayer" parent="MusicLayers"]
-
-[node name="Harmony" type="AudioStreamPlayer" parent="MusicLayers"]
-
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
