@@ -22,6 +22,23 @@ func test_scene_has_required_nodes():
 	assert_not_null(game_manager, "GameManager node should exist")
 	assert_not_null(ui, "UI node should exist")
 
+func test_status_label_is_current_and_below_grid():
+	var scene = main_scene.instantiate()
+	add_child_autofree(scene)
+
+	await wait_frames(5)
+
+	var grid_background = scene.get_node("GridBackground") as ColorRect
+	var score_label = scene.get_node("UI/ScoreLabel") as Label
+	var instructions_label = scene.get_node("UI/InstructionsLabel") as Label
+
+	assert_not_null(score_label, "ScoreLabel should exist")
+	assert_false(score_label.text.contains("Phase 1 MVP"), "ScoreLabel should not show stale Phase 1 copy")
+	assert_true(score_label.text.contains("Score: 0"), "ScoreLabel should show current score")
+	assert_true(score_label.text.contains("Albums: 0"), "ScoreLabel should show album count")
+	assert_true(score_label.offset_top >= grid_background.offset_bottom, "ScoreLabel should sit below the grid")
+	assert_true(instructions_label.text.contains("type and level"), "Instructions should describe current merge rules")
+
 func test_grid_initializes_with_critters():
 	var scene = main_scene.instantiate()
 	add_child_autofree(scene)

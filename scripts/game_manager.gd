@@ -24,6 +24,7 @@ func _ready():
 	if has_node("../StageBackground"):
 		stage_display = get_node("../StageBackground")
 	
+	update_ui()
 	# Start BGM
 	AudioManager.start_music()
 	
@@ -35,8 +36,12 @@ func add_score(points: int):
 	update_ui()
 
 func update_ui():
-	# Will be implemented when UI is added
-	pass
+	if not is_instance_valid(ui):
+		return
+	var score_label := ui.get_node_or_null("ScoreLabel") as Label
+	if score_label == null:
+		return
+	score_label.text = "Score: %d | Albums: %d | BPM: %d" % [score, albums_completed, current_bpm]
 
 func collect_critter(type: Critter.CritterType, level: Critter.CritterLevel):
 	emit_signal("critter_collected", type, level)
@@ -66,6 +71,7 @@ func trigger_concert():
 func complete_album():
 	albums_completed += 1
 	current_bpm += 10  # Increase tempo
+	update_ui()
 	print("Album completed! Total albums: ", albums_completed)
 	
 	# Reset for next tour stop
